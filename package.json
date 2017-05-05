@@ -1,0 +1,22 @@
+{
+  "name": "react-typescript",
+  "version": "1.0.0",
+  "description": "React with typescript",
+  "main": "index.js",
+  "repository": "git@github.com:iMasterAle/react-typescript.git",
+  "author": "Alessandro Casazza <imasterale@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@types/react": "^15.0.24",
+    "@types/react-dom": "^15.5.0",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4"
+  },
+  "devDependencies": {
+    "awesome-typescript-loader": "^3.1.3",
+    "source-map-loader": "^0.2.1",
+    "standard": "^10.0.2",
+    "typescript": "^2.3.2",
+    "webpack": "^2.5.0"
+  }
+}
