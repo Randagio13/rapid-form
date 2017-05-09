@@ -1,6 +1,6 @@
 import webpack from 'webpack'
 import path from 'path'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
+// import HtmlWebpackPlugin from 'html-webpack-plugin'
 
 const LAUNCH_COMMAND = process.env.npm_lifecycle_event
 const isProduction = LAUNCH_COMMAND === 'release'
@@ -15,18 +15,20 @@ const PATHS = {
   components: path.join(__dirname, 'src', 'components'),
   containers: path.join(__dirname, 'src', 'containers'),
   settings: path.join(__dirname, 'src', 'settings'),
-  build: path.join(__dirname, 'docs'),
+  build: path.join(__dirname, 'dist'),
   reducers: path.join(__dirname, 'src', 'redux', 'modules'),
   styles: path.join(__dirname, 'src', 'styles')
 }
 
-const devtool = isProduction ? 'cheap-module-source-map' : 'cheap-module-eval-source-map'
+const devtool = isProduction ? 'cheap-module-source-map' : 'source-map'
 
 const base = {
   devtool: devtool,
   context: PATHS.app,
   module: {
     rules: [
+      { test: /\.tsx?$/, loader: 'awesome-typescript-loader' },
+      { enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' },
       {
         test: /\.js?$/,
         exclude: /node_modules/,
@@ -68,7 +70,7 @@ const base = {
       'node_modules',
       path.join(__dirname, 'src')
     ],
-    extensions: ['.js', '.scss', '.json'],
+    extensions: ['.js', '.scss', '.ts', '.tsx', '.json'],
     alias: {
       src: PATHS.app,
       components: PATHS.components,
@@ -98,7 +100,7 @@ const developmentConfig = {
   },
   devServer: {
     hot: true,
-    contentBase: PATHS.build,
+    // contentBase: PATHS.build,
     publicPath: '/',
     historyApiFallback: true,
     port: 1313,
@@ -106,10 +108,10 @@ const developmentConfig = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin(),
-    new HtmlWebpackPlugin({
-      template: path.join(PATHS.app, 'index.html')
-    })
+    new webpack.NamedModulesPlugin()
+    // new HtmlWebpackPlugin({
+    //   template: path.join(__dirname, 'index.html')
+    // })
   ]
 }
 
@@ -131,10 +133,10 @@ const productionConfig = {
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true
-    }),
-    new HtmlWebpackPlugin({
-      template: path.join(PATHS.app, 'index.html')
     })
+    // new HtmlWebpackPlugin({
+    //   template: path.join(PATHS.app, 'index.html')
+    // })
   ]
 }
 
