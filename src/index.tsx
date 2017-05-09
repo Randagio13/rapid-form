@@ -11,9 +11,10 @@ const renderApp = (Component: any) => {
   ), document.getElementById('app'))
 }
 
-renderApp(<div>{'Ciao'}</div>)
+renderApp(Form)
 
 if (Reflect.get(module, 'hot') !== undefined) {
+  // tslint:disable-next-line:no-var-requires
   const nextApp = require('./components').default
   Reflect.get(module, 'hot').accept('./components', () => { renderApp(nextApp) })
 }

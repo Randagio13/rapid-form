@@ -6,6 +6,6 @@ interface IFormProps {
 
 export class Form extends React.Component<IFormProps, undefined> {
   render () {
-    return <div>{'Form'}</div>
+    return <div>{'Form ciao sono io'}</div>
   }
 }
