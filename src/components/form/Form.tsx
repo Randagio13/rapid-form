@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 interface IFormProps {
-  error: object
+  error?: object
 }
 
 export class Form extends React.Component<IFormProps, undefined> {
