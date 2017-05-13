@@ -16,7 +16,7 @@ const PATHS = {
   containers: path.join(__dirname, 'src', 'containers'),
   settings: path.join(__dirname, 'src', 'settings'),
   build: path.join(__dirname, 'dist'),
-  reducers: path.join(__dirname, 'src', 'redux', 'modules'),
+  reducers: path.join(__dirname, 'src', 'reducers'),
   styles: path.join(__dirname, 'src', 'styles')
 }
 
