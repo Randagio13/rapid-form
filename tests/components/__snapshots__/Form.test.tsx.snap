@@ -1,7 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Form component 1`] = `
-<div>
-  Form ciao sono io
-</div>
+exports[`Snapshot 1`] = `
+<form
+  disabled={true}
+  id="formId"
+  name="formId"
+>
+  <input
+    type="text"
+  />
+</form>
 `;
