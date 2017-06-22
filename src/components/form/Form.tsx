@@ -1,19 +1,25 @@
+import { typesManager } from 'helpers'
 import * as React from 'react'
 import { callbackSubmit } from 'types'
 
-interface IFormProps {
+export interface IFormProps {
   error?: [object],
   id: string,
   name?: string,
   disabled?: boolean,
   onSubmit: callbackSubmit,
-  children: React.ReactChild
+  children: React.ReactNode
 }
 
-export class Form extends React.Component<IFormProps, undefined> {
+export default class Form extends React.Component<IFormProps, undefined> {
+  readChildren = (): any => {
+    const { children } = this.props
+    const propsComponent = Reflect.get(children.valueOf(), 'props')
+    const type = Reflect.get(propsComponent, 'type')
+    return typesManager(type, propsComponent)
+  }
   render () {
     const { children, id, name, disabled } = this.props
-    console.log({children})
-    return <form id={id} name={name || id} disabled={disabled}>{children}</form>
+    return <form id={id} name={name || id} disabled={disabled}>{this.readChildren()}</form>
   }
 }

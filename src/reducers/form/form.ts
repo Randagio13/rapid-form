@@ -1,10 +1,12 @@
 import { Action } from 'types'
-interface InitialState {
-  errors: any[]
+export interface IFormInitialState {
+  errors: any[],
+  fields: any[]
 }
 
-const initialState: InitialState = {
-  errors: []
+const initialState: IFormInitialState = {
+  errors: [],
+  fields: []
 }
 export function form (state = initialState, action = Action): any {
   return state

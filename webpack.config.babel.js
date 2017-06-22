@@ -17,7 +17,8 @@ const PATHS = {
   settings: path.join(__dirname, 'src', 'settings'),
   build: path.join(__dirname, 'dist'),
   reducers: path.join(__dirname, 'src', 'reducers'),
-  styles: path.join(__dirname, 'src', 'styles')
+  styles: path.join(__dirname, 'src', 'styles'),
+  helpers: path.join(__dirname, 'src', 'helpers')
 }
 
 const devtool = isProduction ? 'cheap-module-source-map' : 'source-map'
@@ -77,7 +78,8 @@ const base = {
       containers: PATHS.containers,
       settings: PATHS.settings,
       reducers: PATHS.reducers,
-      styles: PATHS.styles
+      styles: PATHS.styles,
+      helpers: PATHS.helpers
     }
   },
   externals: {

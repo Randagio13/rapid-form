@@ -1,4 +1,5 @@
-import { Form } from 'components'
+// import FormContainer from './containers/form/FormContainer'
+import { FormContainer } from 'containers'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
@@ -25,9 +26,9 @@ const testOnSubmit = (event: any) => {
 }
 
 renderApp(
-  <Form onSubmit={testOnSubmit} id='formId'>
-    <input type='text' />
-  </Form>
+  <FormContainer onSubmit={testOnSubmit} id='formId'>
+    <input />
+  </FormContainer>
 )
 
 if (Reflect.get(module, 'hot') !== undefined) {
