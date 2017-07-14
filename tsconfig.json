@@ -11,7 +11,7 @@
             "components": ["src/components"],
             "containers": ["src/containers"],
             "types": ["src/types"],
-            "reducers": ["src/reducers"],
+            "reducers/*": ["src/reducers/*"],
             "helpers": ["src/helpers"]
         }
     },

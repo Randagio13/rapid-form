@@ -1,6 +1,6 @@
 import webpack from 'webpack'
 import path from 'path'
-// import HtmlWebpackPlugin from 'html-webpack-plugin'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
 
 const LAUNCH_COMMAND = process.env.npm_lifecycle_event
 const isProduction = LAUNCH_COMMAND === 'release'
@@ -28,7 +28,7 @@ const base = {
   context: PATHS.app,
   module: {
     rules: [
-      { test: /\.tsx?$/, loader: 'awesome-typescript-loader' },
+      { test: /\.tsx?$/, loader: 'ts-loader', options: { transpileOnly: true } },
       { enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' },
       {
         test: /\.js?$/,
@@ -135,10 +135,10 @@ const productionConfig = {
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, 'index.html')
     })
-    // new HtmlWebpackPlugin({
-    //   template: path.join(PATHS.app, 'index.html')
-    // })
   ]
 }
 
