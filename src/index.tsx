@@ -27,7 +27,10 @@ const testOnSubmit = (event: any) => {
 
 renderApp(
   <FormContainer onSubmit={testOnSubmit} id='formId'>
-    <input />
+    <div className='testClass'>
+      <input type='text' name='username' />
+    </div>
+    <input type='password' name='password' />
   </FormContainer>
 )
 

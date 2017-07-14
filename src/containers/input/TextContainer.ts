@@ -6,7 +6,7 @@ interface IState {
   input: object
 }
 
-const mapStateToProps = ({ input }: IState, props: any) => {
+const mapStateToProps = ({ input }: IState, props: any): ITextProps => {
   return { ...input, ...props }
 }
 

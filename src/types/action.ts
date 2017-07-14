@@ -1,6 +1,7 @@
 interface IAction {
   payload: any,
-  type: string
+  type: string,
+  fields?: any
 }
 
 export const Action: IAction = {
