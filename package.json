@@ -37,7 +37,7 @@
     "global": "^4.3.2",
     "immutable": "^3.8.1",
     "prop-types": "^15.5.10",
-    "prop-types-ts": "^0.2.0",
+    "prop-types-ts": "^0.3.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.5",
@@ -66,12 +66,12 @@
     "source-map-loader": "^0.2.1",
     "standard": "^10.0.2",
     "ts-jest": "^20.0.7",
-    "ts-loader": "^2.2.2",
+    "ts-loader": "^2.3.0",
     "tslint": "^5.5.0",
     "tslint-config-standard": "^6.0.1",
     "tslint-react": "^3.0.0",
     "typescript": "^2.4.1",
-    "webpack": "^3.2.0",
+    "webpack": "^3.3.0",
     "webpack-dev-server": "^2.5.1"
   }
 }
