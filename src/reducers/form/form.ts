@@ -1,6 +1,6 @@
-import { List } from 'immutable'
+import { fromJS, List } from 'immutable'
 import { Action } from 'types'
-export interface IFormInitialState {
+interface IFormInitialState {
   errors: any[],
   fields: any
 }
@@ -14,12 +14,12 @@ const SET_FIELDS = 'SET_FIELDS'
 
 export const setFields = (fields: any[]): object => {
   return {
-    fields: List(fields),
+    fields: fromJS(fields),
     type: SET_FIELDS
   }
 }
 
-export default function form (state = initialState, action = Action) {
+export default function form (state = initialState, action = Action): any {
   const { type, fields } = action
   switch (type) {
     case SET_FIELDS:

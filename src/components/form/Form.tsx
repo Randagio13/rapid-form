@@ -4,26 +4,46 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { callbackSubmit } from 'types'
 
-export interface IFormProps {
-  error?: [object],
+interface IFormProps {
+  error?: any[],
   id: string,
+  method: string,
+  key?: string,
   name?: string,
-  disabled?: boolean,
-  onSubmit: callbackSubmit,
-  children: [React.ReactNode, any[]],
-  fields: any
+  disabled?: boolean
+  onSubmit?: callbackSubmit,
+  children?: [React.ReactNode, any[]],
+  fields?: any,
+  setFields?: (fields: any[]) => void
 }
 
-export default class Form extends React.Component<IFormProps, undefined> {
+class Form extends React.Component<IFormProps, any> {
   static propTypes = {
-    fields: PropTypes.instanceOf(List)
+    fields: PropTypes.instanceOf(List),
+    id: PropTypes.string.isRequired,
+    method: PropTypes.oneOf(['get', 'post']).isRequired,
+    onSubmit: PropTypes.func,
+    setFields: PropTypes.func.isRequired
   }
-  componentDidMount (): any {
-    const { fields } = this.props
-    console.log(fields, this.props)
+  componentDidMount (): void {
+    const { fields, setFields } = this.props
+    if (fields instanceof List && fields.size === 0) {
+      setFields(this.readChildren())
+    }
   }
-  readChildren = (): any => {
-    const { children } = this.props
+  public render (): any {
+    const { children, id, name, fields, onSubmit, method } = this.props
+    if (fields instanceof List && fields.size === 0) {
+      return null
+    }
+    return (
+      <form key={id} id={id} name={name || id} method={method} onSubmit={onSubmit}>
+        {fields.toJS()}
+      </form>
+    )
+  }
+  readChildren = (): any[] => {
+    const { children, id, key } = this.props
     if (children.length > 1) {
       return children.map((i, k) => {
         const prc = Reflect.get(i.valueOf(), 'props')
@@ -32,11 +52,9 @@ export default class Form extends React.Component<IFormProps, undefined> {
       })
     }
     const propsComponent = Reflect.get(children.valueOf(), 'props')
-    const type = Reflect.get(propsComponent, 'type')
-    return typesManager(type, propsComponent, 'ciao')
-  }
-  render () {
-    const { children, id, name } = this.props
-    return <form key={id} id={id} name={name || id}>{this.readChildren()}</form>
+    const type = Reflect.get(children.valueOf(), 'type')
+    return typesManager(type, propsComponent, !key && id)
   }
 }
+
+export default Form

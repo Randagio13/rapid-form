@@ -2,19 +2,23 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { callbackOnClick } from 'types'
 
-export interface ITextProps {
+export interface IProps {
   children?: any,
   className?: string,
   key?: string,
   name?: string,
   type: string,
-  value?: string,
-  onClick?: callbackOnClick,
-  dispatch?: () => void
+  dispatch?: () => void,
+  style?: object,
+  onClick?: callbackOnClick
 }
 
-class Text extends React.Component<ITextProps, any> {
+class Button extends React.Component<IProps, any> {
   static propTypes = {
+    children: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.element
+    ]),
     className: PropTypes.string,
     key: PropTypes.oneOfType([
       PropTypes.string,
@@ -23,13 +27,17 @@ class Text extends React.Component<ITextProps, any> {
     name: PropTypes.string,
     style: PropTypes.object,
     type: PropTypes.oneOf([
-      'text', 'file', 'password'
+      'submit', 'reset', 'button', 'menu'
     ]).isRequired
   }
   public render (): JSX.Element {
-    const { dispatch, ...allProps } = this.props
-    return <input {...allProps} />
+    const { dispatch, children, ...allProps } = this.props
+    return (
+      <button {...allProps}>
+        {children}
+      </button>
+    )
   }
 }
 
-export default Text
+export default Button

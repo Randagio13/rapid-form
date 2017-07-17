@@ -22,15 +22,21 @@ const renderApp = (Component: any) => {
 }
 
 const testOnSubmit = (event: any) => {
+  event.preventDefault()
   alert(event)
 }
 
 renderApp(
-  <FormContainer onSubmit={testOnSubmit} id='formId'>
+  <FormContainer method='post' onSubmit={testOnSubmit} id='formId'>
     <div className='testClass'>
-      <input type='text' name='username' />
+      <input type='text' name='username' placeholder='username' />
     </div>
-    <input type='password' name='password' />
+    <div className='testClass'>
+      <input type='password' name='password' />
+    </div>
+    <div className='testClass'>
+      <button type='submit'>{'Sign up'}</button>
+    </div>
   </FormContainer>
 )
 
