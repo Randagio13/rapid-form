@@ -27,15 +27,18 @@
     ]
   },
   "dependencies": {
+    "@types/material-ui": "^0.17.17",
     "@types/prop-types": "^15.5.1",
     "@types/react": "^15.0.38",
     "@types/react-dom": "^15.5.1",
     "@types/react-redux": "^4.4.46",
-    "@types/react-test-renderer": "^15.5.1",
+    "@types/react-test-renderer": "^15.5.2",
     "@types/redux": "^3.6.31",
     "@types/redux-thunk": "^2.1.32",
     "global": "^4.3.2",
     "immutable": "^3.8.1",
+    "material-ui": "next",
+    "material-ui-icons": "^1.0.0-alpha.19",
     "prop-types": "^15.5.10",
     "prop-types-ts": "^0.3.0",
     "react": "^15.6.1",
@@ -45,8 +48,8 @@
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
-    "@types/enzyme": "^2.8.2",
-    "@types/jest": "^20.0.2",
+    "@types/enzyme": "^2.8.3",
+    "@types/jest": "^20.0.4",
     "@types/react-hot-loader": "^3.0.3",
     "@types/redux-devtools": "^3.0.38",
     "@types/redux-devtools-extension": "^2.13.2",
@@ -66,11 +69,11 @@
     "source-map-loader": "^0.2.1",
     "standard": "^10.0.2",
     "ts-jest": "^20.0.7",
-    "ts-loader": "^2.3.0",
+    "ts-loader": "^2.3.1",
     "tslint": "^5.5.0",
     "tslint-config-standard": "^6.0.1",
     "tslint-react": "^3.0.0",
-    "typescript": "^2.4.1",
+    "typescript": "^2.4.2",
     "webpack": "^3.3.0",
     "webpack-dev-server": "^2.5.1"
   }
