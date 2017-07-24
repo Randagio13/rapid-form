@@ -14,6 +14,7 @@ const PATHS = {
   app: path.join(__dirname, 'src'),
   components: path.join(__dirname, 'src', 'components'),
   containers: path.join(__dirname, 'src', 'containers'),
+  constants: path.join(__dirname, 'src', 'constants'),
   settings: path.join(__dirname, 'src', 'settings'),
   build: path.join(__dirname, 'dist'),
   reducers: path.join(__dirname, 'src', 'reducers'),
@@ -76,6 +77,7 @@ const base = {
       src: PATHS.app,
       components: PATHS.components,
       containers: PATHS.containers,
+      constants: PATHS.constants,
       settings: PATHS.settings,
       reducers: PATHS.reducers,
       styles: PATHS.styles,
@@ -110,10 +112,17 @@ const developmentConfig = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin()
-    // new HtmlWebpackPlugin({
-    //   template: path.join(__dirname, 'index.html')
-    // })
+    new webpack.NamedModulesPlugin(),
+    new webpack.DefinePlugin({
+      process: {
+        env: {
+          NODE_ENV: JSON.stringify(LAUNCH_COMMAND)
+        }
+      }
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, 'index.html')
+    })
   ]
 }
 

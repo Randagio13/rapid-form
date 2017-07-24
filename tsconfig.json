@@ -10,6 +10,7 @@
         "paths": {
             "components": ["src/components"],
             "containers": ["src/containers"],
+            "constants": ["src/constants"],
             "types": ["src/types"],
             "reducers/*": ["src/reducers/*"],
             "reducers": ["src/reducers"],
