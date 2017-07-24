@@ -41,7 +41,7 @@ class Text extends React.Component<ITextProps, any> {
     if (!method || !required) return null
     const key = Reflect.get(props, 'data-key')
     const isValid = validationMethod(method, val)
-    checkError(props, key, isValid)
+    checkError({...props, value: val}, key, isValid)
   }
   private handleRenderByTheme = (): JSX.Element => {
     const { setCheckError: checkError, theme, type, ...allProps } = this.props

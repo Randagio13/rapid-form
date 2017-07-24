@@ -77,11 +77,15 @@ class Form extends React.Component<IFormProps, any> {
     return typesManager(type, propsComponent, !key && id)
   }
   private handleSubmit = (event: any): void => {
-    const { onSubmit, id } = this.props
+    const { onSubmit, id, fields } = this.props
+    debugger
     event.preventDefault()
     const formElement = document.querySelector(`#${id}`)
     const data = serialize(formElement, { hash: true })
-    if (typeof onSubmit === 'function') {
+    const requiredEl = document.getElementById(id).querySelectorAll('[required]').length
+    const nElement = Object.keys(data).length
+    const isEmpty = nElement === 0 || requiredEl > nElement
+    if (typeof onSubmit === 'function' && !isEmpty) {
       onSubmit(event, data)
     }
   }

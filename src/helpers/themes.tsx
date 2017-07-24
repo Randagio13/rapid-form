@@ -27,7 +27,9 @@ class Themes {
         switch (type) {
           case 'text':
           case 'password':
-            return <TextField type={type} {...props} />
+            const { value } = props
+            debugger
+            return <TextField type={type} {...props} value={value || ''} />
           case 'button':
             const { children , ...p} = props
             return <Button {...p}>{children}</Button>

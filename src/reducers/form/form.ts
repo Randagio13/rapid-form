@@ -36,14 +36,14 @@ export const setTheme = (theme: string): object => {
 export const setCheckError = (field: any, key: any, typeError: any): object => {
   return (dispatch: any, getState: any): any => {
     const errors = getState().form.errors
-    const { name } = field
+    const { name, value } = field
     dispatch({
       errors: analizeErrors(key, name, errors, typeError),
       type: SET_ERRORS
     })
     const fields = getState().form.fields
     const formFields = fields.filter((i: any) => i.get('key') === key)
-    const cmp = analizeFields(formFields, typeError.size === 0)
+    const cmp = analizeFields(formFields, typeError.size === 0, value)
     const newField = formFields.merge(cmp)
     const newFields = fields.update(key, () => fromJS(newField.toJS()[0]))
     return dispatch({

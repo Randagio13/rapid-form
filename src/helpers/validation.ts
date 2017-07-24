@@ -4,7 +4,7 @@ import * as React from 'react'
 /**
  * @param formFields any[]
  */
-export const analizeFields = (formFields: any[], removeError?: any) => {
+export const analizeFields = (formFields: any[], removeError?: any, value = '') => {
   return formFields.map((cmps: any): any => {
     const type = cmps.get('type')
     const key = cmps.get('key')
@@ -16,7 +16,7 @@ export const analizeFields = (formFields: any[], removeError?: any) => {
         // TODO: You must complete this part
         return null
       }
-      const nwProps = {...props, error: !removeError}
+      const nwProps = {...props, error: !removeError, value}
       return fromJS(
         React.createElement(type, {...propsCmp, key}, React.cloneElement(
           children, nwProps
@@ -25,7 +25,7 @@ export const analizeFields = (formFields: any[], removeError?: any) => {
     }
     const p = {...propsCmp, error: !removeError}
     return fromJS(
-      React.createElement(type, {...p, key})
+      React.createElement(type, {...p, key, value})
     )
   })
 }

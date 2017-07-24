@@ -1,6 +1,5 @@
 // import FormContainer from './containers/form/FormContainer'
 import { FormContainer } from 'containers'
-import PermIdentity from 'material-ui-icons/PermIdentity'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
@@ -24,7 +23,6 @@ const renderApp = (Component: any) => {
 
 const testOnSubmit = (event: any, data: object): void => {
   event.preventDefault()
-  debugger
   alert(JSON.stringify(data))
 }
 
