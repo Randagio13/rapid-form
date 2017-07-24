@@ -1,4 +1,5 @@
 import { Themes, validationMethod } from 'helpers'
+import { Map } from 'immutable'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { callbackOnClick, setCheckError } from 'types'
@@ -38,9 +39,11 @@ class Text extends React.Component<ITextProps, any> {
     const method = Reflect.get(this.props, 'data-validation')
     const val = Reflect.get(event.target, 'value')
     const required = Reflect.get(props, 'required')
-    if (!method || !required) return null
     const key = Reflect.get(props, 'data-key')
     const isValid = validationMethod(method, val)
+    if (!method || !required) {
+      return checkError({...props, value: val}, key, Map())
+    }
     checkError({...props, value: val}, key, isValid)
   }
   private handleRenderByTheme = (): JSX.Element => {

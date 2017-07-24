@@ -1,6 +1,6 @@
 import { Form } from 'components'
 import { connect } from 'react-redux'
-import { setFields, setTheme } from 'reducers/form/form'
+import * as formActionCreators from 'reducers/form/form'
 import { bindActionCreators } from 'redux'
 
 interface IState {
@@ -12,8 +12,7 @@ const mapStateToProps = ({ form }: IState, props: any): any => {
 }
 
 const mapDispatchToProps = (dispatch: any) => bindActionCreators({
-  setFields,
-  setTheme
+  ...formActionCreators
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form)

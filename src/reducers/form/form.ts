@@ -1,4 +1,5 @@
-import { analizeErrors, analizeFields } from 'helpers'
+import { inputTypes } from 'constants'
+import { analizeErrors, analizeFields, validationMethod } from 'helpers'
 import { fromJS, List } from 'immutable'
 import { Action } from 'types'
 
@@ -30,6 +31,38 @@ export const setTheme = (theme: string): object => {
   return {
     theme,
     type: SET_THEME
+  }
+}
+
+export const checkAllReqFields = () => {
+  return (dispatch: any, getState: any) => {
+    const { form: { fields } } = getState()
+    fields.map((cmps: any): void => {
+      const key = cmps.get('key')
+      const propsCmps = cmps.get('props').toJS()
+      const { children } = propsCmps
+      if (children) {
+        if (Array.isArray(children)) {
+          // TODO: You must complete this part
+          return null
+        }
+        const propsChild = Reflect.get(children, 'props')
+        const { value: valChild, type: typeChild, required: reqChild } = propsChild
+        if (!inputTypes.find((i: any) => i === typeChild) || !reqChild) {
+          return null
+        }
+        dispatch(
+          setCheckError(propsChild, key, validationMethod('', valChild))
+        )
+      }
+      const { value, type, required } = propsCmps
+      if (!inputTypes.find((i: any) => i === type) || !required) {
+        return null
+      }
+      dispatch(
+        setCheckError(propsCmps, key, validationMethod('', value))
+      )
+    })
   }
 }
 

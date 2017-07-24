@@ -51,7 +51,7 @@ const validationMethod = (method: string, val: any): any => {
     switch (m) {
       case 'empty':
       default:
-        if (val === '') {
+        if (val === '' || val === undefined) {
           r = r.set(m, true)
         }
         break

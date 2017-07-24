@@ -20,6 +20,7 @@ interface IFormProps {
   fields?: any,
   setFields?: (fields: any[]) => void,
   setTheme?: (theme: string) => void,
+  checkAllReqFields?: () => void,
   theme: string
 }
 
@@ -30,6 +31,7 @@ interface IFormProps {
  */
 class Form extends React.Component<IFormProps, any> {
   static propTypes = {
+    checkAllReqFields: PropTypes.func.isRequired,
     fields: PropTypes.instanceOf(List),
     id: PropTypes.string.isRequired,
     method: PropTypes.oneOf(['get', 'post']).isRequired,
@@ -77,8 +79,7 @@ class Form extends React.Component<IFormProps, any> {
     return typesManager(type, propsComponent, !key && id)
   }
   private handleSubmit = (event: any): void => {
-    const { onSubmit, id, fields } = this.props
-    debugger
+    const { onSubmit, id, fields, checkAllReqFields } = this.props
     event.preventDefault()
     const formElement = document.querySelector(`#${id}`)
     const data = serialize(formElement, { hash: true })
@@ -86,8 +87,9 @@ class Form extends React.Component<IFormProps, any> {
     const nElement = Object.keys(data).length
     const isEmpty = nElement === 0 || requiredEl > nElement
     if (typeof onSubmit === 'function' && !isEmpty) {
-      onSubmit(event, data)
+      return onSubmit(event, data)
     }
+    checkAllReqFields()
   }
 }
 

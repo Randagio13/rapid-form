@@ -28,7 +28,6 @@ class Themes {
           case 'text':
           case 'password':
             const { value } = props
-            debugger
             return <TextField type={type} {...props} value={value || ''} />
           case 'button':
             const { children , ...p} = props
