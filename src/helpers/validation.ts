@@ -50,11 +50,10 @@ const validationMethod = (method: string, val: any): any => {
   explodeMethod.map((m) => {
     switch (m) {
       case 'empty':
+      default:
         if (val === '') {
           r = r.set(m, true)
         }
-        break
-      default:
         break
     }
   })
