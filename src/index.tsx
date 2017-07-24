@@ -1,5 +1,6 @@
 // import FormContainer from './containers/form/FormContainer'
 import { FormContainer } from 'containers'
+import PermIdentity from 'material-ui-icons/PermIdentity'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
@@ -21,21 +22,20 @@ const renderApp = (Component: any) => {
   ), document.getElementById('app'))
 }
 
-const testOnSubmit = (event: any) => {
+const testOnSubmit = (event: any, data: object): void => {
   event.preventDefault()
-  alert(event)
+  debugger
+  alert(JSON.stringify(data))
 }
 
 renderApp(
-  <FormContainer method='post' onSubmit={testOnSubmit} id='formId'>
+  <FormContainer method='post' onSubmit={testOnSubmit} id='formId' theme='material-ui'>
+    <input type='text' name='username' label='Username' data-validation='empty' required />
     <div className='testClass'>
-      <input type='text' name='username' placeholder='username' />
+      <input type='password' name='password' label='Password' data-validation='empty' required />
     </div>
     <div className='testClass'>
-      <input type='password' name='password' />
-    </div>
-    <div className='testClass'>
-      <button type='submit'>{'Sign up'}</button>
+      <button type='submit' color='primary' raised>{'Sign up'}</button>
     </div>
   </FormContainer>
 )
