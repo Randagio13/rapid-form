@@ -1,3 +1,3 @@
 export { ConnectedTextProps } from './container'
-export { callbackSubmit, callbackOnClick } from './function'
+export { callbackSubmit, callbackOnClick, setCheckError } from './function'
 export { Action } from './action'

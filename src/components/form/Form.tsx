@@ -1,9 +1,13 @@
-import { typesManager } from 'helpers'
+import * as serialize from 'form-serialize'
+import { Themes, typesManager } from 'helpers'
 import { List } from 'immutable'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { callbackSubmit } from 'types'
 
+/**
+ * @interface IFormProps
+ */
 interface IFormProps {
   error?: any[],
   id: string,
@@ -14,21 +18,33 @@ interface IFormProps {
   onSubmit?: callbackSubmit,
   children?: [React.ReactNode, any[]],
   fields?: any,
-  setFields?: (fields: any[]) => void
+  setFields?: (fields: any[]) => void,
+  setTheme?: (theme: string) => void,
+  theme: string
 }
 
+/**
+ * Main component
+ * @class Form
+ * @extends {React.Component<IFormProps, any>}
+ */
 class Form extends React.Component<IFormProps, any> {
   static propTypes = {
     fields: PropTypes.instanceOf(List),
     id: PropTypes.string.isRequired,
     method: PropTypes.oneOf(['get', 'post']).isRequired,
     onSubmit: PropTypes.func,
-    setFields: PropTypes.func.isRequired
+    setFields: PropTypes.func.isRequired,
+    setTheme: PropTypes.func.isRequired,
+    theme: PropTypes.oneOf(['material-ui'])
   }
   componentDidMount (): void {
-    const { fields, setFields } = this.props
+    const { fields, setFields, setTheme, theme } = this.props
     if (fields instanceof List && fields.size === 0) {
       setFields(this.readChildren())
+    }
+    if (theme) {
+      setTheme(theme)
     }
   }
   public render (): any {
@@ -36,14 +52,19 @@ class Form extends React.Component<IFormProps, any> {
     if (fields instanceof List && fields.size === 0) {
       return null
     }
-    return (
-      <form key={id} id={id} name={name || id} method={method} onSubmit={onSubmit}>
+    return this.renderByThemes((
+      <form key={id} id={id} name={name || id} method={method} onSubmit={this.handleSubmit}>
         {fields.toJS()}
       </form>
-    )
+    ))
   }
-  readChildren = (): any[] => {
-    const { children, id, key } = this.props
+  private renderByThemes = (cmp: JSX.Element) => {
+    const { theme } = this.props
+    const themes = new Themes(theme)
+    return themes.renderByTheme(cmp)
+  }
+  private readChildren = (): any[] => {
+    const { children, id, key, theme } = this.props
     if (children.length > 1) {
       return children.map((i, k) => {
         const prc = Reflect.get(i.valueOf(), 'props')
@@ -54,6 +75,15 @@ class Form extends React.Component<IFormProps, any> {
     const propsComponent = Reflect.get(children.valueOf(), 'props')
     const type = Reflect.get(children.valueOf(), 'type')
     return typesManager(type, propsComponent, !key && id)
+  }
+  private handleSubmit = (event: any): void => {
+    const { onSubmit, id } = this.props
+    event.preventDefault()
+    const formElement = document.querySelector(`#${id}`)
+    const data = serialize(formElement, { hash: true })
+    if (typeof onSubmit === 'function') {
+      onSubmit(event, data)
+    }
   }
 }
 

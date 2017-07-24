@@ -1,10 +1,12 @@
-interface IAction {
+interface IActionForm {
   payload: any,
   type: string,
-  fields?: any
+  fields?: any,
+  theme?: string,
+  errors?: any
 }
 
-export const Action: IAction = {
+export const Action: IActionForm = {
   payload: null,
   type: ''
 }

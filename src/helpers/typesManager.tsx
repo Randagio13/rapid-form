@@ -22,7 +22,7 @@ const typesManager = (typeCmp: any|string, props: IPropsTypes, key?: string, cmp
     default:
       const { children, ...otherProps } = props
       const hasChild = Reflect.get(props, 'children')
-      if (hasChild.length > 1 && Array.isArray(hasChild)) {
+      if (Array.isArray(hasChild) && hasChild.length > 1) {
         const nc = hasChild.map((c: any, i: any) => {
           const tc = Reflect.get(c.valueOf(), 'type')
           const pc = Reflect.get(c.valueOf(), 'props')
