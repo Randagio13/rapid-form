@@ -132,7 +132,8 @@ const productionConfig = {
   ],
   output: {
     path: PATHS.build,
-    filename: 'bundle.js'
+    libraryTarget: 'umd',
+    library: 'RapidForm'
   },
   plugins: [
     new webpack.DefinePlugin({
