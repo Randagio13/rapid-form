@@ -144,10 +144,10 @@ const productionConfig = {
     }),
     new webpack.LoaderOptionsPlugin({
       minimize: true
-    }),
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'index.html')
     })
+    // new HtmlWebpackPlugin({
+    //   template: path.join(__dirname, 'index.html')
+    // })
   ]
 }
 

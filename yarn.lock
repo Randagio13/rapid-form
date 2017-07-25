@@ -54,9 +54,9 @@
   version "20.0.4"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-20.0.4.tgz#91e2c76fbe90b3a719b5d689958f0495f005beb9"
 
-"@types/material-ui@^0.17.17":
-  version "0.17.17"
-  resolved "https://registry.yarnpkg.com/@types/material-ui/-/material-ui-0.17.17.tgz#48ac3d082dec113350f0637601e73df6e0679aac"
+"@types/material-ui@^0.17.18":
+  version "0.17.18"
+  resolved "https://registry.yarnpkg.com/@types/material-ui/-/material-ui-0.17.18.tgz#9bba8dcaf4b6466ae698c5d06083ab9a2af00ba9"
   dependencies:
     "@types/react" "*"
     "@types/react-addons-linked-state-mixin" "*"
@@ -91,9 +91,9 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-redux@^4.4.46":
-  version "4.4.46"
-  resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-4.4.46.tgz#83b78c8783f31fc890d9a4d1e2acf9c4665fa913"
+"@types/react-redux@^4.4.47":
+  version "4.4.47"
+  resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-4.4.47.tgz#12af1677116e08d413fe2620d0a85560c8a0536e"
   dependencies:
     "@types/react" "*"
     redux "^3.6.0"
@@ -108,9 +108,9 @@
   version "15.0.32"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-15.0.32.tgz#a1d5291cc930a578435d9f17db77414ad4ce0f8c"
 
-"@types/react@^15.0.38":
-  version "15.0.38"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-15.0.38.tgz#6afea31a9fe66304af474106ba372ddaba449995"
+"@types/react@^15.0.39":
+  version "15.0.39"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-15.0.39.tgz#5a820c75cabf4cbfa177a3ab5a9a0634c46b14d1"
 
 "@types/redux-devtools-extension@^2.13.2":
   version "2.13.2"
@@ -156,9 +156,9 @@
   dependencies:
     "@types/source-map" "*"
 
-"@types/webpack-dev-server@^2.4.0":
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/@types/webpack-dev-server/-/webpack-dev-server-2.4.0.tgz#e584fdcb58eb2f5bd62cd47852dfefa334675822"
+"@types/webpack-dev-server@^2.4.1":
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/@types/webpack-dev-server/-/webpack-dev-server-2.4.1.tgz#395edc2a368fd43f036f4e21945a1f1b4aaf50ec"
   dependencies:
     "@types/express-serve-static-core" "*"
     "@types/serve-static" "*"

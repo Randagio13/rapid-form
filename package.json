@@ -27,11 +27,11 @@
     ]
   },
   "dependencies": {
-    "@types/material-ui": "^0.17.17",
+    "@types/material-ui": "^0.17.18",
     "@types/prop-types": "^15.5.1",
-    "@types/react": "^15.0.38",
+    "@types/react": "^15.0.39",
     "@types/react-dom": "^15.5.1",
-    "@types/react-redux": "^4.4.46",
+    "@types/react-redux": "^4.4.47",
     "@types/react-test-renderer": "^15.5.2",
     "@types/redux": "^3.6.31",
     "@types/redux-thunk": "^2.1.32",
@@ -55,7 +55,7 @@
     "@types/redux-devtools": "^3.0.38",
     "@types/redux-devtools-extension": "^2.13.2",
     "@types/webpack": "^3.0.5",
-    "@types/webpack-dev-server": "^2.4.0",
+    "@types/webpack-dev-server": "^2.4.1",
     "babel-cli": "^6.24.1",
     "babel-loader": "^7.1.1",
     "babel-preset-env": "^1.6.0",
