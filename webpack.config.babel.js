@@ -22,7 +22,7 @@ const PATHS = {
   helpers: path.join(__dirname, 'src', 'helpers')
 }
 
-const devtool = isProduction ? 'source-map' : 'cheap-module-eval-source-map'
+const devtool = isProduction ? 'cheap-source-map' : 'eval-source-map'
 
 const base = {
   devtool: devtool,
@@ -103,7 +103,7 @@ const developmentConfig = {
     'react-hot-loader/patch',
     'webpack-dev-server/client?http://localhost:1313',
     'webpack/hot/only-dev-server',
-    'index'
+    path.join(__dirname, 'develop')
   ],
   output: {
     path: PATHS.build,
