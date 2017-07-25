@@ -1,13 +1,17 @@
 {
   "presets": [
-    "env",
+    ["env", {
+      "targets": { "uglify": true }
+    }],
     "react",
     "stage-0"
   ],
   "env": {
     "development": {
       "presets": [
-        ["env",{"modules": false}],
+        ["env", {
+          "modules": false
+        }],
         "react",
         "stage-0"
       ],

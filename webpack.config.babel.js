@@ -22,20 +22,29 @@ const PATHS = {
   helpers: path.join(__dirname, 'src', 'helpers')
 }
 
-const devtool = isProduction ? 'cheap-module-source-map' : 'source-map'
+const devtool = isProduction ? 'source-map' : 'cheap-module-eval-source-map'
 
 const base = {
   devtool: devtool,
   context: PATHS.app,
   module: {
     rules: [
-      { test: /\.tsx?$/, loader: 'ts-loader', options: { transpileOnly: true } },
-      { enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' },
       {
-        test: /\.js?$/,
+        test: /\.(ts|tsx)$/,
+        loader: 'ts-loader',
         exclude: /node_modules/,
-        loader: 'babel-loader'
+        options: { transpileOnly: true }
       },
+      {
+        enforce: 'pre',
+        test: /\.js$/,
+        loader: 'source-map-loader'
+      },
+      // {
+      //   test: /\.js?$/,
+      //   exclude: /node_modules/,
+      //   loader: 'babel-loader'
+      // },
       {
         test: /\.css$/,
         use: [
@@ -132,8 +141,9 @@ const productionConfig = {
   ],
   output: {
     path: PATHS.build,
-    libraryTarget: 'umd',
-    library: 'RapidForm'
+    libraryTarget: 'commonjs',
+    library: 'RapidForm',
+    filename: 'rapidForm.js'
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -143,9 +153,10 @@ const productionConfig = {
         }
       }
     }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true
-    })
+    new webpack.optimize.UglifyJsPlugin()
+    // new webpack.LoaderOptionsPlugin({
+    //   minimize: true
+    // })
     // new HtmlWebpackPlugin({
     //   template: path.join(__dirname, 'index.html')
     // })

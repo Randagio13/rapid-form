@@ -1,8 +1,8 @@
 {
-  "name": "react-typescript",
+  "name": "rapid-form",
   "version": "1.0.0-alpha0",
-  "description": "React with typescript",
-  "main": "index.js",
+  "description": "React/Redux Form",
+  "main": "rapidForm.js",
   "repository": "git@github.com:iMasterAle/react-typescript.git",
   "author": "Alessandro Casazza <imasterale@gmail.com>",
   "license": "MIT",
@@ -12,7 +12,7 @@
   "scripts": {
     "start": "webpack-dev-server",
     "test": "jest -u",
-    "release": "rm -rf ./dist && webpack -p"
+    "release": "rm -rf ./dist && webpack"
   },
   "jest": {
     "transform": {

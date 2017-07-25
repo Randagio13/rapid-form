@@ -5065,6 +5065,30 @@ react-transition-group@^1.2.0:
     prop-types "^15.5.6"
     warning "^3.0.0"
 
+"react-typescript@git+ssh://git@github.com:Randagio13/rapid-form.git#develop":
+  version "1.0.0-alpha0"
+  resolved "git+ssh://git@github.com:Randagio13/rapid-form.git#e92be369e5195c5dc49291d2551a7199922fd132"
+  dependencies:
+    "@types/material-ui" "^0.17.18"
+    "@types/prop-types" "^15.5.1"
+    "@types/react" "^15.0.39"
+    "@types/react-dom" "^15.5.1"
+    "@types/react-redux" "^4.4.47"
+    "@types/redux" "^3.6.31"
+    "@types/redux-thunk" "^2.1.32"
+    form-serialize "^0.7.2"
+    global "^4.3.2"
+    immutable "^3.8.1"
+    material-ui next
+    material-ui-icons "^1.0.0-alpha.19"
+    prop-types "^15.5.10"
+    prop-types-ts "^0.3.0"
+    react "^15.6.1"
+    react-dom "^15.6.1"
+    react-redux "^5.0.5"
+    redux "^3.7.2"
+    redux-thunk "^2.2.0"
+
 react@^15.0.0, react@^15.5.4, react@^15.6.1:
   version "15.6.1"
   resolved "https://registry.yarnpkg.com/react/-/react-15.6.1.tgz#baa8434ec6780bde997cdc380b79cd33b96393df"
