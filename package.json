@@ -1,15 +1,18 @@
 {
   "name": "react-typescript",
-  "version": "1.0.0",
+  "version": "1.0.0-alpha0",
   "description": "React with typescript",
   "main": "index.js",
   "repository": "git@github.com:iMasterAle/react-typescript.git",
   "author": "Alessandro Casazza <imasterale@gmail.com>",
   "license": "MIT",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "start": "webpack-dev-server",
     "test": "jest -u",
-    "release": "rm -rf ./dist && webpack"
+    "release": "rm -rf ./dist && webpack -p"
   },
   "jest": {
     "transform": {
@@ -32,7 +35,6 @@
     "@types/react": "^15.0.39",
     "@types/react-dom": "^15.5.1",
     "@types/react-redux": "^4.4.47",
-    "@types/react-test-renderer": "^15.5.2",
     "@types/redux": "^3.6.31",
     "@types/redux-thunk": "^2.1.32",
     "form-serialize": "^0.7.2",
@@ -52,6 +54,7 @@
     "@types/enzyme": "^2.8.4",
     "@types/jest": "^20.0.4",
     "@types/react-hot-loader": "^3.0.3",
+    "@types/react-test-renderer": "^15.5.2",
     "@types/redux-devtools": "^3.0.38",
     "@types/redux-devtools-extension": "^2.13.2",
     "@types/webpack": "^3.0.5",
