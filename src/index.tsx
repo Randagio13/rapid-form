@@ -1,7 +1,7 @@
 // import FormContainer from './containers/form/FormContainer'
 import { FormContainer } from 'containers'
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
+// import * as ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 import { Provider } from 'react-redux'
 import reducers from 'reducers'
