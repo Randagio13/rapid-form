@@ -142,7 +142,6 @@ const productionConfig = {
   output: {
     path: PATHS.build,
     libraryTarget: 'umd',
-    umdNamedDefine: true,
     library: 'RapidForm',
     filename: 'rapidForm.js'
   },
