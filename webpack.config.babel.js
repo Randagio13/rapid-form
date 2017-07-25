@@ -141,7 +141,8 @@ const productionConfig = {
   ],
   output: {
     path: PATHS.build,
-    libraryTarget: 'commonjs',
+    libraryTarget: 'umd',
+    umdNamedDefine: true,
     library: 'RapidForm',
     filename: 'rapidForm.js'
   },
@@ -153,7 +154,9 @@ const productionConfig = {
         }
       }
     }),
-    new webpack.optimize.UglifyJsPlugin()
+    new webpack.optimize.UglifyJsPlugin({
+      minimize: true
+    })
     // new webpack.LoaderOptionsPlugin({
     //   minimize: true
     // })
