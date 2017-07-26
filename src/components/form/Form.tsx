@@ -20,6 +20,7 @@ interface IFormProps {
   fields?: any,
   setFields?: (fields: any[]) => void,
   setTheme?: (theme: string) => void,
+  overrideTheme?: object,
   checkAllReqFields?: () => void,
   theme: string
 }
@@ -36,6 +37,7 @@ class Form extends React.Component<IFormProps, any> {
     id: PropTypes.string.isRequired,
     method: PropTypes.oneOf(['get', 'post']).isRequired,
     onSubmit: PropTypes.func,
+    overrideTheme: PropTypes.object,
     setFields: PropTypes.func.isRequired,
     setTheme: PropTypes.func.isRequired,
     theme: PropTypes.oneOf(['material-ui'])
@@ -61,9 +63,9 @@ class Form extends React.Component<IFormProps, any> {
     ))
   }
   private renderByThemes = (cmp: JSX.Element) => {
-    const { theme } = this.props
+    const { theme, overrideTheme } = this.props
     const themes = new Themes(theme)
-    return themes.renderByTheme(cmp)
+    return themes.renderByTheme(cmp, overrideTheme)
   }
   private readChildren = (): any[] => {
     const { children, id, key, theme } = this.props

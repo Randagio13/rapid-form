@@ -1,5 +1,5 @@
 import Button from 'material-ui/Button'
-import { MuiThemeProvider } from 'material-ui/styles'
+import { createMuiTheme, MuiThemeProvider } from 'material-ui/styles'
 import TextField from 'material-ui/TextField'
 import * as React from 'react'
 
@@ -11,12 +11,13 @@ class Themes {
   constructor (themeName: string) {
     this.themeName = themeName
   }
-  renderByTheme (component: any) {
+  renderByTheme (component: any, override = {}): JSX.Element {
     switch (this.themeName) {
       case 'material-ui':
+        const theme = createMuiTheme(override)
         // Old material-UI
-        // return <MuiThemeProvider>{component}</MuiThemeProvider>
-        return component
+        return <MuiThemeProvider theme={theme}>{component}</MuiThemeProvider>
+        // return component
       default:
         return component
     }
