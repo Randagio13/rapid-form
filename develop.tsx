@@ -37,7 +37,7 @@ if (NODE_ENV !== 'production') {
   renderApp(
     <RapidForm method='post' onSubmit={testOnSubmit} id='formId' theme='material-ui' overrideTheme={themeOverride}>
       <div>
-        <input type='text' name='username' label='Username' data-validation='empty' required />
+        <input type='email' name='username' label='Username' data-validation='empty' required />
       </div>
       <div className='testClass'>
         <input type='password' name='password' label='Password' data-validation='empty' autoComplete='new-password' />
