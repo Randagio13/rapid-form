@@ -28,7 +28,7 @@ class Text extends React.Component<ITextProps, any> {
     style: PropTypes.object,
     theme: PropTypes.string,
     type: PropTypes.oneOf([
-      'text', 'file', 'password'
+      'text', 'file', 'password', 'email'
     ]).isRequired
   }
   public render (): JSX.Element {

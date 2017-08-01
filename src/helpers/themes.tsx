@@ -27,6 +27,7 @@ class Themes {
       case 'material-ui':
         switch (type) {
           case 'text':
+          case 'email':
           case 'password':
             const { value } = props
             return <TextField type={type} {...props} value={value || ''} />
