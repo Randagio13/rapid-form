@@ -1,6 +1,5 @@
 import { TextContainer } from 'containers'
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 
 const typesInput = (type: string, props: any, key?: string, theme?: string) => {
   switch (type) {

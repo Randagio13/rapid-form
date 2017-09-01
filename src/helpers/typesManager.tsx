@@ -1,7 +1,6 @@
 // import { TextContainer } from 'containers'
 import { ButtonContainer } from 'containers'
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import typesInput from './typesInput'
 
 interface IPropsTypes {
@@ -9,7 +8,7 @@ interface IPropsTypes {
   children?: any
 }
 
-const typesManager = (typeCmp: any|string, props: IPropsTypes, key?: string, cmp?: any ): null|any => {
+const typesManager = (typeCmp: any|string, props: IPropsTypes, key?: string, cmp?: any): null|any => {
   switch (typeCmp) {
     case 'input':
       const { type } = props
