@@ -1,6 +1,6 @@
 {
   "name": "rapid-form",
-  "version": "1.0.0-alpha4",
+  "version": "1.0.0-alpha5",
   "description": "React/Redux Form",
   "main": "dist/rapidForm.js",
   "repository": "git@github.com:iMasterAle/react-typescript.git",
@@ -44,8 +44,6 @@
     "material-ui-icons": "^1.0.0-beta.5",
     "prop-types": "^15.5.10",
     "prop-types-ts": "^0.3.0",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0"
