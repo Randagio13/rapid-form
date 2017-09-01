@@ -48,12 +48,6 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-dom@^15.5.4":
-  version "15.5.4"
-  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-15.5.4.tgz#3f75ba86a2ce9a7d1d9e7d1ee3f186f3a9652d8f"
-  dependencies:
-    "@types/react" "*"
-
 "@types/react-hot-loader@^3.0.4":
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/@types/react-hot-loader/-/react-hot-loader-3.0.4.tgz#7fc081509830c64218d8a99a865e2fb4a94572ad"
@@ -76,10 +70,6 @@
 "@types/react@*":
   version "15.0.32"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-15.0.32.tgz#a1d5291cc930a578435d9f17db77414ad4ce0f8c"
-
-"@types/react@^16.0.5":
-  version "16.0.5"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.0.5.tgz#d713cf67cc211dea20463d2a0b66005c22070c4b"
 
 "@types/redux-devtools-extension@^2.13.2":
   version "2.13.2"

@@ -153,10 +153,6 @@ const productionConfig = {
         }
       }
     }),
-    new webpack.ProvidePlugin({
-      'React': 'react',
-      'ReactDOM': 'react-dom'
-    }),
     new webpack.optimize.UglifyJsPlugin({
       minimize: true
     })
