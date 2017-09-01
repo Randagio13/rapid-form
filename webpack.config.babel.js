@@ -152,12 +152,12 @@ const productionConfig = {
         }
       }
     }),
+    new webpack.ProvidePlugin({
+      'React': 'react'
+    }),
     new webpack.optimize.UglifyJsPlugin({
       minimize: true
     })
-    // new webpack.LoaderOptionsPlugin({
-    //   minimize: true
-    // })
     // new HtmlWebpackPlugin({
     //   template: path.join(__dirname, 'index.html')
     // })
