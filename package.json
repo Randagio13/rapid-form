@@ -7,7 +7,7 @@
   "author": "Alessandro Casazza <imasterale@gmail.com>",
   "license": "MIT",
   "files": [
-    "dist/"
+    "./dist"
   ],
   "scripts": {
     "start": "webpack-dev-server",
