@@ -6,9 +6,6 @@
   "repository": "git@github.com:iMasterAle/react-typescript.git",
   "author": "Alessandro Casazza <imasterale@gmail.com>",
   "license": "MIT",
-  "files": [
-    "dist/"
-  ],
   "scripts": {
     "start": "webpack-dev-server",
     "test": "jest -u",
