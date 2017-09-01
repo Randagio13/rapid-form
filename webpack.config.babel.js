@@ -94,7 +94,8 @@ const base = {
     }
   },
   externals: {
-    'react': 'React'
+    'react': 'React',
+    'react-dom': 'ReactDOM'
   }
 }
 
@@ -153,7 +154,8 @@ const productionConfig = {
       }
     }),
     new webpack.ProvidePlugin({
-      'React': 'react'
+      'React': 'react',
+      'ReactDOM': 'react-dom'
     }),
     new webpack.optimize.UglifyJsPlugin({
       minimize: true
