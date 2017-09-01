@@ -1,4 +1,4 @@
-import Button from 'material-ui/Button'
+import Button from 'material-ui/FlatButton'
 import { createMuiTheme, MuiThemeProvider } from 'material-ui/styles'
 import TextField from 'material-ui/TextField'
 import * as React from 'react'
