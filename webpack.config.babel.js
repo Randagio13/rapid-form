@@ -1,6 +1,7 @@
 import webpack from 'webpack'
 import path from 'path'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
+import UglifyJSPlugin from 'uglifyjs-webpack-plugin'
 
 const LAUNCH_COMMAND = process.env.npm_lifecycle_event
 const isProduction = LAUNCH_COMMAND === 'release'
@@ -22,7 +23,7 @@ const PATHS = {
   helpers: path.join(__dirname, 'src', 'helpers')
 }
 
-const devtool = isProduction ? 'cheap-source-map' : 'eval-source-map'
+const devtool = isProduction ? 'source-map' : 'eval-source-map'
 
 const base = {
   devtool: devtool,
@@ -144,6 +145,7 @@ const productionConfig = {
     chunkFilename: '[name].js'
   },
   plugins: [
+    new webpack.NamedModulesPlugin(),
     new webpack.DefinePlugin({
       process: {
         env: {
@@ -151,9 +153,10 @@ const productionConfig = {
         }
       }
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      minimize: true
-    })
+    new UglifyJSPlugin()
+    // new webpack.optimize.UglifyJsPlugin({
+    //   minimize: true
+    // })
     // new HtmlWebpackPlugin({
     //   template: path.join(__dirname, 'index.html')
     // })
