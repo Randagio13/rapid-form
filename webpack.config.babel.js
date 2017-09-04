@@ -159,10 +159,6 @@ const productionConfig = {
     }),
     new webpack.optimize.UglifyJsPlugin({
       minimize: true
-    }),
-    new webpack.ProvidePlugin({
-      'React': 'react',
-      'ReactDOM': 'react-dom'
     })
     // new HtmlWebpackPlugin({
     //   template: path.join(__dirname, 'index.html')
