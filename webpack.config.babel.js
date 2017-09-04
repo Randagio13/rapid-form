@@ -92,10 +92,6 @@ const base = {
       styles: PATHS.styles,
       helpers: PATHS.helpers
     }
-  },
-  externals: {
-    react: 'React',
-    'react-dom': 'ReactDOM'
   }
 }
 
@@ -131,23 +127,21 @@ const developmentConfig = {
     }),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'index.html')
-    }),
-    new webpack.ProvidePlugin({
-      'React': 'react',
-      'ReactDOM': 'react-dom'
     })
   ]
 }
 
 const productionConfig = {
-  entry: [
-    'index'
-  ],
+  entry: {
+    rapidForm: 'index',
+    reactVendor: ['react', 'react-dom']
+  },
   output: {
     path: PATHS.build,
     libraryTarget: 'umd',
     library: 'RapidForm',
-    filename: 'rapidForm.js'
+    filename: '[name].js',
+    chunkFilename: '[name].js'
   },
   plugins: [
     new webpack.DefinePlugin({
