@@ -77,9 +77,9 @@
   dependencies:
     redux-devtools-extension "*"
 
-"@types/redux-devtools@^3.0.39":
-  version "3.0.39"
-  resolved "https://registry.yarnpkg.com/@types/redux-devtools/-/redux-devtools-3.0.39.tgz#29797822c926c328b0150760e07e182305f09a44"
+"@types/redux-devtools@^3.0.40":
+  version "3.0.40"
+  resolved "https://registry.yarnpkg.com/@types/redux-devtools/-/redux-devtools-3.0.40.tgz#9b22037e5e36eaeac97034593588dc85a720421e"
   dependencies:
     "@types/react" "*"
     redux "^3.6.0"
@@ -6420,9 +6420,9 @@ tryit@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/tryit/-/tryit-1.0.3.tgz#393be730a9446fd1ead6da59a014308f36c289cb"
 
-ts-jest@^20.0.13:
-  version "20.0.13"
-  resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-20.0.13.tgz#606543e695a053a702034811e4247099f36bcb62"
+ts-jest@^20.0.14:
+  version "20.0.14"
+  resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-20.0.14.tgz#9e82130cea6b6df718b2c2b6055452af46bb248d"
   dependencies:
     babel-core "^6.24.1"
     babel-plugin-istanbul "^4.1.4"
