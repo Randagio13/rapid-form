@@ -95,7 +95,7 @@ const base = {
   },
   externals: {
     'react': 'React',
-    'react-dom': 'react-dom'
+    'react-dom': 'ReactDOM'
   }
 }
 
@@ -131,6 +131,10 @@ const developmentConfig = {
     }),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'index.html')
+    }),
+    new webpack.ProvidePlugin({
+      'React': 'react',
+      'ReactDOM': 'react-dom'
     })
   ]
 }
@@ -155,6 +159,10 @@ const productionConfig = {
     }),
     new webpack.optimize.UglifyJsPlugin({
       minimize: true
+    }),
+    new webpack.ProvidePlugin({
+      'React': 'react',
+      'ReactDOM': 'react-dom'
     })
     // new HtmlWebpackPlugin({
     //   template: path.join(__dirname, 'index.html')
