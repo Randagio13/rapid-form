@@ -85,15 +85,8 @@ class Form extends React.Component<IFormProps, any> {
     event.preventDefault()
     const formElement = document.querySelector(`#${id}`)
     const data = serialize(formElement, { hash: true })
-    const requiredEl = document.getElementById(id).querySelectorAll('[required]').length
     const nElement = Object.keys(data).length
-    const isEmpty = nElement === 0 || requiredEl > nElement
-    console.log('data --->', data)
-    console.log('requiredEl --->', requiredEl)
-    console.log('nElement --->', nElement)
-    console.log('isEmpty --->', isEmpty)
-    console.log('isEmpty --->', isEmpty)
-    console.log('onSubmit --->', onSubmit)
+    const isEmpty = nElement === 0
     if (typeof onSubmit === 'function' && !isEmpty) {
       return onSubmit(event, data)
     }
