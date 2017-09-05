@@ -135,7 +135,8 @@ const developmentConfig = {
 const productionConfig = {
   entry: {
     rapidForm: 'index',
-    reactVendor: ['react', 'react-dom']
+    reactVendor: ['react', 'react-dom'],
+    materialUI: 'material-ui'
   },
   output: {
     path: PATHS.build,
@@ -153,7 +154,7 @@ const productionConfig = {
       }
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'reactVendor',
+      names: ['reactVendor', 'materialUI'],
       children: true,
       async: true,
       minChunks: 3
@@ -161,9 +162,6 @@ const productionConfig = {
     new UglifyJSPlugin({
       minimize: true
     })
-    // new HtmlWebpackPlugin({
-    //   template: path.join(__dirname, 'index.html')
-    // })
   ]
 }
 

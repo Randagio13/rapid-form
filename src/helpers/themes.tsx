@@ -33,7 +33,6 @@ class Themes {
             return <TextField type={type} {...props} value={value || ''} />
           case 'button':
             const { children , ...p} = props
-            console.log('Button props --> ', p)
             return <Button {...p}>{children}</Button>
           default:
             return cmp
