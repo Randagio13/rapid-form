@@ -141,8 +141,7 @@ const productionConfig = {
     path: PATHS.build,
     libraryTarget: 'umd',
     library: 'RapidForm',
-    filename: '[name].js',
-    chunkFilename: '[name].js'
+    filename: '[name].js'
   },
   plugins: [
     new webpack.NamedModulesPlugin(),
@@ -153,7 +152,13 @@ const productionConfig = {
         }
       }
     }),
-    new UglifyJSPlugin()
+    // new UglifyJSPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'reactVendor',
+      children: true,
+      async: true,
+      minChunks: 3
+    })
     // new webpack.optimize.UglifyJsPlugin({
     //   minimize: true
     // })
