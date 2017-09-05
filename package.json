@@ -1,6 +1,6 @@
 {
   "name": "rapid-form",
-  "version": "1.0.0-alpha.12",
+  "version": "1.0.0-alpha.13",
   "description": "React/Redux Form",
   "main": "dist/rapidForm.js",
   "repository": "git@github.com:iMasterAle/rapid-form.git",
@@ -31,7 +31,6 @@
     ]
   },
   "dependencies": {
-    "@types/material-ui": "0.18.0",
     "@types/prop-types": "^15.5.1",
     "@types/react-redux": "^5.0.6",
     "@types/redux": "^3.6.31",
@@ -39,8 +38,8 @@
     "form-serialize": "^0.7.2",
     "global": "^4.3.2",
     "immutable": "^3.8.1",
-    "material-ui": "v1.0.0-beta.8",
-    "material-ui-icons": "^1.0.0-beta.5",
+    "material-ui": "next",
+    "material-ui-icons": "next",
     "prop-types": "^15.5.10",
     "prop-types-ts": "^0.3.0",
     "react": "^15.6.1",
