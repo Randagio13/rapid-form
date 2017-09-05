@@ -88,6 +88,8 @@ class Form extends React.Component<IFormProps, any> {
     const requiredEl = document.getElementById(id).querySelectorAll('[required]').length
     const nElement = Object.keys(data).length
     const isEmpty = nElement === 0 || requiredEl > nElement
+    console.log('isEmpty --->', isEmpty)
+    console.log('onSubmit --->', onSubmit)
     if (typeof onSubmit === 'function' && !isEmpty) {
       return onSubmit(event, data)
     }

@@ -152,16 +152,15 @@ const productionConfig = {
         }
       }
     }),
-    // new UglifyJSPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'reactVendor',
       children: true,
       async: true,
       minChunks: 3
+    }),
+    new UglifyJSPlugin({
+      minimize: true
     })
-    // new webpack.optimize.UglifyJsPlugin({
-    //   minimize: true
-    // })
     // new HtmlWebpackPlugin({
     //   template: path.join(__dirname, 'index.html')
     // })
