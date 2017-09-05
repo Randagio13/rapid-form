@@ -1,9 +1,9 @@
 {
   "name": "rapid-form",
-  "version": "1.0.0-alpha.11",
+  "version": "1.0.0-alpha.12",
   "description": "React/Redux Form",
   "main": "dist/rapidForm.js",
-  "repository": "git@github.com:iMasterAle/react-typescript.git",
+  "repository": "git@github.com:iMasterAle/rapid-form.git",
   "author": "Alessandro Casazza <imasterale@gmail.com>",
   "license": "MIT",
   "files": [
@@ -15,6 +15,7 @@
     "release": "rm -rf ./dist && webpack"
   },
   "jest": {
+    "bail": true,
     "transform": {
       ".(ts|tsx)": "./node_modules/ts-jest/preprocessor.js"
     },
@@ -64,13 +65,13 @@
     "babel-preset-stage-0": "^6.24.1",
     "enzyme": "^2.9.1",
     "html-webpack-plugin": "^2.30.1",
-    "jest-cli": "^20.0.4",
+    "jest-cli": "^21.0.1",
     "react-hot-loader": "next",
     "react-test-renderer": "^15.6.1",
     "redux-devtools-extension": "^2.13.2",
     "source-map-loader": "^0.2.1",
     "standard": "^10.0.3",
-    "ts-jest": "^20.0.14",
+    "ts-jest": "^21.0.0",
     "ts-loader": "^2.3.4",
     "tslint": "^5.7.0",
     "tslint-config-standard": "^6.0.1",
