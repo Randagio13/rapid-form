@@ -31,6 +31,7 @@ export const analizeFields = (formFields: any[], removeError?: any, value = '') 
 }
 
 export const analizeErrors = (key: number, name: string, errors: any, typeError: any) => {
+  debugger
   if (typeError.size > 0) {
     return errors.set(key, {name, ...typeError.toJS()}).filter((v: any) => v !== undefined)
   }

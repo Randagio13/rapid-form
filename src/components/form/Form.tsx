@@ -1,6 +1,6 @@
 import * as serialize from 'form-serialize'
 import { Themes, typesManager } from 'helpers'
-import { List } from 'immutable'
+import { Map } from 'immutable'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { callbackSubmit } from 'types'
@@ -18,7 +18,7 @@ interface IFormProps {
   onSubmit?: callbackSubmit,
   children?: [React.ReactNode, any[]],
   fields?: any,
-  setFields?: (fields: any[]) => void,
+  setFields?: (fields: any[], id: string) => void,
   setTheme?: (theme: string) => void,
   overrideTheme?: object,
   checkAllReqFields?: () => void,
@@ -33,7 +33,7 @@ interface IFormProps {
 class Form extends React.Component<IFormProps, any> {
   static propTypes = {
     checkAllReqFields: PropTypes.func.isRequired,
-    fields: PropTypes.instanceOf(List),
+    fields: PropTypes.instanceOf(Map),
     id: PropTypes.string.isRequired,
     method: PropTypes.oneOf(['get', 'post']).isRequired,
     onSubmit: PropTypes.func,
@@ -43,9 +43,9 @@ class Form extends React.Component<IFormProps, any> {
     theme: PropTypes.oneOf(['material-ui'])
   }
   componentDidMount (): void {
-    const { fields, setFields, setTheme, theme } = this.props
-    if (fields instanceof List && fields.size === 0) {
-      setFields(this.readChildren())
+    const { fields, setFields, setTheme, theme, id } = this.props
+    if (fields instanceof Map && fields.size === 0) {
+      setFields(this.readChildren(), id)
     }
     if (theme) {
       setTheme(theme)
@@ -53,12 +53,13 @@ class Form extends React.Component<IFormProps, any> {
   }
   public render (): any {
     const { children, id, name, fields, onSubmit, method } = this.props
-    if (fields instanceof List && fields.size === 0) {
+    if (fields instanceof Map && fields.size === 0) {
       return null
     }
+    const content = fields.get(id).toJS()
     return this.renderByThemes((
       <form key={id} id={id} name={name || id} method={method} onSubmit={this.handleSubmit}>
-        {fields.toJS()}
+        {content[id]}
       </form>
     ))
   }
@@ -73,12 +74,12 @@ class Form extends React.Component<IFormProps, any> {
       return children.map((i, k) => {
         const prc = Reflect.get(i.valueOf(), 'props')
         const typeCmp = Reflect.get(i.valueOf(), 'type')
-        return typesManager(typeCmp, prc, `${k}`, i)
+        return typesManager(typeCmp, {...prc, formId: id}, `${k}`, i)
       })
     }
     const propsComponent = Reflect.get(children.valueOf(), 'props')
     const type = Reflect.get(children.valueOf(), 'type')
-    return typesManager(type, propsComponent, !key && id)
+    return [typesManager(type, {...propsComponent, formId: id}, !key && id)]
   }
   private handleSubmit = (event: any): void => {
     const { onSubmit, id, fields, checkAllReqFields } = this.props
@@ -90,7 +91,7 @@ class Form extends React.Component<IFormProps, any> {
     if (typeof onSubmit === 'function' && !isEmpty) {
       return onSubmit(event, data)
     }
-    checkAllReqFields()
+    checkAllReqFields(id)
   }
 }
 

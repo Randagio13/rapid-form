@@ -30,22 +30,37 @@ if (NODE_ENV !== 'production') {
   }
 
   const testOnSubmit = (event: any, data: object): void => {
+    debugger
     event.preventDefault()
     alert(JSON.stringify(data))
   }
 
   renderApp(
-    <RapidForm method='post' onSubmit={testOnSubmit} id='formId' theme='material-ui' overrideTheme={themeOverride}>
-      <div className='testClass'>
-        <input type='email' name='username' label='Username' data-validation='empty' required />
-      </div>
-      <div className='testClass'>
-        <input type='password' name='password' label='Password' data-validation='empty' autoComplete='new-password' required />
-      </div>
-      <div className='testClass'>
-        <button type='submit' color='primary' raised>{'Sign up'}</button>
-      </div>
-    </RapidForm>
+    <div>
+      <RapidForm method='post' onSubmit={testOnSubmit} id='formId' theme='material-ui' overrideTheme={themeOverride}>
+        <div className='testClass'>
+          <select name='company' data-validation='empty' required>
+            <option key='0' value=''>{'choose a company'}</option>
+            <option key='1' value='ciao'>{'ciao'}</option>
+          </select>
+        </div>
+        <div className='testClass'>
+          <input type='file' name='data' label='Data' data-validation='empty' required />
+        </div>
+        <div className='testClass'>
+          <button type='submit' color='primary' raised>{'Sign up'}</button>
+        </div>
+      </RapidForm>
+      <RapidForm method='post' onSubmit={testOnSubmit} id='createUser' theme='material-ui' overrideTheme={themeOverride}>
+        <div className='testClass'>
+          <input type='email' name='username' label='Username' data-validation='empty' required />
+        </div>
+        <div className='testClass'>
+          <button type='submit' color='primary' raised>{'Sign up'}</button>
+        </div>
+      </RapidForm>
+
+    </div>
   )
 
   if (Reflect.get(module, 'hot') !== undefined) {
@@ -54,3 +69,22 @@ if (NODE_ENV !== 'production') {
     Reflect.get(module, 'hot').accept('./src', () => { renderApp(nextApp) })
   }
 }
+// ### Login form
+/* <RapidForm method='post' onSubmit={testOnSubmit} id='formId' theme='material-ui' overrideTheme={themeOverride}>
+  <div className='testClass'>
+    <input type='email' name='username' label='Username' data-validation='empty' required />
+  </div>
+  <div className='testClass'>
+    <input
+      type='password'
+      name='password'
+      label='Password'
+      data-validation='empty'
+      autoComplete='new-password'
+      required
+      />
+  </div>
+  <div className='testClass'>
+    <button type='submit' color='primary' raised>{'Sign up'}</button>
+  </div>
+</RapidForm> */

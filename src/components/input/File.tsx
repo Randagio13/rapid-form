@@ -27,9 +27,7 @@ class Text extends React.Component<ITextProps, any> {
     setCheckError: PropTypes.func,
     style: PropTypes.object,
     theme: PropTypes.string,
-    type: PropTypes.oneOf([
-      'text', 'password', 'email'
-    ]).isRequired
+    type: PropTypes.oneOf(['file']).isRequired
   }
   public render (): JSX.Element {
     return this.handleRenderByTheme()
@@ -37,7 +35,7 @@ class Text extends React.Component<ITextProps, any> {
   private handleValidation = (event: any): any => {
     const { setCheckError: checkError, ...props } = this.props
     const method = Reflect.get(this.props, 'data-validation')
-    const val = Reflect.get(event.target, 'value')
+    const val = Reflect.get(event.target.files[0], 'name')
     const required = Reflect.get(props, 'required')
     const key = Reflect.get(props, 'data-key')
     const isValid = validationMethod(method, val)

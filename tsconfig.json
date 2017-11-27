@@ -15,7 +15,10 @@
             "reducers/*": ["src/reducers/*"],
             "reducers": ["src/reducers"],
             "helpers": ["src/helpers"]
-        }
+        },
+        "lib": [
+            "esnext"
+        ]
     },
     "include": [
         "src/**/*"

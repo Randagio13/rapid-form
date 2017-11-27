@@ -1,6 +1,9 @@
+import FileUpload from 'material-ui-icons/FileUpload'
 import Button from 'material-ui/Button'
+import Select from 'material-ui/Select'
 import { createMuiTheme, MuiThemeProvider } from 'material-ui/styles'
 import TextField from 'material-ui/TextField'
+import Typography from 'material-ui/Typography'
 import * as React from 'react'
 
 /**
@@ -22,6 +25,9 @@ class Themes {
         return component
     }
   }
+  handleInputFile = (): void => {
+    this.inputFile.click()
+  }
   renderField<C> (type: string, props: any, cmp?: C) {
     switch (this.themeName) {
       case 'material-ui':
@@ -31,9 +37,31 @@ class Themes {
           case 'password':
             const { value } = props
             return <TextField type={type} {...props} value={value || ''} />
+          case 'file':
+            const { value, error, ...p } = props
+            console.log(props)
+            return (
+              <div>
+                <Button raised onClick={this.handleInputFile}>
+                  {'upload'}
+                  <FileUpload />
+                  <input
+                    ref={(r) => {this.inputFile = r}}
+                    style={{display: 'none'}}
+                    type={type}
+                    {...p}
+                  />
+                </Button>
+                <Typography type='subheading'>{value || ''}</Typography>
+              </div>
+
+            )
           case 'button':
             const { children , ...p} = props
             return <Button {...p}>{children}</Button>
+          case 'select':
+            const { children , ...p} = props
+            return <Select native {...p}>{children}</Select>
           default:
             return cmp
         }

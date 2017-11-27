@@ -1,6 +1,6 @@
 import { inputTypes } from 'constants'
 import { analizeErrors, analizeFields, validationMethod } from 'helpers'
-import { fromJS, List } from 'immutable'
+import { fromJS, List, Map } from 'immutable'
 import { Action } from 'types'
 
 interface IFormInitialState {
@@ -11,7 +11,7 @@ interface IFormInitialState {
 
 const initialState: IFormInitialState = {
   errors: List(),
-  fields: List(),
+  fields: Map(),
   theme: ''
 }
 
@@ -20,9 +20,11 @@ const SET_THEME = 'SET_THEME'
 const SET_ERRORS = 'SET_ERRORS'
 const SET_CHECK_ERROR = 'SET_CHECK_ERROR'
 
-export const setFields = (fields: any[]): object => {
+export const setFields = (fields: any[], id: string): object => {
+  const fs = Map().set(id, fromJS(fields))
   return {
-    fields: fromJS(fields),
+    fields: fs,
+    id,
     type: SET_FIELDS
   }
 }
@@ -34,10 +36,11 @@ export const setTheme = (theme: string): object => {
   }
 }
 
-export const checkAllReqFields = () => {
+export const checkAllReqFields = (id: string) => {
   return (dispatch: any, getState: any) => {
     const { form: { fields } } = getState()
-    fields.map((cmps: any): void => {
+    fields.get(id).map((cmps: any): void => {
+      debugger
       const key = cmps.get('key')
       const propsCmps = cmps.get('props').toJS()
       const { children } = propsCmps
@@ -70,6 +73,7 @@ export const setCheckError = (field: any, key: any, typeError: any): object => {
   return (dispatch: any, getState: any): any => {
     const errors = getState().form.errors
     const { name, value } = field
+    debugger
     dispatch({
       errors: analizeErrors(key, name, errors, typeError),
       type: SET_ERRORS
@@ -87,11 +91,12 @@ export const setCheckError = (field: any, key: any, typeError: any): object => {
 }
 
 export default function form (state = initialState, action = Action): any {
-  const { type, fields, theme, errors } = action
+  const { type, fields, theme, errors, id } = action
   switch (type) {
     case SET_FIELDS:
     case SET_CHECK_ERROR:
-      return fields ? {...state, fields} : state
+      const fs = state.fields.set(id, fields)
+      return fields ? {...state, fields: fs} : state
     case SET_ERRORS:
       return {...state, errors}
     case SET_THEME:

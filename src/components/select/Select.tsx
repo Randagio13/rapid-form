@@ -1,24 +1,40 @@
 import { Themes, validationMethod } from 'helpers'
-import { Map } from 'immutable'
+import { List, Map } from 'immutable'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { callbackOnClick, setCheckError } from 'types'
 
-export interface ITextProps {
+/**
+ * @export
+ * @interface IProps
+ */
+export interface IProps {
   children?: any,
   className?: string,
   key?: string,
   name?: string,
   type: string,
-  value?: string,
-  theme?: string,
+  theme: string,
+  dispatch?: () => void,
+  setCheckError?: setCheckError,
+  style?: object,
   onClick?: callbackOnClick,
-  setCheckError?: setCheckError
+  errors?: any
 }
 
-class Text extends React.Component<ITextProps, any> {
+/**
+ * @class Select
+ * @extends {React.Component<IProps, any>}
+ */
+class Select extends React.Component<IProps, any> {
   static propTypes = {
+    children: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.element,
+      PropTypes.array
+    ]),
     className: PropTypes.string,
+    errors: PropTypes.instanceOf(List),
     key: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number
@@ -26,16 +42,15 @@ class Text extends React.Component<ITextProps, any> {
     name: PropTypes.string,
     setCheckError: PropTypes.func,
     style: PropTypes.object,
-    theme: PropTypes.string,
-    type: PropTypes.oneOf([
-      'text', 'password', 'email'
-    ]).isRequired
+    theme: PropTypes.string
   }
   public render (): JSX.Element {
+    const { dispatch, children, ...allProps } = this.props
     return this.handleRenderByTheme()
   }
   private handleValidation = (event: any): any => {
     const { setCheckError: checkError, ...props } = this.props
+    debugger
     const method = Reflect.get(this.props, 'data-validation')
     const val = Reflect.get(event.target, 'value')
     const required = Reflect.get(props, 'required')
@@ -47,12 +62,12 @@ class Text extends React.Component<ITextProps, any> {
     checkError({...props, value: val}, key, isValid)
   }
   private handleRenderByTheme = (): JSX.Element => {
-    const { setCheckError: checkError, theme, type, ...allProps } = this.props
+    const { setCheckError: checkError, children, theme, errors, ...allProps } = this.props
     const themeClass = new Themes(theme)
-    const cmp = <input {...allProps} onChange={this.handleValidation} />
+    const cmp = <select {...allProps}>{children}</select>
     const props = { onChange: this.handleValidation, ...allProps }
-    return themeClass.renderField(type, props, cmp)
+    return themeClass.renderField('select', {...props, children}, cmp)
   }
 }
 
-export default Text
+export default Select

@@ -41,11 +41,6 @@ const base = {
         test: /\.js$/,
         loader: 'source-map-loader'
       },
-      // {
-      //   test: /\.js?$/,
-      //   exclude: /node_modules/,
-      //   loader: 'babel-loader'
-      // },
       {
         test: /\.css$/,
         use: [

@@ -1,3 +1,5 @@
 export { default as ButtonContainer } from './button/ButtonContainer'
 export { default as FormContainer } from './form/FormContainer'
 export { default as TextContainer } from './input/TextContainer'
+export { default as FileContainer } from './input/FileContainer'
+export { default as SelectContainer } from './select/SelectContainer'

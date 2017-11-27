@@ -1,5 +1,5 @@
 // import { TextContainer } from 'containers'
-import { ButtonContainer } from 'containers'
+import { ButtonContainer, SelectContainer } from 'containers'
 import * as React from 'react'
 import typesInput from './typesInput'
 
@@ -15,6 +15,8 @@ const typesManager = (typeCmp: any|string, props: IPropsTypes, key?: string, cmp
       return typesInput(type, props, key)
     case 'button':
       return <ButtonContainer {...props} />
+    case 'select':
+      return <SelectContainer data-key={key} {...props} />
     case undefined:
       console.error('Warning: The prop `type` is marked as required, but its value is `undefined`')
       return null

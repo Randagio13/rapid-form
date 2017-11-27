@@ -1,4 +1,5 @@
 interface IActionForm {
+  id?: string,
   payload: any,
   type: string,
   fields?: any,
