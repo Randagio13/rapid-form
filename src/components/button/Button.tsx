@@ -1,5 +1,5 @@
 import { Themes } from 'helpers'
-import { List } from 'immutable'
+import { Map } from 'immutable'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { callbackOnClick } from 'types'
@@ -13,6 +13,7 @@ export interface IProps {
   className?: string,
   key?: string,
   name?: string,
+  formid: string,
   type: string,
   theme: string,
   dispatch?: () => void,
@@ -32,7 +33,8 @@ class Button extends React.Component<IProps, any> {
       PropTypes.element
     ]),
     className: PropTypes.string,
-    errors: PropTypes.instanceOf(List),
+    errors: PropTypes.instanceOf(Map),
+    formid: PropTypes.string.isRequired,
     key: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number
@@ -49,9 +51,10 @@ class Button extends React.Component<IProps, any> {
     return this.handleRenderByTheme()
   }
   private handleRenderByTheme = (): JSX.Element => {
-    const { children, theme, errors, ...allProps } = this.props
+    const { children, theme, errors, formid, ...allProps } = this.props
     const themeClass = new Themes(theme)
-    const p = {...allProps, disabled: errors.size > 0}
+    const disabled = errors.get(formid) && errors.get(formid).size > 0
+    const p = {...allProps, disabled}
     const cmp = <button {...p}>{children}</button>
     return themeClass.renderField('button', {...p, children}, cmp)
   }

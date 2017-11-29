@@ -2,7 +2,10 @@ import { fromJS, List, Map } from 'immutable'
 import * as React from 'react'
 
 /**
+ * analizeFields
  * @param formFields any[]
+ * @param removeError any
+ * @param value string
  */
 export const analizeFields = (formFields: any[], removeError?: any, value = '') => {
   return formFields.map((cmps: any): any => {
@@ -30,12 +33,12 @@ export const analizeFields = (formFields: any[], removeError?: any, value = '') 
   })
 }
 
-export const analizeErrors = (key: number, name: string, errors: any, typeError: any) => {
-  debugger
+export const analizeErrors = (formid: string, key: number, name: string, errors: any, typeError: any) => {
+  const e = errors.get(formid)
   if (typeError.size > 0) {
-    return errors.set(key, {name, ...typeError.toJS()}).filter((v: any) => v !== undefined)
+    return errors.setIn([formid, key], {name, ...typeError.toJS()}).filter((v: any) => v !== undefined)
   }
-  if (errors.get(key) || errors.size > 0 && Reflect.get(errors.get(0), 'name') === name) {
+  if (e && e.size > 0 && Reflect.get(e.get(key), 'name') === name) {
     return errors.size === 1 ? errors.delete(0) : errors.delete(key)
   }
   return errors

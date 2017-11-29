@@ -1,5 +1,5 @@
 import { Themes, validationMethod } from 'helpers'
-import { List, Map } from 'immutable'
+import { Map } from 'immutable'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { callbackOnClick, setCheckError } from 'types'
@@ -34,7 +34,7 @@ class Select extends React.Component<IProps, any> {
       PropTypes.array
     ]),
     className: PropTypes.string,
-    errors: PropTypes.instanceOf(List),
+    errors: PropTypes.instanceOf(Map),
     key: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number
@@ -50,7 +50,6 @@ class Select extends React.Component<IProps, any> {
   }
   private handleValidation = (event: any): any => {
     const { setCheckError: checkError, ...props } = this.props
-    debugger
     const method = Reflect.get(this.props, 'data-validation')
     const val = Reflect.get(event.target, 'value')
     const required = Reflect.get(props, 'required')

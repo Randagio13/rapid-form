@@ -21,7 +21,7 @@ interface IFormProps {
   setFields?: (fields: any[], id: string) => void,
   setTheme?: (theme: string) => void,
   overrideTheme?: object,
-  checkAllReqFields?: () => void,
+  checkAllReqFields?: (id: string) => void,
   theme: string
 }
 
@@ -59,7 +59,7 @@ class Form extends React.Component<IFormProps, any> {
     const content = fields.get(id).toJS()
     return this.renderByThemes((
       <form key={id} id={id} name={name || id} method={method} onSubmit={this.handleSubmit}>
-        {content[id]}
+        {content}
       </form>
     ))
   }
@@ -74,12 +74,14 @@ class Form extends React.Component<IFormProps, any> {
       return children.map((i, k) => {
         const prc = Reflect.get(i.valueOf(), 'props')
         const typeCmp = Reflect.get(i.valueOf(), 'type')
-        return typesManager(typeCmp, {...prc, formId: id}, `${k}`, i)
+        const p = {...prc, formid: id}
+        return typesManager(typeCmp, p, `${k}`, i)
       })
     }
     const propsComponent = Reflect.get(children.valueOf(), 'props')
     const type = Reflect.get(children.valueOf(), 'type')
-    return [typesManager(type, {...propsComponent, formId: id}, !key && id)]
+    const ps = {...propsComponent, formid: id}
+    return [typesManager(type, ps, !key && id)]
   }
   private handleSubmit = (event: any): void => {
     const { onSubmit, id, fields, checkAllReqFields } = this.props

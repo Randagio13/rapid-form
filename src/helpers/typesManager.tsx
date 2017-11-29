@@ -5,10 +5,12 @@ import typesInput from './typesInput'
 
 interface IPropsTypes {
   type?: string,
-  children?: any
+  children?: any,
+  formid?: any
 }
 
 const typesManager = (typeCmp: any|string, props: IPropsTypes, key?: string, cmp?: any): null|any => {
+  const { formid } = props
   switch (typeCmp) {
     case 'input':
       const { type } = props
@@ -27,17 +29,17 @@ const typesManager = (typeCmp: any|string, props: IPropsTypes, key?: string, cmp
         const nc = hasChild.map((c: any, i: any) => {
           const tc = Reflect.get(c.valueOf(), 'type')
           const pc = Reflect.get(c.valueOf(), 'props')
-          return typesManager(tc, pc, i, c)
+          return typesManager(tc, {...pc, formid}, i, c)
         })
-        return React.createElement(typeCmp, {...otherProps, key}, nc)
+        return React.createElement(typeCmp, {...otherProps, key, formid}, nc)
       }
       if (typeof hasChild === 'string') {
-        return React.createElement(typeCmp, {...otherProps, key}, hasChild)
+        return React.createElement(typeCmp, {...otherProps, key, formid}, hasChild)
       }
       const typeChild = Reflect.get(hasChild.valueOf(), 'type')
       const propsChild = Reflect.get(hasChild.valueOf(), 'props')
-      const newChildren = typesManager(typeChild, propsChild, key, hasChild)
-      return React.createElement(typeCmp, {...otherProps, key}, newChildren)
+      const newChildren = typesManager(typeChild, {...propsChild, formid}, key, hasChild)
+      return React.createElement(typeCmp, {...otherProps, key, formid}, newChildren)
   }
 }
 

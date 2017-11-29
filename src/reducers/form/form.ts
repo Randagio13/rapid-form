@@ -1,6 +1,6 @@
 import { inputTypes } from 'constants'
 import { analizeErrors, analizeFields, validationMethod } from 'helpers'
-import { fromJS, List, Map } from 'immutable'
+import { fromJS, Map } from 'immutable'
 import { Action } from 'types'
 
 interface IFormInitialState {
@@ -10,7 +10,7 @@ interface IFormInitialState {
 }
 
 const initialState: IFormInitialState = {
-  errors: List(),
+  errors: Map(),
   fields: Map(),
   theme: ''
 }
@@ -21,9 +21,8 @@ const SET_ERRORS = 'SET_ERRORS'
 const SET_CHECK_ERROR = 'SET_CHECK_ERROR'
 
 export const setFields = (fields: any[], id: string): object => {
-  const fs = Map().set(id, fromJS(fields))
   return {
-    fields: fs,
+    fields: fromJS(fields),
     id,
     type: SET_FIELDS
   }
@@ -72,19 +71,19 @@ export const checkAllReqFields = (id: string) => {
 export const setCheckError = (field: any, key: any, typeError: any): object => {
   return (dispatch: any, getState: any): any => {
     const errors = getState().form.errors
-    const { name, value } = field
-    debugger
+    const { name, value, formid } = field
     dispatch({
-      errors: analizeErrors(key, name, errors, typeError),
+      errors: analizeErrors(formid, key, name, errors, typeError),
       type: SET_ERRORS
     })
-    const fields = getState().form.fields
+    const fields = fromJS(getState().form.fields.get(formid))
     const formFields = fields.filter((i: any) => i.get('key') === key)
     const cmp = analizeFields(formFields, typeError.size === 0, value)
     const newField = formFields.merge(cmp)
     const newFields = fields.update(key, () => fromJS(newField.toJS()[0]))
     return dispatch({
       fields: newFields,
+      id: formid,
       type: SET_CHECK_ERROR
     })
   }

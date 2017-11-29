@@ -39,7 +39,6 @@ class Themes {
             return <TextField type={type} {...props} value={value || ''} />
           case 'file':
             const { value, error, ...p } = props
-            console.log(props)
             return (
               <div>
                 <Button raised onClick={this.handleInputFile}>
@@ -54,7 +53,6 @@ class Themes {
                 </Button>
                 <Typography type='subheading'>{value || ''}</Typography>
               </div>
-
             )
           case 'button':
             const { children , ...p} = props
