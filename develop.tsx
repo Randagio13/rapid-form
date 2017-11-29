@@ -52,11 +52,29 @@ if (NODE_ENV !== 'production') {
         </div>
       </RapidForm>
       <RapidForm method='post' onSubmit={testOnSubmit} id='createUser' theme='material-ui' overrideTheme={themeOverride}>
-        <div className='testClass'>
-          <input type='email' name='username' label='Username' data-validation='empty' required />
+        <div>
+          <input
+            type='email'
+            name='username'
+            label='Email'
+            data-validation='empty'
+            required
+            fullWidth
+          />
         </div>
-        <div className='testClass'>
-          <button type='submit' color='primary' raised>{'Sign up'}</button>
+        <div>
+          <input
+            type='password'
+            name='password'
+            label='Password'
+            data-validation='empty'
+            required
+            fullWidth
+            autoComplete='new-password'
+          />
+        </div>
+        <div>
+          <button type='submit' color='primary' raised>{'create'}</button>
         </div>
       </RapidForm>
 
