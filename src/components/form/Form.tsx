@@ -1,6 +1,6 @@
 import * as serialize from 'form-serialize'
 import { Themes, typesManager } from 'helpers'
-import { Map } from 'immutable'
+import { List, Map } from 'immutable'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { callbackSubmit } from 'types'
@@ -56,10 +56,11 @@ class Form extends React.Component<IFormProps, any> {
     if (fields instanceof Map && fields.size === 0) {
       return null
     }
-    const content = fields.get(id).toJS()
+    const content = fields.get(id)
+    console.log(content)
     return this.renderByThemes((
       <form key={id} id={id} name={name || id} method={method} onSubmit={this.handleSubmit}>
-        {content}
+        {content instanceof List ? content.toJS() : content}
       </form>
     ))
   }
