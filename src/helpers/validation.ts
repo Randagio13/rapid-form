@@ -34,13 +34,15 @@ export const analizeFields = (formFields: any[], removeError?: any, value = '') 
 }
 
 export const analizeErrors = (formid: string, key: number, name: string, errors: any, typeError: any) => {
-  debugger
   const e = errors.get(formid)
   if (typeError.size > 0) {
     return errors.setIn([formid, key], fromJS({name, ...typeError.toJS()})).filter((v: any) => v !== undefined)
   }
   if (e && e.size > 0 && e.getIn([`${key}`, 'name']) === name) {
-    return errors.size === 1 ? errors.delete(0) : errors.delete(key)
+    if (e.size === 1) {
+      return e.delete('0')
+    }
+    return errors.setIn([formid], e.delete(`${key}`))
   }
   return errors
 }
