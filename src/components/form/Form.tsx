@@ -44,7 +44,7 @@ class Form extends React.Component<IFormProps, any> {
   }
   componentDidMount (): void {
     const { fields, setFields, setTheme, theme, id } = this.props
-    debugger
+    console.log('componentDidMount --> ', fields.toJS())
     if (fields instanceof Map && fields.size === 0) {
       setFields(this.readChildren(), id)
     }
@@ -56,6 +56,7 @@ class Form extends React.Component<IFormProps, any> {
     const { fields, setFields } = this.props
     const { id } = nextProps
     const f = fields.find((v: any, k: any) => k === id)
+    console.log('componentWillUpdate --> ', fields.toJS(), f)
     if (!f && fields.size > 0) {
       setFields(this.readChildren(), id)
     }
