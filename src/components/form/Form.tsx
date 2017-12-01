@@ -66,7 +66,7 @@ class Form extends React.Component<IFormProps, any> {
     //   return null
     // }
     const content = fields.get(id) ? fields.get(id).toJS() : null
-    console.log('CONTENT --> ', content)
+    console.log('CONTENT --> ', content, fields)
     return this.renderByThemes((
       <form key={id} id={id} name={name || id} method={method} onSubmit={this.handleSubmit}>
         {content}
