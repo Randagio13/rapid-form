@@ -45,7 +45,7 @@ class Form extends React.Component<IFormProps, any> {
   componentDidMount (): void {
     const { fields, setFields, setTheme, theme, id } = this.props
     console.log('componentDidMount --> ', fields.toJS())
-    if (fields instanceof Map && fields.size === 0) {
+    if (fields instanceof Map) {
       setFields(this.readChildren(), id)
     }
     if (theme) {
