@@ -44,7 +44,6 @@ class Form extends React.Component<IFormProps, any> {
   }
   componentDidMount (): void {
     const { fields, setFields, setTheme, theme, id } = this.props
-    console.log('componentDidMount --> ', fields.toJS())
     if (fields instanceof Map) {
       setFields(this.readChildren(), id)
     }
@@ -56,18 +55,13 @@ class Form extends React.Component<IFormProps, any> {
     const { fields, setFields } = this.props
     const { id } = nextProps
     const f = fields.find((v: any, k: any) => k === id)
-    console.log('componentWillUpdate --> ', fields.toJS(), f)
     if (!f && fields.size > 0) {
       setFields(this.readChildren(), id)
     }
   }
   public render (): any {
     const { children, id, name, fields, onSubmit, method } = this.props
-    // if (fields instanceof Map && fields.size === 0) {
-    //   return null
-    // }
     const content = fields.get(id) ? fields.get(id).toJS() : null
-    console.log('CONTENT --> ', content, fields.toJS())
     return this.renderByThemes((
       <form key={id} id={id} name={name || id} method={method} onSubmit={this.handleSubmit}>
         {content}
