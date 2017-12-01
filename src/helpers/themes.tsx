@@ -19,7 +19,11 @@ class Themes {
       case 'material-ui':
         const theme = createMuiTheme(override)
         // Old material-UI
-        return <MuiThemeProvider theme={theme}>{component}</MuiThemeProvider>
+        return (
+          <div>
+            <MuiThemeProvider theme={theme}>{component}</MuiThemeProvider>
+          </div>
+        )
         // return component
       default:
         return component
