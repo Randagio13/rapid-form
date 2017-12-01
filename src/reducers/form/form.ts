@@ -95,7 +95,7 @@ export default function form (state = initialState, action = Action): any {
     case SET_FIELDS:
     case SET_CHECK_ERROR:
       const fs = state.fields.set(id, fields)
-      return fields ? {...state, fields: fs} : state
+      return {...state, fields: fs}
     case SET_ERRORS:
       return {...state, errors}
     case SET_THEME:

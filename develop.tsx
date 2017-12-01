@@ -21,10 +21,76 @@ const themeOverride = {
   }
 }
 if (NODE_ENV !== 'production') {
+  class Develop extends React.Component<any, any> {
+    state = {
+      viewForm: true
+    }
+    handleButton = () => {
+      const { viewForm } = this.state
+      this.setState({
+        viewForm: !viewForm
+      })
+    }
+    handleSwitch = () => {
+      const { viewForm } = this.state
+      console.log(viewForm)
+      return viewForm ? (
+        <RapidForm method='post' onSubmit={testOnSubmit} id='formId' theme='material-ui' overrideTheme={themeOverride}>
+          <div className='testClass'>
+            <select name='company' data-validation='empty' required>
+              <option key='0' value=''>{'choose a company'}</option>
+              <option key='1' value='ciao'>{'ciao'}</option>
+            </select>
+          </div>
+          <div className='testClass'>
+            <input type='file' name='data' label='Data' data-validation='empty' required />
+          </div>
+          <div className='testClass'>
+            <button type='submit' color='primary' raised>{'Sign up'}</button>
+          </div>
+        </RapidForm>
+      ) : (
+        <RapidForm method='post' onSubmit={testOnSubmit} id='createUser' theme='material-ui' overrideTheme={themeOverride}>
+          <div>
+            <input
+              type='email'
+              name='username'
+              label='Email'
+              data-validation='empty'
+              required
+              fullWidth
+            />
+          </div>
+          <div>
+            <input
+              type='password'
+              name='password'
+              label='Password'
+              data-validation='empty'
+              required
+              fullWidth
+              autoComplete='new-password'
+            />
+          </div>
+          <div>
+            <button type='submit' color='primary' raised>{'create'}</button>
+          </div>
+        </RapidForm>
+      )
+    }
+    public render () {
+      return (
+        <div>
+          {this.handleSwitch()}
+          <button onClick={this.handleButton}>{'change form'}</button>
+        </div>
+      )
+    }
+  }
   const renderApp = (Component: any) => {
     ReactDOM.render((
       <AppContainer>
-        {Component}
+        <Component />
       </AppContainer>
     ), document.getElementById('app'))
   }
@@ -35,51 +101,26 @@ if (NODE_ENV !== 'production') {
     alert(JSON.stringify(data))
   }
 
-  renderApp(
-    <div>
-      <RapidForm method='post' onSubmit={testOnSubmit} id='formId' theme='material-ui' overrideTheme={themeOverride}>
-        <div className='testClass'>
-          <select name='company' data-validation='empty' required>
-            <option key='0' value=''>{'choose a company'}</option>
-            <option key='1' value='ciao'>{'ciao'}</option>
-          </select>
-        </div>
-        <div className='testClass'>
-          <input type='file' name='data' label='Data' data-validation='empty' required />
-        </div>
-        <div className='testClass'>
-          <button type='submit' color='primary' raised>{'Sign up'}</button>
-        </div>
-      </RapidForm>
-      <RapidForm method='post' onSubmit={testOnSubmit} id='createUser' theme='material-ui' overrideTheme={themeOverride}>
-        <div>
-          <input
-            type='email'
-            name='username'
-            label='Email'
-            data-validation='empty'
-            required
-            fullWidth
-          />
-        </div>
-        <div>
-          <input
-            type='password'
-            name='password'
-            label='Password'
-            data-validation='empty'
-            required
-            fullWidth
-            autoComplete='new-password'
-          />
-        </div>
-        <div>
-          <button type='submit' color='primary' raised>{'create'}</button>
-        </div>
-      </RapidForm>
+  renderApp(Develop)
 
-    </div>
-  )
+  // renderApp(
+  //   <div>
+  //     <RapidForm method='post' onSubmit={testOnSubmit} id='formId' theme='material-ui' overrideTheme={themeOverride}>
+  //       <div className='testClass'>
+  //         <select name='company' data-validation='empty' required>
+  //           <option key='0' value=''>{'choose a company'}</option>
+  //           <option key='1' value='ciao'>{'ciao'}</option>
+  //         </select>
+  //       </div>
+  //       <div className='testClass'>
+  //         <input type='file' name='data' label='Data' data-validation='empty' required />
+  //       </div>
+  //       <div className='testClass'>
+  //         <button type='submit' color='primary' raised>{'Sign up'}</button>
+  //       </div>
+  //     </RapidForm>
+  //   </div>
+  // )
 
   if (Reflect.get(module, 'hot') !== undefined) {
     // tslint:disable-next-line:no-var-
@@ -105,4 +146,30 @@ if (NODE_ENV !== 'production') {
   <div className='testClass'>
     <button type='submit' color='primary' raised>{'Sign up'}</button>
   </div>
+</RapidForm> */
+/* <RapidForm method='post' onSubmit={testOnSubmit} id='createUser' theme='material-ui' overrideTheme={themeOverride}>
+<div>
+  <input
+    type='email'
+    name='username'
+    label='Email'
+    data-validation='empty'
+    required
+    fullWidth
+  />
+</div>
+<div>
+  <input
+    type='password'
+    name='password'
+    label='Password'
+    data-validation='empty'
+    required
+    fullWidth
+    autoComplete='new-password'
+  />
+</div>
+<div>
+  <button type='submit' color='primary' raised>{'create'}</button>
+</div>
 </RapidForm> */

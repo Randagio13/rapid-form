@@ -51,11 +51,19 @@ class Form extends React.Component<IFormProps, any> {
       setTheme(theme)
     }
   }
+  componentWillUpdate (nextProps: any): void {
+    const { fields, setFields } = this.props
+    const { id } = nextProps
+    const f = fields.find((v: any, k: any) => k === id)
+    if (!f && fields.size > 0) {
+      setFields(this.readChildren(), id)
+    }
+  }
   public render (): any {
     const { children, id, name, fields, onSubmit, method } = this.props
-    if (fields instanceof Map && fields.size === 0) {
-      return null
-    }
+    // if (fields instanceof Map && fields.size === 0) {
+    //   return null
+    // }
     const content = fields.get(id)
     return this.renderByThemes((
       <form key={id} id={id} name={name || id} method={method} onSubmit={this.handleSubmit}>
