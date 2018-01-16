@@ -39,6 +39,7 @@ class Themes {
           case 'text':
           case 'email':
           case 'password':
+          case 'hidden':
             const { value } = props
             return <TextField type={type} {...props} value={value || ''} />
           case 'file':

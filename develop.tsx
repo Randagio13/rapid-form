@@ -51,6 +51,7 @@ if (NODE_ENV !== 'production') {
         </RapidForm>
       ) : (
         <RapidForm method='post' onSubmit={testOnSubmit} id='createUser' theme='material-ui' overrideTheme={themeOverride}>
+          <input type='hidden' name='userId' value='13' />
           <div>
             <input
               type='email'

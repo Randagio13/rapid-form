@@ -6,6 +6,7 @@ const typesInput = (type: string, props: any, key?: string, theme?: string) => {
     case 'text':
     case 'password':
     case 'email':
+    case 'hidden':
       return <TextContainer key={key} data-key={key} {...props} />
     case 'file':
       return <FileContainer key={key} data-key={key} {...props} />
