@@ -46,7 +46,7 @@ class Themes {
             const { value, error, ...p } = props
             return (
               <div>
-                <Button raised onClick={this.handleInputFile}>
+                <Button variant='raised' onClick={this.handleInputFile}>
                   {'upload'}
                   <FileUpload />
                   <input

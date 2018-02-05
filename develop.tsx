@@ -46,7 +46,7 @@ if (NODE_ENV !== 'production') {
             <input type='file' name='data' label='Data' data-validation='empty' required />
           </div>
           <div className='testClass'>
-            <button type='submit' color='primary' raised>{'Sign up'}</button>
+            <button type='submit' color='primary' variant='raised'>{'Sign up'}</button>
           </div>
         </RapidForm>
       ) : (

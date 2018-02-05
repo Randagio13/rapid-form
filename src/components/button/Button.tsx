@@ -53,7 +53,6 @@ class Button extends React.Component<IProps, any> {
   private handleRenderByTheme = (): JSX.Element => {
     const { children, theme, errors, formid, ...allProps } = this.props
     const themeClass = new Themes(theme)
-    console.log('Errors --> ', errors.get(formid))
     const disabled = errors.get(formid) && errors.get(formid).size > 0
     const p = {...allProps, disabled}
     const cmp = <button {...p}>{children}</button>
