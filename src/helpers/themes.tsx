@@ -1,5 +1,11 @@
 import FileUpload from 'material-ui-icons/FileUpload'
 import Button from 'material-ui/Button'
+import Checkbox from 'material-ui/Checkbox'
+import Chip from 'material-ui/Chip'
+import { FormControl } from 'material-ui/Form'
+import Input, { InputLabel } from 'material-ui/Input'
+import { ListItemText } from 'material-ui/List'
+import Menu, { MenuItem } from 'material-ui/Menu'
 import Select from 'material-ui/Select'
 import { createMuiTheme, MuiThemeProvider } from 'material-ui/styles'
 import TextField from 'material-ui/TextField'
@@ -64,13 +70,54 @@ class Themes {
             return <Button {...p}>{children}</Button>
           case 'select':
             const { children , ...p} = props
-            return <Select native {...p}>{children}</Select>
+            const { multiple, value, placeholder, withChip } = p
+            Reflect.deleteProperty(p, 'withChip')
+            const input = <Input id='select-placeholder' />
+            if (multiple) {
+              const v = value || []
+              const renderValue = !withChip
+                ? (selected: any) => selected.join(', ')
+                : (selected: any) => selected.map((val: any) => {
+                  return <Chip key={val} label={val} />
+                })
+              return !placeholder
+                ? <Select value={v} renderValue={renderValue} {...p}>{this.renderMultipleSelect(children, v)}</Select>
+                : (
+                  <FormControl>
+                    <InputLabel htmlFor='select-placeholder'>{placeholder}</InputLabel>
+                    <Select value={v} renderValue={renderValue} input={input} {...p}>
+                      {this.renderMultipleSelect(children, v)}
+                    </Select>
+                  </FormControl>
+                )
+            }
+            return !placeholder
+              ? <Select native {...p}>{children}</Select>
+              : (
+                <FormControl>
+                  <InputLabel htmlFor='select-placeholder'>{placeholder}</InputLabel>
+                  <Select native input={input} {...p}>{children}</Select>
+                </FormControl>
+              )
           default:
             return cmp
         }
       default:
         return cmp
     }
+  }
+  private renderMultipleSelect = (options: any, val: any[]): any[] => {
+    return options.map((option: any, key: number): JSX.Element => {
+      const { props } = option
+      const { value, children } = props
+      const checked = val.indexOf(value) > -1
+      return (
+        <MenuItem key={key} value={value}>
+          <Checkbox checked={checked} />
+          <ListItemText primary={children} />
+        </MenuItem>
+      )
+    })
   }
 }
 

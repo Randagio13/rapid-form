@@ -37,9 +37,17 @@ if (NODE_ENV !== 'production') {
       return viewForm ? (
         <RapidForm method='post' onSubmit={testOnSubmit} id='formId' theme='material-ui' overrideTheme={themeOverride}>
           <div className='testClass'>
-            <select name='company' data-validation='empty' required>
-              <option key='0' value=''>{'choose a company'}</option>
-              <option key='1' value='ciao'>{'ciao'}</option>
+            <select multiple name='company' placeholder='choose a company' data-validation='empty' required displayEmpty autoWidth withChip>
+              <option key='1' value='Alessandro'>{'Alessandro'}</option>
+              <option key='2' value='2'>{'Bruce'}</option>
+              <option key='3' value='3'>{'Robin'}</option>
+            </select>
+          </div>
+          <div className='testClass'>
+            <select name='user' placeholder='choose a user' data-validation='empty' required>
+              <option key='1' value='1'>{'1'}</option>
+              <option key='2' value='2'>{'2'}</option>
+              <option key='3' value='3'>{'3'}</option>
             </select>
           </div>
           <div className='testClass'>
