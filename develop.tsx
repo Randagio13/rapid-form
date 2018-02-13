@@ -1,3 +1,4 @@
+import Dialog from 'material-ui/Dialog'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
@@ -35,26 +36,28 @@ if (NODE_ENV !== 'production') {
       const { viewForm } = this.state
       console.log(viewForm)
       return viewForm ? (
-        <RapidForm method='post' onSubmit={testOnSubmit} id='formId' theme='material-ui' overrideTheme={themeOverride}>
-          <div className='testClass'>
-          <select multiple name='users' placeholder='select users' data-validation='empty' required displayEmpty autoWidth withChip>
-            <option key='1' value='Alessandro'>{'Alessandro'}</option>
-          </select>
-          </div>
-          <div className='testClass'>
-            <select name='user' placeholder='choose a user' data-validation='empty' required>
-              <option key='1' value='1'>{'1'}</option>
-              <option key='2' value='2'>{'2'}</option>
-              <option key='3' value='3'>{'3'}</option>
+        <Dialog open={true}>
+          <RapidForm method='post' onSubmit={testOnSubmit} id='formId' theme='material-ui' overrideTheme={themeOverride}>
+            <div className='testClass'>
+            <select multiple name='users' placeholder='select users' data-validation='empty' required displayEmpty autoWidth withChip multiCheckbox>
+              <option key='1' value='Alessandro'>{'Alessandro'}</option>
             </select>
-          </div>
-          <div className='testClass'>
-            <input type='file' name='data' label='Data' data-validation='empty' required />
-          </div>
-          <div className='testClass'>
-            <button type='submit' color='primary' variant='raised'>{'Sign up'}</button>
-          </div>
-        </RapidForm>
+            </div>
+            <div className='testClass'>
+              <select name='user' placeholder='choose a user' data-validation='empty' required>
+                <option key='1' value='1'>{'1'}</option>
+                <option key='2' value='2'>{'2'}</option>
+                <option key='3' value='3'>{'3'}</option>
+              </select>
+            </div>
+            <div className='testClass'>
+              <input type='file' name='data' label='Data' data-validation='empty' required />
+            </div>
+            <div className='testClass'>
+              <button type='submit' color='primary' variant='raised'>{'Sign up'}</button>
+            </div>
+          </RapidForm>
+        </Dialog>
       ) : (
         <RapidForm method='post' onSubmit={testOnSubmit} id='createUser' theme='material-ui' overrideTheme={themeOverride}>
           <input type='hidden' name='userId' value='13' />

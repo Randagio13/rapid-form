@@ -70,8 +70,9 @@ class Themes {
             return <Button {...p}>{children}</Button>
           case 'select':
             const { children , ...p} = props
-            const { multiple, value, placeholder, withChip } = p
+            const { multiple, value, placeholder, withChip, multiCheckbox } = p
             Reflect.deleteProperty(p, 'withChip')
+            Reflect.deleteProperty(p, 'multiCheckbox')
             const input = <Input id='select-placeholder' />
             if (multiple) {
               const v = value || []
@@ -81,12 +82,12 @@ class Themes {
                   return <Chip key={val} label={val} />
                 })
               return !placeholder
-                ? <Select value={v} renderValue={renderValue} {...p}>{this.renderMultipleSelect(children, v)}</Select>
+                ? <Select value={v} renderValue={renderValue} {...p}>{this.renderMultipleSelect(children, v, multiCheckbox)}</Select>
                 : (
                   <FormControl>
                     <InputLabel htmlFor='select-placeholder'>{placeholder}</InputLabel>
                     <Select value={v} renderValue={renderValue} input={input} {...p}>
-                      {this.renderMultipleSelect(children, v)}
+                      {this.renderMultipleSelect(children, v, multiCheckbox)}
                     </Select>
                   </FormControl>
                 )
@@ -106,15 +107,19 @@ class Themes {
         return cmp
     }
   }
-  private renderMultipleSelect = (options: any, val: any[]): any[] => {
+  private renderMultipleSelect = (options: any, val: any[], multiCheckbox?: boolean): any[] => {
     const opts = Array.isArray(options) ? options : [options]
     return opts.map((option: any, key: number): JSX.Element => {
       const { props } = option
       const { value, children } = props
       const checked = val.indexOf(value) > -1
-      return (
+      return multiCheckbox ? (
         <MenuItem key={key} value={value}>
           <Checkbox checked={checked} />
+          <ListItemText primary={children} />
+        </MenuItem>
+      ) : (
+        <MenuItem key={key} value={value}>
           <ListItemText primary={children} />
         </MenuItem>
       )
