@@ -107,7 +107,8 @@ class Themes {
     }
   }
   private renderMultipleSelect = (options: any, val: any[]): any[] => {
-    return options.map((option: any, key: number): JSX.Element => {
+    const opts = Array.isArray(options) ? options : [options]
+    return opts.map((option: any, key: number): JSX.Element => {
       const { props } = option
       const { value, children } = props
       const checked = val.indexOf(value) > -1
