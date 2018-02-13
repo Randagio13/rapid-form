@@ -82,11 +82,11 @@ class Themes {
                   return <Chip key={val} label={val} />
                 })
               return !placeholder
-                ? <Select value={v} renderValue={renderValue} {...p}>{this.renderMultipleSelect(children, v, multiCheckbox)}</Select>
+                ? <Select value={v} {...p}>{this.renderMultipleSelect(children, v, multiCheckbox)}</Select>
                 : (
                   <FormControl>
                     <InputLabel htmlFor='select-placeholder'>{placeholder}</InputLabel>
-                    <Select value={v} renderValue={renderValue} input={input} {...p}>
+                    <Select value={v} input={input} {...p}>
                       {this.renderMultipleSelect(children, v, multiCheckbox)}
                     </Select>
                   </FormControl>
