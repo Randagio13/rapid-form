@@ -78,15 +78,15 @@ class Themes {
               const v = value || []
               const renderValue = !withChip
                 ? (selected: any) => selected.join(', ')
-                : (selected: any) => selected.map((val: any) => {
-                  return <Chip key={val} label={val} />
+                : (selected: any) => selected.map((val: any, k: number) => {
+                  return <Chip key={k} label={val} />
                 })
               return !placeholder
-                ? <Select value={v} {...p}>{this.renderMultipleSelect(children, v, multiCheckbox)}</Select>
+                ? <Select value={v} renderValue={renderValue} {...p}>{this.renderMultipleSelect(children, v, multiCheckbox)}</Select>
                 : (
                   <FormControl>
                     <InputLabel htmlFor='select-placeholder'>{placeholder}</InputLabel>
-                    <Select value={v} input={input} {...p}>
+                    <Select value={v} renderValue={renderValue} input={input} {...p}>
                       {this.renderMultipleSelect(children, v, multiCheckbox)}
                     </Select>
                   </FormControl>
@@ -114,12 +114,12 @@ class Themes {
       const { value, children } = props
       const checked = val.indexOf(value) > -1
       return multiCheckbox ? (
-        <MenuItem key={key} value={value}>
+        <MenuItem key={value} value={value}>
           <Checkbox checked={checked} />
           <ListItemText primary={children} />
         </MenuItem>
       ) : (
-        <MenuItem key={key} value={value}>
+        <MenuItem key={value} value={value}>
           <ListItemText primary={children} />
         </MenuItem>
       )
