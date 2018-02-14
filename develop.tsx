@@ -34,7 +34,6 @@ if (NODE_ENV !== 'production') {
     }
     handleSwitch = () => {
       const { viewForm } = this.state
-      console.log(viewForm)
       return viewForm ? (
         <RapidForm method='post' onSubmit={testOnSubmit} id='formId' theme='material-ui' overrideTheme={themeOverride}>
           <div className='testClass'>
@@ -42,16 +41,6 @@ if (NODE_ENV !== 'production') {
             <option key='0' value='Alessandro'>{'Alessandro'}</option>
             <option key='1' value='Bruce'>{'Bruce'}</option>
           </select>
-          </div>
-          <div className='testClass'>
-            <select name='user' placeholder='choose a user' data-validation='empty' required>
-              <option key='1' value='1'>{'1'}</option>
-              <option key='2' value='2'>{'2'}</option>
-              <option key='3' value='3'>{'3'}</option>
-            </select>
-          </div>
-          <div className='testClass'>
-            <input type='file' name='data' label='Data' data-validation='empty' required />
           </div>
           <div className='testClass'>
             <button type='submit' color='primary' variant='raised'>{'Sign up'}</button>
@@ -82,7 +71,7 @@ if (NODE_ENV !== 'production') {
             />
           </div>
           <div>
-            <button type='submit' color='primary' raised>{'create'}</button>
+            <button type='submit' color='primary' variant='raised'>{'create'}</button>
           </div>
         </RapidForm>
       )

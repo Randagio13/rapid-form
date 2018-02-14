@@ -39,7 +39,6 @@ export const checkAllReqFields = (id: string) => {
   return (dispatch: any, getState: any) => {
     const { form: { fields } } = getState()
     fields.get(id).map((cmps: any): void => {
-      debugger
       const key = cmps.get('key')
       const propsCmps = cmps.get('props').toJS()
       const { children } = propsCmps
@@ -50,19 +49,21 @@ export const checkAllReqFields = (id: string) => {
         }
         const propsChild = Reflect.get(children, 'props')
         const { value: valChild, type: typeChild, required: reqChild } = propsChild
-        if (!inputTypes.find((i: any) => i === typeChild) || !reqChild) {
+        if (!inputTypes.find((i: any) => i === typeChild) && !reqChild) {
           return null
         }
+        const dataValidation = Reflect.get(propsChild, 'data-validation')
         dispatch(
-          setCheckError(propsChild, key, validationMethod('', valChild))
+          setCheckError(propsChild, key, validationMethod(dataValidation, valChild))
         )
       }
       const { value, type, required } = propsCmps
-      if (!inputTypes.find((i: any) => i === type) || !required) {
+      if (!inputTypes.find((i: any) => i === type) && !required) {
         return null
       }
+      const dataVal = Reflect.get(propsCmps, 'data-validation')
       dispatch(
-        setCheckError(propsCmps, key, validationMethod('', value))
+        setCheckError(propsCmps, key, validationMethod(dataVal, value))
       )
     })
   }

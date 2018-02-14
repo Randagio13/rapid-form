@@ -70,21 +70,27 @@ class Themes {
             return <Button {...p}>{children}</Button>
           case 'select':
             const { children , ...p} = props
-            const { multiple, value, placeholder, withChip, multiCheckbox } = p
+            const { multiple, value, placeholder, withChip, multiCheckbox, error } = p
             Reflect.deleteProperty(p, 'withChip')
             Reflect.deleteProperty(p, 'multiCheckbox')
             const input = <Input id='select-placeholder' />
             if (multiple) {
-              const v = value || []
+              Reflect.deleteProperty(p, 'value')
+              const v = value === '' || !value ? [] : value
               const renderValue = !withChip
                 ? (selected: any) => selected.join(', ')
-                : (selected: any) => selected.map((val: any, k: number) => {
-                  return <Chip key={k} label={val} />
-                })
+                : (selected: any): any => {
+                  if (selected) {
+                    return selected.map((val: any, k: number) => {
+                      return <Chip key={k} label={val} />
+                    })
+                  }
+                  return []
+                }
               return !placeholder
                 ? <Select value={v} renderValue={renderValue} {...p}>{this.renderMultipleSelect(children, v, multiCheckbox)}</Select>
                 : (
-                  <FormControl>
+                  <FormControl error={error}>
                     <InputLabel htmlFor='select-placeholder'>{placeholder}</InputLabel>
                     <Select value={v} renderValue={renderValue} input={input} {...p}>
                       {this.renderMultipleSelect(children, v, multiCheckbox)}
@@ -95,7 +101,7 @@ class Themes {
             return !placeholder
               ? <Select native {...p}>{children}</Select>
               : (
-                <FormControl>
+                <FormControl error={error}>
                   <InputLabel htmlFor='select-placeholder'>{placeholder}</InputLabel>
                   <Select native input={input} {...p}>{children}</Select>
                 </FormControl>
@@ -112,14 +118,14 @@ class Themes {
     return opts.map((option: any, key: number): JSX.Element => {
       const { props } = option
       const { value, children } = props
-      const checked = val.indexOf(value) > -1
+      const checked = Array.isArray(val) ? val.indexOf(value) > -1 : false
       return multiCheckbox ? (
-        <MenuItem key={value} value={value}>
+        <MenuItem key={key} value={value}>
           <Checkbox checked={checked} />
           <ListItemText primary={children} />
         </MenuItem>
       ) : (
-        <MenuItem key={value} value={value}>
+        <MenuItem key={key} value={value}>
           <ListItemText primary={children} />
         </MenuItem>
       )
