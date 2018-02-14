@@ -52,8 +52,8 @@
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-2.0.0.tgz#5a7306e367c539b9f6543499de8dd519fac37a8b"
 
 "@types/node@*":
-  version "9.4.5"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.4.5.tgz#d2a90c634208173d1b1a0a6ba9f1df3de62edcf5"
+  version "9.4.6"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.4.6.tgz#d8176d864ee48753d053783e4e463aec86b8d82e"
 
 "@types/prop-types@^15.5.1":
   version "15.5.2"
@@ -157,12 +157,13 @@
     "@types/uglify-js" "*"
 
 "@types/webpack@^3.0.10":
-  version "3.8.5"
-  resolved "https://registry.yarnpkg.com/@types/webpack/-/@types/webpack-3.8.5.tgz#793a0dc6c49900095313c4f424eda6fb814dd76b"
+  version "3.8.7"
+  resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-3.8.7.tgz#c8c0dd1af73e566f8f10fa8f95d4232e6d80d6e9"
   dependencies:
     "@types/node" "*"
     "@types/tapable" "*"
     "@types/uglify-js" "*"
+    source-map "^0.7.0"
 
 abab@^1.0.3:
   version "1.0.4"
@@ -6164,6 +6165,10 @@ source-map@^0.6.0, source-map@^0.6.1, source-map@~0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
 
+source-map@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.7.0.tgz#ebf0d13a48f3619f91891816fdda932f83a6021f"
+
 sourcemapped-stacktrace@^1.1.6:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/sourcemapped-stacktrace/-/sourcemapped-stacktrace-1.1.7.tgz#17e05374ff78b71a9d89ad3975a49f22725ba935"
@@ -6593,8 +6598,8 @@ tslint-eslint-rules@^4.0.0:
     tsutils "^1.4.0"
 
 tslint-react@^3.2.0:
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/tslint-react/-/tslint-react-3.5.0.tgz#88c13ed92bb6ac14596bdec6767b9be97ced2d3b"
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/tslint-react/-/tslint-react-3.5.1.tgz#a5ca48034bf583fb63b42763bb89fa23062d5390"
   dependencies:
     tsutils "^2.13.1"
 
