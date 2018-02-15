@@ -33,6 +33,40 @@ export const analizeFields = (formFields: any[], removeError?: any, value = '') 
   })
 }
 
+export const analizeRequiredFields = (formFields: any, submitResult: any): any[] => {
+  const checker: any[] = []
+  formFields.map((cmps: any): any => {
+    const type = cmps.get('type')
+    const key = cmps.get('key')
+    const propsCmps = cmps.get('props').toJS()
+    const { children, required, name, ...propsCmp } = propsCmps
+    if (children) {
+      const { props } = children
+      const { required: requiredChild, name: nameChild } = props
+      if (Array.isArray(children)) {
+        // TODO: You must complete this part
+      }
+      if (requiredChild && !Reflect.get(submitResult, nameChild)) {
+        checker.push({name: nameChild, check: false})
+      } else if (name) {
+        checker.push({name: nameChild, check: true})
+      }
+    }
+    if (required && !Reflect.get(submitResult, name)) {
+      checker.push({name, check: false})
+    } else if (name) {
+      checker.push({name, check: true})
+    }
+  })
+  return checker.find((el: { check: any }): any => {
+    const { check } = el
+    if (check === false) {
+      return true
+    }
+    return false
+  })
+}
+
 export const analizeErrors = (formid: string, key: number, name: string, errors: any, typeError: any) => {
   const e = errors.get(formid)
   if (typeError.size > 0) {
@@ -66,4 +100,5 @@ const validationMethod = (method: string, val: any): any => {
   })
   return r
 }
+
 export default validationMethod

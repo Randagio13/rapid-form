@@ -38,6 +38,7 @@ export const setTheme = (theme: string): object => {
 export const checkAllReqFields = (id: string) => {
   return (dispatch: any, getState: any) => {
     const { form: { fields } } = getState()
+    debugger
     fields.get(id).map((cmps: any): void => {
       const key = cmps.get('key')
       const propsCmps = cmps.get('props').toJS()

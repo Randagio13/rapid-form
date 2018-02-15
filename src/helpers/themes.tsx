@@ -70,10 +70,11 @@ class Themes {
             return <Button {...p}>{children}</Button>
           case 'select':
             const { children , ...p} = props
-            const { multiple, value, placeholder, withChip, multiCheckbox, error } = p
+            const { multiple, value, placeholder, withChip, multiCheckbox, error, required } = p
             Reflect.deleteProperty(p, 'withChip')
             Reflect.deleteProperty(p, 'multiCheckbox')
             const input = <Input id='select-placeholder' />
+            const inputProps = { required }
             if (multiple) {
               Reflect.deleteProperty(p, 'value')
               const v = value === '' || !value ? [] : value
@@ -88,22 +89,25 @@ class Themes {
                   return []
                 }
               return !placeholder
-                ? <Select value={v} renderValue={renderValue} {...p}>{this.renderMultipleSelect(children, v, multiCheckbox)}</Select>
-                : (
+                ? (
+                  <Select value={v} renderValue={renderValue} inputProps={inputProps} {...p}>
+                    {this.renderMultipleSelect(children, v, multiCheckbox)}
+                  </Select>
+                ) : (
                   <FormControl error={error}>
                     <InputLabel htmlFor='select-placeholder'>{placeholder}</InputLabel>
-                    <Select value={v} renderValue={renderValue} input={input} {...p}>
+                    <Select inputProps={inputProps} value={v} renderValue={renderValue} input={input} {...p}>
                       {this.renderMultipleSelect(children, v, multiCheckbox)}
                     </Select>
                   </FormControl>
                 )
             }
             return !placeholder
-              ? <Select native {...p}>{children}</Select>
+              ? <Select native inputProps={inputProps} {...p}>{children}</Select>
               : (
                 <FormControl error={error}>
                   <InputLabel htmlFor='select-placeholder'>{placeholder}</InputLabel>
-                  <Select native input={input} {...p}>{children}</Select>
+                  <Select native input={input} inputProps={inputProps} {...p}>{children}</Select>
                 </FormControl>
               )
           default:

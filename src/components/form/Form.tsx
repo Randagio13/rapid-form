@@ -1,5 +1,5 @@
 import * as serialize from 'form-serialize'
-import { Themes, typesManager } from 'helpers'
+import { analizeRequiredFields, Themes, typesManager } from 'helpers'
 import { List, Map } from 'immutable'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -95,7 +95,8 @@ class Form extends React.Component<IFormProps, any> {
     const data = serialize(formElement, { hash: true })
     const nElement = Object.keys(data).length
     const isEmpty = nElement === 0
-    if (typeof onSubmit === 'function' && !isEmpty) {
+    const isValid = analizeRequiredFields(fields.get(id), data)
+    if (typeof onSubmit === 'function' && !isEmpty && isValid === undefined) {
       return onSubmit(event, data)
     }
     checkAllReqFields(id)

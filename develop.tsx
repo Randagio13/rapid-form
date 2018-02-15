@@ -36,6 +36,7 @@ if (NODE_ENV !== 'production') {
       const { viewForm } = this.state
       return viewForm ? (
         <RapidForm method='post' onSubmit={testOnSubmit} id='formId' theme='material-ui' overrideTheme={themeOverride}>
+          <input type='hidden' name='groupId' value={1} />
           <div className='testClass'>
           <select multiple name='users' placeholder='select users' data-validation='empty' required displayEmpty autoWidth withChip multiCheckbox>
             <option key='0' value='Alessandro'>{'Alessandro'}</option>
@@ -71,7 +72,7 @@ if (NODE_ENV !== 'production') {
             />
           </div>
           <div>
-            <button type='submit' color='primary' variant='raised'>{'create'}</button>
+            <button disabled type='submit' color='primary' variant='raised'>{'create'}</button>
           </div>
         </RapidForm>
       )
