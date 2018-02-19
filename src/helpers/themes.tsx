@@ -121,15 +121,15 @@ class Themes {
     const opts = Array.isArray(options) ? options : [options]
     return opts.map((option: any, key: number): JSX.Element => {
       const { props } = option
-      const { value, children } = props
+      const { value, children, ...other } = props
       const checked = Array.isArray(val) ? val.indexOf(value) > -1 : false
       return multiCheckbox ? (
-        <MenuItem key={key} value={value}>
+        <MenuItem key={key} value={value} {...other}>
           <Checkbox checked={checked} />
           <ListItemText primary={children} />
         </MenuItem>
       ) : (
-        <MenuItem key={key} value={value}>
+        <MenuItem key={key} value={value} {...other}>
           <ListItemText primary={children} />
         </MenuItem>
       )

@@ -39,7 +39,7 @@ if (NODE_ENV !== 'production') {
           <input type='hidden' name='groupId' value={1} />
           <div className='testClass'>
           <select multiple name='users' placeholder='select users' data-validation='empty' required displayEmpty autoWidth withChip multiCheckbox>
-            <option key='0' value='Alessandro'>{'Alessandro'}</option>
+            <option disabled key='0' value='Alessandro'>{'Alessandro'}</option>
             <option key='1' value='Bruce'>{'Bruce'}</option>
           </select>
           </div>
