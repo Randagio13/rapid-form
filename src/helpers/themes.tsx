@@ -38,7 +38,7 @@ class Themes {
   handleInputFile = (): void => {
     this.inputFile.click()
   }
-  renderField<C> (type: string, props: any, cmp?: C) {
+  renderField = (type: string, props: any, cmp?: any): JSX.Element => {
     switch (this.themeName) {
       case 'material-ui':
         switch (type) {
