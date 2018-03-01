@@ -1,7 +1,8 @@
 import webpack from 'webpack'
 import path from 'path'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
-import UglifyJSPlugin from 'uglifyjs-webpack-plugin'
+// import UglifyJSPlugin from 'uglifyjs-webpack-plugin'
+import Visualizer from 'webpack-visualizer-plugin'
 
 const LAUNCH_COMMAND = process.env.npm_lifecycle_event
 const isProduction = LAUNCH_COMMAND === 'release'
@@ -128,16 +129,28 @@ const developmentConfig = {
 }
 
 const productionConfig = {
+  mode: 'production',
   entry: {
-    rapidForm: 'index',
-    reactVendor: ['react', 'react-dom'],
-    materialUI: 'material-ui'
+    rapidForm: 'index'
   },
   output: {
     path: PATHS.build,
     libraryTarget: 'umd',
     library: 'RapidForm',
-    filename: '[name].js'
+    filename: '[name].js',
+    chunkFilename: '[chunkhash].js'
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all'
+        }
+      }
+    },
+    runtimeChunk: true
   },
   plugins: [
     new webpack.NamedModulesPlugin(),
@@ -148,15 +161,18 @@ const productionConfig = {
         }
       }
     }),
-    new webpack.optimize.CommonsChunkPlugin({
-      names: ['reactVendor', 'materialUI'],
-      children: true,
-      async: true,
-      minChunks: 3
-    }),
-    new UglifyJSPlugin({
-      minimize: true
+    new Visualizer({
+      filename: './statistics.prod.html'
     })
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   names: ['reactVendor', 'materialUI'],
+    //   children: true,
+    //   async: true,
+    //   minChunks: 3
+    // }),
+    // new UglifyJSPlugin({
+    //   minimize: true
+    // })
   ]
 }
 

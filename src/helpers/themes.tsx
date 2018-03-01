@@ -16,11 +16,11 @@ import * as React from 'react'
  * Themes
  */
 class Themes {
-  themeName: string
+  private themeName: string
   constructor (themeName: string) {
     this.themeName = themeName
   }
-  renderByTheme (component: any, override = {}): JSX.Element {
+  public renderByTheme (component: any, override = {}): JSX.Element {
     switch (this.themeName) {
       case 'material-ui':
         const theme = createMuiTheme(override)
@@ -35,10 +35,10 @@ class Themes {
         return component
     }
   }
-  handleInputFile = (): void => {
+  private handleInputFile = (): void => {
     this.inputFile.click()
   }
-  renderField = (type: string, props: any, cmp?: any): JSX.Element => {
+  private renderField = (type: string, props: any, cmp?: any): JSX.Element => {
     switch (this.themeName) {
       case 'material-ui':
         switch (type) {
@@ -46,10 +46,10 @@ class Themes {
           case 'email':
           case 'password':
           case 'hidden':
-            const { value } = props
-            return <TextField type={type} {...props} value={value || ''} />
+            const { value: val } = props
+            return <TextField type={type} {...props} value={val || ''} />
           case 'file':
-            const { value, error, ...p } = props
+            const { value: va, error: err, ...pr } = props
             return (
               <div>
                 <Button variant='raised' onClick={this.handleInputFile}>
@@ -57,19 +57,19 @@ class Themes {
                   <FileUpload />
                   <input
                     ref={(r) => {this.inputFile = r}}
-                    style={{display: 'none'}}
+                    style={{ display: 'none' }}
                     type={type}
-                    {...p}
+                    {...pr}
                   />
                 </Button>
-                <Typography type='subheading'>{value || ''}</Typography>
+                <Typography type='subheading'>{va || ''}</Typography>
               </div>
             )
           case 'button':
-            const { children , ...p} = props
-            return <Button {...p}>{children}</Button>
+            const { children: child , ...other } = props
+            return <Button {...other}>{child}</Button>
           case 'select':
-            const { children , ...p} = props
+            const { children , ...p } = props
             const { multiple, value, placeholder, withChip, multiCheckbox, error, required } = p
             Reflect.deleteProperty(p, 'withChip')
             Reflect.deleteProperty(p, 'multiCheckbox')
@@ -82,8 +82,8 @@ class Themes {
                 ? (selected: any) => selected.join(', ')
                 : (selected: any): any => {
                   if (selected) {
-                    return selected.map((val: any, k: number) => {
-                      return <Chip key={k} label={val} />
+                    return selected.map((lab: any, k: number) => {
+                      return <Chip key={k} label={lab} />
                     })
                   }
                   return []
