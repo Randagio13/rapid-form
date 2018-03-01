@@ -17,7 +17,8 @@
             "helpers": ["src/helpers"]
         },
         "lib": [
-            "esnext"
+            "esnext",
+            "dom.iterable"
         ]
     },
     "include": [
