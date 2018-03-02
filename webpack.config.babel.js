@@ -148,19 +148,12 @@ const productionConfig = {
   },
   optimization: {
     splitChunks: {
-      chunks: 'async',
+      chunks: 'all',
       minSize: 30000,
       minChunks: 1,
       maxAsyncRequests: 5,
       maxInitialRequests: 3,
-      name: true,
-      cacheGroups: {
-        commons: {
-            test: /[\\/]node_modules[\\/]/,
-            name: "vendor",
-            chunks: "all"
-        }
-      }
+      name: true
       // cacheGroups: {
       //   default: {
       //     minChunks: 2,
