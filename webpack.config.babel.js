@@ -137,11 +137,11 @@ const productionConfig = {
   output: {
     path: PATHS.build,
     libraryTarget: 'umd',
-    library: 'RapidForm',
+    library: 'rapidForm',
     filename: '[name].js',
-    chunkFilename: '[chunkhash].js'
+    chunkFilename: '[chunkhash].js',
+    umdNamedDefine: true
     // jsonpScriptType: 'module',
-    // umdNamedDefine: true
   },
   optimization: {
     splitChunks: {
