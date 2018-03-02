@@ -141,7 +141,7 @@ const productionConfig = {
     filename: '[name].js',
     chunkFilename: '[chunkhash].js',
     jsonpScriptType: 'module',
-    libraryExport: 'default',
+    libraryExport: 'RapidForm',
     umdNamedDefine: true
   },
   optimization: {
