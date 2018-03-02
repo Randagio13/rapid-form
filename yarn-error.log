@@ -16,7 +16,7 @@ Platform:
 npm manifest: 
   {
     "name": "rapid-form",
-    "version": "1.0.0-alpha.40",
+    "version": "1.0.0-alpha.37",
     "description": "React/Redux Form",
     "main": "dist/rapidForm.js",
     "repository": "git@github.com:iMasterAle/rapid-form.git",
@@ -28,7 +28,7 @@ npm manifest:
     "scripts": {
       "start": "webpack-dev-server",
       "test": "jest -u",
-      "release": "rm -rf ./dist && webpack --progress"
+      "release": "rm -rf ./dist && webpack"
     },
     "jest": {
       "bail": true,
@@ -47,36 +47,35 @@ npm manifest:
       ]
     },
     "dependencies": {
-      "@types/immutable": "^3.8.7",
-      "@types/prop-types": "^15.5.2",
-      "@types/react-redux": "^5.0.15",
+      "@types/prop-types": "^15.5.1",
+      "@types/react-redux": "^5.0.6",
       "@types/redux": "^3.6.31",
       "@types/redux-thunk": "^2.1.32",
       "form-serialize": "^0.7.2",
       "global": "^4.3.2",
-      "immutable": "^3.8.2",
-      "material-ui": "^1.0.0-beta.35",
+      "immutable": "^3.8.1",
+      "material-ui": "^1.0.0-beta.19",
       "material-ui-icons": "1.0.0-beta.35",
-      "prop-types": "^15.6.1",
+      "prop-types": "^15.6.0",
       "prop-types-ts": "^0.6.0",
-      "react": "^16.2.0",
-      "react-dom": "^16.2.0",
-      "react-redux": "^5.0.7",
+      "react": "^16.0.0",
+      "react-dom": "^16.0.0",
+      "react-redux": "^5.0.6",
       "redux": "^3.7.2",
       "redux-thunk": "^2.2.0"
     },
     "devDependencies": {
       "@types/enzyme": "^3.1.9",
       "@types/jest": "^22.1.4",
-      "@types/react-hot-loader": "^3.0.6",
+      "@types/react-hot-loader": "^3.0.4",
       "@types/react-test-renderer": "^16.0.1",
-      "@types/redux-devtools": "^3.0.43",
+      "@types/redux-devtools": "^3.0.40",
       "@types/redux-devtools-extension": "^2.13.2",
-      "@types/webpack": "^3.8.8",
-      "@types/webpack-dev-server": "^2.9.3",
+      "@types/webpack": "^3.0.10",
+      "@types/webpack-dev-server": "^2.4.1",
       "babel-cli": "^6.26.0",
-      "babel-loader": "^7.1.3",
-      "babel-preset-env": "^1.6.1",
+      "babel-loader": "^7.1.2",
+      "babel-preset-env": "^1.6.0",
       "babel-preset-react": "^6.24.1",
       "babel-preset-stage-0": "^6.24.1",
       "enzyme": "^3.3.0",
@@ -87,7 +86,7 @@ npm manifest:
       "redux-devtools-extension": "^2.13.2",
       "source-map-loader": "^0.2.1",
       "standard": "^11.0.0",
-      "ts-jest": "^22.4.0",
+      "ts-jest": "^22.4.1",
       "ts-loader": "^4.0.0",
       "tslint": "^5.7.0",
       "tslint-config-standard": "^7.0.0",
@@ -96,8 +95,7 @@ npm manifest:
       "uglifyjs-webpack-plugin": "^1.2.2",
       "webpack": "^4.0.1",
       "webpack-cli": "^2.0.10",
-      "webpack-dev-server": "^3.1.0",
-      "webpack-visualizer-plugin": "^0.1.11"
+      "webpack-dev-server": "^3.1.0"
     },
     "peerDependencies": {
       "react": "^15.6.1"
@@ -173,12 +171,6 @@ Lockfile:
       "@types/events" "*"
       "@types/node" "*"
   
-  "@types/immutable@^3.8.7":
-    version "3.8.7"
-    resolved "https://registry.yarnpkg.com/@types/immutable/-/immutable-3.8.7.tgz#536d33d30f3f3d9a6d4642a219419fd82af633fb"
-    dependencies:
-      immutable "*"
-  
   "@types/jest@^22.1.4":
     version "22.1.4"
     resolved "https://registry.yarnpkg.com/@types/jest/-/jest-22.1.4.tgz#5c0c06a9bb495c67e0a78002a952f151e2ae58a1"
@@ -195,17 +187,17 @@ Lockfile:
     version "9.4.6"
     resolved "https://registry.yarnpkg.com/@types/node/-/node-9.4.6.tgz#d8176d864ee48753d053783e4e463aec86b8d82e"
   
-  "@types/prop-types@^15.5.2":
+  "@types/prop-types@^15.5.1":
     version "15.5.2"
     resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.5.2.tgz#3c6b8dceb2906cc87fe4358e809f9d20c8d59be1"
   
-  "@types/react-hot-loader@^3.0.6":
+  "@types/react-hot-loader@^3.0.4":
     version "3.0.6"
     resolved "https://registry.yarnpkg.com/@types/react-hot-loader/-/react-hot-loader-3.0.6.tgz#23b1875a327c32cbab705fbf660d8f207ede4d69"
     dependencies:
       "@types/react" "*"
   
-  "@types/react-redux@^5.0.15":
+  "@types/react-redux@^5.0.6":
     version "5.0.15"
     resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-5.0.15.tgz#420af2c702ac7aab321cf45bb7d3cb2503dd24d5"
     dependencies:
@@ -234,7 +226,7 @@ Lockfile:
     dependencies:
       redux-devtools-extension "*"
   
-  "@types/redux-devtools@^3.0.43":
+  "@types/redux-devtools@^3.0.40":
     version "3.0.43"
     resolved "https://registry.yarnpkg.com/@types/redux-devtools/-/redux-devtools-3.0.43.tgz#082b203a3b06cb768ea26601f8080b57a7a96d42"
     dependencies:
@@ -274,7 +266,7 @@ Lockfile:
     dependencies:
       source-map "^0.6.1"
   
-  "@types/webpack-dev-server@^2.9.3":
+  "@types/webpack-dev-server@^2.4.1":
     version "2.9.3"
     resolved "https://registry.yarnpkg.com/@types/webpack-dev-server/-/webpack-dev-server-2.9.3.tgz#5658275644bdb5cefc84da1cf800780ecb7c6c71"
     dependencies:
@@ -284,7 +276,7 @@ Lockfile:
       "@types/spdy" "*"
       "@types/webpack" "*"
   
-  "@types/webpack@*", "@types/webpack@^3.8.8":
+  "@types/webpack@*", "@types/webpack@^3.0.10":
     version "3.8.8"
     resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-3.8.8.tgz#fd9483edf2d6935eaab52aa530b1f737c188cd9a"
     dependencies:
@@ -330,7 +322,7 @@ Lockfile:
     version "3.3.0"
     resolved "https://registry.yarnpkg.com/acorn/-/acorn-3.3.0.tgz#45e37fb39e8da3f25baee3ff5369e2bb5f22017a"
   
-  acorn@^5.0.0, acorn@^5.2.1, acorn@^5.3.0, acorn@^5.4.0:
+  acorn@^5.0.0, acorn@^5.3.0, acorn@^5.4.0:
     version "5.5.0"
     resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.5.0.tgz#1abb587fbf051f94e3de20e6b26ef910b1828298"
   
@@ -574,10 +566,6 @@ Lockfile:
     version "0.11.2"
     resolved "https://registry.yarnpkg.com/ast-types/-/ast-types-0.11.2.tgz#cc4e1d15a36b39979a1986fe1e91321cbfae7783"
   
-  ast-types@0.9.6:
-    version "0.9.6"
-    resolved "https://registry.yarnpkg.com/ast-types/-/ast-types-0.9.6.tgz#102c9e9e9005d3e7e3829bf0c4fa24ee862ee9b9"
-  
   astral-regex@^1.0.0:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/astral-regex/-/astral-regex-1.0.0.tgz#6c8c3fb827dd43ee3918f27b82782ab7658a6fd9"
@@ -819,7 +807,7 @@ Lockfile:
       babel-plugin-istanbul "^4.1.5"
       babel-preset-jest "^22.4.1"
   
-  babel-loader@^7.1.3:
+  babel-loader@^7.1.2:
     version "7.1.3"
     resolved "https://registry.yarnpkg.com/babel-loader/-/babel-loader-7.1.3.tgz#ff5b440da716e9153abb946251a9ab7670037b16"
     dependencies:
@@ -1210,7 +1198,7 @@ Lockfile:
       core-js "^2.5.0"
       regenerator-runtime "^0.10.5"
   
-  babel-preset-env@^1.6.1:
+  babel-preset-env@^1.6.0:
     version "1.6.1"
     resolved "https://registry.yarnpkg.com/babel-preset-env/-/babel-preset-env-1.6.1.tgz#a18b564cc9b9afdf4aae57ae3c1b0d99188e6f48"
     dependencies:
@@ -1392,10 +1380,6 @@ Lockfile:
   balanced-match@^1.0.0:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
-  
-  base62@^1.1.0:
-    version "1.2.7"
-    resolved "https://registry.yarnpkg.com/base62/-/base62-1.2.7.tgz#5c01aad73c0124f9535cff1bdb9c4e6ccf838cfb"
   
   base64-js@^1.0.2:
     version "1.2.3"
@@ -2005,7 +1989,7 @@ Lockfile:
     dependencies:
       delayed-stream "~1.0.0"
   
-  commander@2.14.x, commander@^2.11.0, commander@^2.12.1, commander@^2.5.0, commander@~2.14.1:
+  commander@2.14.x, commander@^2.11.0, commander@^2.12.1, commander@~2.14.1:
     version "2.14.1"
     resolved "https://registry.yarnpkg.com/commander/-/commander-2.14.1.tgz#2235123e37af8ca3c65df45b026dbd357b01b9aa"
   
@@ -2016,20 +2000,6 @@ Lockfile:
   commondir@^1.0.1:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/commondir/-/commondir-1.0.1.tgz#ddd800da0c66127393cca5950ea968a3aaf1253b"
-  
-  commoner@^0.10.1:
-    version "0.10.8"
-    resolved "https://registry.yarnpkg.com/commoner/-/commoner-0.10.8.tgz#34fc3672cd24393e8bb47e70caa0293811f4f2c5"
-    dependencies:
-      commander "^2.5.0"
-      detective "^4.3.1"
-      glob "^5.0.15"
-      graceful-fs "^4.1.2"
-      iconv-lite "^0.4.5"
-      mkdirp "^0.5.0"
-      private "^0.1.6"
-      q "^1.1.2"
-      recast "^0.11.17"
   
   component-emitter@^1.2.1:
     version "1.2.1"
@@ -2266,10 +2236,6 @@ Lockfile:
     version "0.2.2"
     resolved "https://registry.yarnpkg.com/cyclist/-/cyclist-0.2.2.tgz#1b33792e11e914a2fd6d6ed6447464444e5fa640"
   
-  d3@^3.5.6:
-    version "3.5.17"
-    resolved "https://registry.yarnpkg.com/d3/-/d3-3.5.17.tgz#bc46748004378b21a360c9fc7cf5231790762fb8"
-  
   dargs@^5.1.0:
     version "5.1.0"
     resolved "https://registry.yarnpkg.com/dargs/-/dargs-5.1.0.tgz#ec7ea50c78564cd36c9d5ec18f66329fade27829"
@@ -2370,10 +2336,6 @@ Lockfile:
       is-descriptor "^1.0.2"
       isobject "^3.0.1"
   
-  defined@^1.0.0:
-    version "1.0.0"
-    resolved "https://registry.yarnpkg.com/defined/-/defined-1.0.0.tgz#c98d9bcef75674188e110969151199e39b1fa693"
-  
   deglob@^2.1.0:
     version "2.1.0"
     resolved "https://registry.yarnpkg.com/deglob/-/deglob-2.1.0.tgz#4d44abe16ef32c779b4972bd141a80325029a14a"
@@ -2456,13 +2418,6 @@ Lockfile:
   detect-node@^2.0.3:
     version "2.0.3"
     resolved "https://registry.yarnpkg.com/detect-node/-/detect-node-2.0.3.tgz#a2033c09cc8e158d37748fbde7507832bd6ce127"
-  
-  detective@^4.3.1:
-    version "4.7.1"
-    resolved "https://registry.yarnpkg.com/detective/-/detective-4.7.1.tgz#0eca7314338442febb6d65da54c10bb1c82b246e"
-    dependencies:
-      acorn "^5.2.1"
-      defined "^1.0.0"
   
   diff@^2.1.2:
     version "2.2.3"
@@ -2601,8 +2556,8 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/duplexer/-/duplexer-0.1.1.tgz#ace6ff808c1ce66b57d1ebf97977acb02334cfc1"
   
   duplexify@^3.4.2, duplexify@^3.5.3:
-    version "3.5.3"
-    resolved "https://registry.yarnpkg.com/duplexify/-/duplexify-3.5.3.tgz#8b5818800df92fd0125b27ab896491912858243e"
+    version "3.5.4"
+    resolved "https://registry.yarnpkg.com/duplexify/-/duplexify-3.5.4.tgz#4bb46c1796eabebeec4ca9a2e66b808cb7a3d8b4"
     dependencies:
       end-of-stream "^1.0.0"
       inherits "^2.0.1"
@@ -2678,13 +2633,6 @@ Lockfile:
   entities@^1.1.1, entities@~1.1.1:
     version "1.1.1"
     resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.1.tgz#6e5c2d0a5621b5dadaecef80b90edfb5cd7772f0"
-  
-  envify@^3.0.0:
-    version "3.4.1"
-    resolved "https://registry.yarnpkg.com/envify/-/envify-3.4.1.tgz#d7122329e8df1688ba771b12501917c9ce5cbce8"
-    dependencies:
-      jstransform "^11.0.3"
-      through "~2.3.4"
   
   enzyme@^3.3.0:
     version "3.3.0"
@@ -2886,11 +2834,7 @@ Lockfile:
       acorn "^5.4.0"
       acorn-jsx "^3.0.0"
   
-  esprima-fb@^15001.1.0-dev-harmony-fb:
-    version "15001.1.0-dev-harmony-fb"
-    resolved "https://registry.yarnpkg.com/esprima-fb/-/esprima-fb-15001.1.0-dev-harmony-fb.tgz#30a947303c6b8d5e955bee2b99b1d233206a6901"
-  
-  esprima@^3.1.3, esprima@~3.1.0:
+  esprima@^3.1.3:
     version "3.1.3"
     resolved "https://registry.yarnpkg.com/esprima/-/esprima-3.1.3.tgz#fdca51cee6133895e3c88d535ce49dbff62a4633"
   
@@ -3138,16 +3082,6 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/fb-watchman/-/fb-watchman-2.0.0.tgz#54e9abf7dfa2f26cd9b1636c588c1afc05de5d58"
     dependencies:
       bser "^2.0.0"
-  
-  fbjs@^0.6.1:
-    version "0.6.1"
-    resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.6.1.tgz#9636b7705f5ba9684d44b72f78321254afc860f7"
-    dependencies:
-      core-js "^1.0.0"
-      loose-envify "^1.0.0"
-      promise "^7.0.3"
-      ua-parser-js "^0.7.9"
-      whatwg-fetch "^0.9.0"
   
   fbjs@^0.8.1, fbjs@^0.8.16:
     version "0.8.16"
@@ -3490,16 +3424,6 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/glob2base/-/glob2base-0.0.12.tgz#9d419b3e28f12e83a362164a277055922c9c0d56"
     dependencies:
       find-index "^0.1.1"
-  
-  glob@^5.0.15:
-    version "5.0.15"
-    resolved "https://registry.yarnpkg.com/glob/-/glob-5.0.15.tgz#1bc936b9e02f4a603fcc222ecf7633d30b8b93b1"
-    dependencies:
-      inflight "^1.0.4"
-      inherits "2"
-      minimatch "2 || 3"
-      once "^1.3.0"
-      path-is-absolute "^1.0.0"
   
   glob@^6.0.1:
     version "6.0.4"
@@ -3951,7 +3875,7 @@ Lockfile:
     version "1.0.2"
     resolved "https://registry.yarnpkg.com/hyphenate-style-name/-/hyphenate-style-name-1.0.2.tgz#31160a36930adaf1fc04c6074f7eb41465d4ec4b"
   
-  iconv-lite@0.4.19, iconv-lite@^0.4.17, iconv-lite@^0.4.5, iconv-lite@~0.4.13:
+  iconv-lite@0.4.19, iconv-lite@^0.4.17, iconv-lite@~0.4.13:
     version "0.4.19"
     resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.19.tgz#f7468f60135f5e5dad3399c0a81be9a1603a082b"
   
@@ -3967,7 +3891,7 @@ Lockfile:
     version "3.3.7"
     resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.3.7.tgz#612289bfb3c220e186a58118618d5be8c1bab021"
   
-  immutable@*, immutable@^3.8.2:
+  immutable@^3.8.1:
     version "3.8.2"
     resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.2.tgz#c2439951455bb39913daf281376f1530e104adf3"
   
@@ -4959,16 +4883,6 @@ Lockfile:
       symbol-observable "^1.1.0"
       warning "^3.0.0"
   
-  jstransform@^11.0.3:
-    version "11.0.3"
-    resolved "https://registry.yarnpkg.com/jstransform/-/jstransform-11.0.3.tgz#09a78993e0ae4d4ef4487f6155a91f6190cb4223"
-    dependencies:
-      base62 "^1.1.0"
-      commoner "^0.10.1"
-      esprima-fb "^15001.1.0-dev-harmony-fb"
-      object-assign "^2.0.0"
-      source-map "^0.4.2"
-  
   jsx-ast-utils@^2.0.1:
     version "2.0.1"
     resolved "https://registry.yarnpkg.com/jsx-ast-utils/-/jsx-ast-utils-2.0.1.tgz#e801b1b39985e20fffc87b40e3748080e2dcac7f"
@@ -5255,7 +5169,7 @@ Lockfile:
     dependencies:
       recompose "^0.26.0"
   
-  material-ui@^1.0.0-beta.35:
+  material-ui@^1.0.0-beta.19:
     version "1.0.0-beta.35"
     resolved "https://registry.yarnpkg.com/material-ui/-/material-ui-1.0.0-beta.35.tgz#eeac6be307c0469943c7686e5c6bd4eaa6b1b563"
     dependencies:
@@ -5753,10 +5667,6 @@ Lockfile:
   oauth-sign@~0.8.1, oauth-sign@~0.8.2:
     version "0.8.2"
     resolved "https://registry.yarnpkg.com/oauth-sign/-/oauth-sign-0.8.2.tgz#46a6ab7f0aead8deae9ec0565780b7d4efeb9d43"
-  
-  object-assign@^2.0.0:
-    version "2.1.1"
-    resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-2.1.1.tgz#43c36e5d569ff8e4816c4efa8be02d26967c18aa"
   
   object-assign@^4.0.1, object-assign@^4.1.0, object-assign@^4.1.1:
     version "4.1.1"
@@ -6278,7 +6188,7 @@ Lockfile:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/promise-inflight/-/promise-inflight-1.0.1.tgz#98472870bf228132fcbdd868129bad12c3c029e3"
   
-  promise@^7.0.3, promise@^7.1.1:
+  promise@^7.1.1:
     version "7.3.1"
     resolved "https://registry.yarnpkg.com/promise/-/promise-7.3.1.tgz#064b72602b18f90f29192b8b1bc418ffd1ebd3bf"
     dependencies:
@@ -6291,7 +6201,7 @@ Lockfile:
       io-ts "^1.0.2"
       react "^15.0.0 || ^16.0.0"
   
-  prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1:
+  prop-types@^15.5.8, prop-types@^15.6.0:
     version "15.6.1"
     resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.1.tgz#36644453564255ddda391191fb3a125cbdf654ca"
     dependencies:
@@ -6350,10 +6260,6 @@ Lockfile:
   punycode@^2.1.0:
     version "2.1.0"
     resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.0.tgz#5f863edc89b96db09074bad7947bf09056ca4e7d"
-  
-  q@^1.1.2:
-    version "1.5.1"
-    resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
   
   qs@6.5.1, qs@~6.5.1:
     version "6.5.1"
@@ -6452,11 +6358,7 @@ Lockfile:
       minimist "^1.2.0"
       strip-json-comments "~2.0.1"
   
-  react-dom@^0.14.0:
-    version "0.14.9"
-    resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-0.14.9.tgz#05064a3dcf0fb1880a3b2bfc9d58c55d8d9f6293"
-  
-  react-dom@^16.2.0:
+  react-dom@^16.0.0:
     version "16.2.0"
     resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.2.0.tgz#69003178601c0ca19b709b33a83369fe6124c044"
     dependencies:
@@ -6501,7 +6403,7 @@ Lockfile:
       popper.js "^1.12.9"
       prop-types "^15.6.0"
   
-  react-redux@^5.0.7:
+  react-redux@^5.0.6:
     version "5.0.7"
     resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-5.0.7.tgz#0dc1076d9afb4670f993ffaef44b8f8c1155a4c8"
     dependencies:
@@ -6540,14 +6442,7 @@ Lockfile:
       prop-types "^15.5.8"
       warning "^3.0.0"
   
-  react@^0.14.0:
-    version "0.14.9"
-    resolved "https://registry.yarnpkg.com/react/-/react-0.14.9.tgz#9110a6497c49d44ba1c0edd317aec29c2e0d91d1"
-    dependencies:
-      envify "^3.0.0"
-      fbjs "^0.6.1"
-  
-  "react@^15.0.0 || ^16.0.0", react@^16.2.0:
+  "react@^15.0.0 || ^16.0.0", react@^16.0.0:
     version "16.2.0"
     resolved "https://registry.yarnpkg.com/react/-/react-16.2.0.tgz#a31bd2dab89bff65d42134fa187f24d054c273ba"
     dependencies:
@@ -6628,15 +6523,6 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/realpath-native/-/realpath-native-1.0.0.tgz#7885721a83b43bd5327609f0ddecb2482305fdf0"
     dependencies:
       util.promisify "^1.0.0"
-  
-  recast@^0.11.17:
-    version "0.11.23"
-    resolved "https://registry.yarnpkg.com/recast/-/recast-0.11.23.tgz#451fd3004ab1e4df9b4e4b66376b2a21912462d3"
-    dependencies:
-      ast-types "0.9.6"
-      esprima "~3.1.0"
-      private "~0.1.5"
-      source-map "~0.5.0"
   
   recast@^0.12.5:
     version "0.12.9"
@@ -7310,11 +7196,11 @@ Lockfile:
     version "0.4.0"
     resolved "https://registry.yarnpkg.com/source-map-url/-/source-map-url-0.4.0.tgz#3e935d7ddd73631b97659956d55128e87b5084a3"
   
-  source-map@0.5.x, source-map@^0.5.3, source-map@^0.5.6, source-map@^0.5.7, source-map@~0.5.0, source-map@~0.5.1:
+  source-map@0.5.x, source-map@^0.5.3, source-map@^0.5.6, source-map@^0.5.7, source-map@~0.5.1:
     version "0.5.7"
     resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
   
-  source-map@^0.4.2, source-map@^0.4.4:
+  source-map@^0.4.4:
     version "0.4.4"
     resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.4.4.tgz#eba4f5da9c0dc999de68032d8b4f76173652036b"
     dependencies:
@@ -7700,7 +7586,7 @@ Lockfile:
       readable-stream "^2.1.5"
       xtend "~4.0.1"
   
-  through@^2.3.6, through@~2.3.4:
+  through@^2.3.6:
     version "2.3.8"
     resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   
@@ -7788,9 +7674,9 @@ Lockfile:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/trim-right/-/trim-right-1.0.1.tgz#cb2e1203067e0c8de1f614094b9fe45704ea6003"
   
-  ts-jest@^22.4.0:
-    version "22.4.0"
-    resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-22.4.0.tgz#c9d3f9565696e0ad17e658eee96e06822af96bb9"
+  ts-jest@^22.4.1:
+    version "22.4.1"
+    resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-22.4.1.tgz#69defb2042d689cff9b4244365ef638ecd35f706"
     dependencies:
       babel-core "^6.24.1"
       babel-plugin-istanbul "^4.1.4"
@@ -8315,15 +8201,6 @@ Lockfile:
       source-list-map "^2.0.0"
       source-map "~0.6.1"
   
-  webpack-visualizer-plugin@^0.1.11:
-    version "0.1.11"
-    resolved "https://registry.yarnpkg.com/webpack-visualizer-plugin/-/webpack-visualizer-plugin-0.1.11.tgz#b8770ad86b4f652612c68b1b782253faf9f8a34e"
-    dependencies:
-      d3 "^3.5.6"
-      mkdirp "^0.5.1"
-      react "^0.14.0"
-      react-dom "^0.14.0"
-  
   webpack@^4.0.1:
     version "4.0.1"
     resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.0.1.tgz#768d708beeca4c5f77f6c2d38a240fb6ff50ba5d"
@@ -8368,10 +8245,6 @@ Lockfile:
   whatwg-fetch@>=0.10.0:
     version "2.0.3"
     resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-2.0.3.tgz#9c84ec2dcf68187ff00bc64e1274b442176e1c84"
-  
-  whatwg-fetch@^0.9.0:
-    version "0.9.0"
-    resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-0.9.0.tgz#0e3684c6cb9995b43efc9df03e4c365d95fd9cc0"
   
   whatwg-url@^6.4.0:
     version "6.4.0"
@@ -8638,7 +8511,7 @@ Trace:
   Error: Command failed.
   Exit code: 1
   Command: sh
-  Arguments: -c rm -rf ./dist && webpack --progress
+  Arguments: -c rm -rf ./dist && webpack
   Directory: /Volumes/Apple SD/Sites/rapid-form
   Output:
   
