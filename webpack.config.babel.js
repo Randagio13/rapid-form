@@ -135,7 +135,8 @@ const developmentConfig = {
 
 const productionConfig = {
   entry: {
-    rapidForm: 'index'
+    rapidForm: 'index',
+    vendors: ['react-dom', 'material-ui']
   },
   output: {
     path: PATHS.build,
@@ -149,17 +150,14 @@ const productionConfig = {
   optimization: {
     splitChunks: {
       chunks: 'all',
-      minSize: 30000,
-      minChunks: 1,
-      maxAsyncRequests: 5,
-      maxInitialRequests: 3,
-      name: true
-      // cacheGroups: {
-      //   default: {
-      //     minChunks: 2,
-      //     priority: -20,
-      //     reuseExistingChunk: true,
-      //   },
+      cacheGroups: {
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true,
+        },
+        vendors: false
+      }
       //   vendors: {
       //     test: /[\\/]node_modules[\\/]/,
       //     name: 'vendors',
