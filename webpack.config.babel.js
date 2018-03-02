@@ -126,6 +126,9 @@ const developmentConfig = {
     }),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'index.html')
+    }),
+    new Visualizer({
+      filename: '../statistics.html'
     })
   ]
 }
@@ -137,7 +140,7 @@ const productionConfig = {
   output: {
     path: PATHS.build,
     libraryTarget: 'umd',
-    library: 'rapidForm',
+    library: 'RapidForm',
     filename: '[name].js',
     chunkFilename: '[chunkhash].js',
     umdNamedDefine: true
@@ -163,6 +166,7 @@ const productionConfig = {
     //     }
     //   }
     // }),
+    new webpack.NamedModulesPlugin(),
     new Visualizer({
       filename: '../statistics.prod.html'
     })
