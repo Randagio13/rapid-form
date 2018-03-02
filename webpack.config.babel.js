@@ -135,29 +135,20 @@ const developmentConfig = {
 
 const productionConfig = {
   entry: {
-    rapidForm: 'index',
-    vendors: ['react-dom', 'material-ui']
+    rapidForm: 'index'
   },
   output: {
     path: PATHS.build,
     libraryTarget: 'umd',
     library: 'RapidForm',
     filename: '[name].js',
-    chunkFilename: '[chunkhash].js'
-    // umdNamedDefine: true
+    chunkFilename: '[chunkhash].[name].js',
+    umdNamedDefine: true
     // jsonpScriptType: 'module',
   },
   optimization: {
     splitChunks: {
-      chunks: 'all',
-      cacheGroups: {
-        default: {
-          minChunks: 2,
-          priority: -20,
-          reuseExistingChunk: true,
-        },
-        vendors: false
-      }
+      chunks: 'async'
       //   vendors: {
       //     test: /[\\/]node_modules[\\/]/,
       //     name: 'vendors',
