@@ -148,23 +148,31 @@ const productionConfig = {
   },
   optimization: {
     splitChunks: {
-      chunks: "async",
+      chunks: 'async',
       minSize: 30000,
       minChunks: 1,
       maxAsyncRequests: 5,
       maxInitialRequests: 3,
       name: true,
       cacheGroups: {
-        default: {
-          minChunks: 2,
-          priority: -20,
-          reuseExistingChunk: true,
-        },
-        vendors: {
-          test: /[\\/]node_modules[\\/]/,
-          priority: -10
+        commons: {
+            test: /[\\/]node_modules[\\/]/,
+            name: "vendor",
+            chunks: "all"
         }
       }
+      // cacheGroups: {
+      //   default: {
+      //     minChunks: 2,
+      //     priority: -20,
+      //     reuseExistingChunk: true,
+      //   },
+      //   vendors: {
+      //     test: /[\\/]node_modules[\\/]/,
+      //     name: 'vendors',
+      //     priority: -10
+      //   }
+      // }
       // cacheGroups: {
       //   commons: {
       //     test: /[\\/]node_modules[\\/]/,

@@ -12,7 +12,7 @@
   "scripts": {
     "start": "webpack-dev-server",
     "test": "jest -u",
-    "release": "rm -rf ./dist && webpack"
+    "release": "rm -rf ./dist && webpack --progress"
   },
   "jest": {
     "bail": true,
