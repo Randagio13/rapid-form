@@ -23,16 +23,16 @@ const themeOverride = {
 }
 if (NODE_ENV !== 'production') {
   class Develop extends React.Component<any, any> {
-    state = {
+    public state = {
       viewForm: true
     }
-    handleButton = () => {
+    public handleButton = () => {
       const { viewForm } = this.state
       this.setState({
         viewForm: !viewForm
       })
     }
-    handleSwitch = () => {
+    public handleSwitch = () => {
       const { viewForm } = this.state
       return viewForm ? (
         <RapidForm method='post' onSubmit={testOnSubmit} id='formId' theme='material-ui' overrideTheme={themeOverride}>
@@ -48,33 +48,35 @@ if (NODE_ENV !== 'production') {
           </div>
         </RapidForm>
       ) : (
-        <RapidForm method='post' onSubmit={testOnSubmit} id='createUser' theme='material-ui' overrideTheme={themeOverride}>
-          <input type='hidden' name='userId' value='13' />
-          <div>
-            <input
-              type='email'
-              name='username'
-              label='Email'
-              data-validation='empty'
-              required
-              fullWidth
-            />
-          </div>
-          <div>
-            <input
-              type='password'
-              name='password'
-              label='Password'
-              data-validation='empty'
-              required
-              fullWidth
-              autoComplete='new-password'
-            />
-          </div>
-          <div>
-            <button disabled type='submit' color='primary' variant='raised'>{'create'}</button>
-          </div>
-        </RapidForm>
+        <Dialog open={true} disableAutoFocus={true}>
+          <RapidForm method='post' onSubmit={testOnSubmit} id='createUser' theme='material-ui' overrideTheme={themeOverride}>
+            <input type='hidden' name='userId' value='13' />
+            <div>
+              <input
+                type='email'
+                name='username'
+                label='Email'
+                data-validation='empty'
+                required
+                fullWidth
+              />
+            </div>
+            <div>
+              <input
+                type='password'
+                name='password'
+                label='Password'
+                data-validation='empty'
+                required
+                fullWidth
+                autoComplete='new-password'
+              />
+            </div>
+            <div>
+              <button disabled type='submit' color='primary' variant='raised'>{'create'}</button>
+            </div>
+          </RapidForm>
+        </Dialog>
       )
     }
     public render () {

@@ -25,8 +25,10 @@ const PATHS = {
 }
 
 const devtool = isProduction ? 'source-map' : 'eval-source-map'
+const mode = isProduction ? 'production' : 'development'
 
 const base = {
+  mode: mode,
   devtool: devtool,
   context: PATHS.app,
   module: {
@@ -78,7 +80,7 @@ const base = {
       'node_modules',
       path.join(__dirname, 'src')
     ],
-    extensions: ['.js', '.scss', '.ts', '.tsx', '.json'],
+    extensions: ['.js', '.scss', '.ts', '.tsx', '.json', '.html'],
     alias: {
       src: PATHS.app,
       components: PATHS.components,
@@ -129,7 +131,6 @@ const developmentConfig = {
 }
 
 const productionConfig = {
-  mode: 'production',
   entry: {
     rapidForm: 'index'
   },
@@ -150,7 +151,7 @@ const productionConfig = {
         }
       }
     },
-    runtimeChunk: true
+    runtimeChunk: false
   },
   plugins: [
     new webpack.NamedModulesPlugin(),
@@ -162,7 +163,7 @@ const productionConfig = {
       }
     }),
     new Visualizer({
-      filename: './statistics.prod.html'
+      filename: '../statistics.prod.html'
     })
     // new webpack.optimize.CommonsChunkPlugin({
     //   names: ['reactVendor', 'materialUI'],
