@@ -132,11 +132,11 @@ const developmentConfig = {
 
 const productionConfig = {
   entry: {
-    rapidForm: 'index'
+    rapidForm: path.join(PATHS.app, 'index')
   },
   output: {
     path: PATHS.build,
-    libraryTarget: 'commonjs',
+    libraryTarget: 'umd',
     library: 'RapidForm',
     filename: '[name].js',
     chunkFilename: '[chunkhash].js'
