@@ -80,7 +80,7 @@ const base = {
       'node_modules',
       path.join(__dirname, 'src')
     ],
-    extensions: ['.js', '.scss', '.ts', '.tsx', '.json', '.html'],
+    extensions: ['.js', '.scss', '.ts', '.tsx', '.json'],
     alias: {
       src: PATHS.app,
       components: PATHS.components,
@@ -139,7 +139,10 @@ const productionConfig = {
     libraryTarget: 'umd',
     library: 'RapidForm',
     filename: '[name].js',
-    chunkFilename: '[chunkhash].js'
+    chunkFilename: '[chunkhash].js',
+    jsonpScriptType: 'module',
+    libraryExport: 'default',
+    umdNamedDefine: true
   },
   optimization: {
     splitChunks: {
@@ -154,14 +157,13 @@ const productionConfig = {
     runtimeChunk: false
   },
   plugins: [
-    new webpack.NamedModulesPlugin(),
-    new webpack.DefinePlugin({
-      process: {
-        env: {
-          NODE_ENV: JSON.stringify('production')
-        }
-      }
-    }),
+    // new webpack.DefinePlugin({
+    //   process: {
+    //     env: {
+    //       NODE_ENV: JSON.stringify('production')
+    //     }
+    //   }
+    // }),
     new Visualizer({
       filename: '../statistics.prod.html'
     })
