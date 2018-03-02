@@ -1,6 +1,6 @@
 {
   "name": "rapid-form",
-  "version": "1.0.0-alpha.39",
+  "version": "1.0.0-alpha.40",
   "description": "React/Redux Form",
   "main": "dist/rapidForm.js",
   "repository": "git@github.com:iMasterAle/rapid-form.git",
@@ -12,7 +12,7 @@
   "scripts": {
     "start": "webpack-dev-server",
     "test": "jest -u",
-    "release": "rm -rf ./dist && webpack"
+    "release": "rm -rf ./dist && webpack --progress"
   },
   "jest": {
     "bail": true,
