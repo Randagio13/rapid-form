@@ -135,11 +135,11 @@ const developmentConfig = {
 
 const productionConfig = {
   entry: {
-    rapidForm: path.join(PATHS.app, 'index')
+    rapidForm: 'index'
   },
   output: {
     path: PATHS.build,
-    libraryTarget: 'umd',
+    libraryTarget: 'commonjs2',
     library: 'RapidForm',
     filename: '[name].js',
     chunkFilename: '[chunkhash].js',
@@ -159,14 +159,14 @@ const productionConfig = {
     runtimeChunk: false
   },
   plugins: [
-    // new webpack.DefinePlugin({
-    //   process: {
-    //     env: {
-    //       NODE_ENV: JSON.stringify('production')
-    //     }
-    //   }
-    // }),
-    new webpack.NamedModulesPlugin(),
+    new webpack.DefinePlugin({
+      process: {
+        env: {
+          NODE_ENV: JSON.stringify('production')
+        }
+      }
+    }),
+    // new webpack.NamedModulesPlugin(),
     new Visualizer({
       filename: '../statistics.prod.html'
     })
