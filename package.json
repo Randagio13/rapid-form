@@ -2,7 +2,7 @@
   "name": "rapid-form",
   "version": "1.0.0-alpha.40",
   "description": "React/Redux Form",
-  "main": "dist/rapidForm.js",
+  "main": "dist/index.js",
   "repository": "git@github.com:iMasterAle/rapid-form.git",
   "author": "Alessandro Casazza <imasterale@gmail.com>",
   "license": "MIT",

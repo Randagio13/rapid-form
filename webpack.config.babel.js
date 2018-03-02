@@ -135,15 +135,15 @@ const developmentConfig = {
 
 const productionConfig = {
   entry: {
-    rapidForm: 'index'
+    index: 'index'
   },
   output: {
     path: PATHS.build,
-    libraryTarget: 'commonjs2',
+    libraryTarget: 'umd',
     library: 'RapidForm',
     filename: '[name].js',
-    chunkFilename: '[chunkhash].js',
-    umdNamedDefine: true
+    chunkFilename: '[chunkhash].js'
+    // umdNamedDefine: true
     // jsonpScriptType: 'module',
   },
   optimization: {
