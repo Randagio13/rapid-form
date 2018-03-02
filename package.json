@@ -1,6 +1,6 @@
 {
   "name": "rapid-form",
-  "version": "1.0.0-alpha.38",
+  "version": "1.0.0-alpha.39",
   "description": "React/Redux Form",
   "main": "dist/rapidForm.js",
   "repository": "git@github.com:iMasterAle/rapid-form.git",
