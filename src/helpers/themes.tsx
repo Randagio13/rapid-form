@@ -17,6 +17,9 @@ import * as React from 'react'
  */
 class Themes {
   private themeName: string
+  private inputFile: {
+    click: () => void
+  }
   constructor (themeName: string) {
     this.themeName = themeName
   }
@@ -46,28 +49,29 @@ class Themes {
           case 'email':
           case 'password':
           case 'hidden':
-            const { value: val } = props
-            return <TextField type={type} {...props} value={val || ''} />
+            const { value: val, key: ke } = props
+            return <TextField key={`${type}-${ke}`} type={type} {...props} value={val || ''} />
           case 'file':
-            const { value: va, error: err, ...pr } = props
+            const { value: va, error: err, key, ...pr } = props
+            const ref = (r: any) => this.inputFile = r
             return (
               <div>
-                <Button variant='raised' onClick={this.handleInputFile}>
+                <Button key={`${type}-${key}`} variant='raised' onClick={this.handleInputFile}>
                   {'upload'}
                   <FileUpload />
                   <input
-                    ref={(r) => {this.inputFile = r}}
+                    ref={ref}
                     style={{ display: 'none' }}
                     type={type}
                     {...pr}
                   />
                 </Button>
-                <Typography type='subheading'>{va || ''}</Typography>
+                <Typography variant='subheading'>{va || ''}</Typography>
               </div>
             )
           case 'button':
-            const { children: child , ...other } = props
-            return <Button {...other}>{child}</Button>
+            const { children: child, key: k, ...other } = props
+            return <Button key={`${type}-${k}`} {...other}>{child}</Button>
           case 'select':
             const { children , ...p } = props
             const { multiple, value, placeholder, withChip, multiCheckbox, error, required } = p
@@ -82,8 +86,8 @@ class Themes {
                 ? (selected: any) => selected.join(', ')
                 : (selected: any): any => {
                   if (selected) {
-                    return selected.map((lab: any, k: number) => {
-                      return <Chip key={k} label={lab} />
+                    return selected.map((lab: any, ky: number) => {
+                      return <Chip key={`chip-${ky}`} label={lab} />
                     })
                   }
                   return []
@@ -103,11 +107,11 @@ class Themes {
                 )
             }
             return !placeholder
-              ? <Select native inputProps={inputProps} {...p}>{children}</Select>
+              ? <Select native={true} inputProps={inputProps} {...p}>{children}</Select>
               : (
                 <FormControl error={error}>
                   <InputLabel htmlFor='select-placeholder'>{placeholder}</InputLabel>
-                  <Select native input={input} inputProps={inputProps} {...p}>{children}</Select>
+                  <Select native={true} input={input} inputProps={inputProps} {...p}>{children}</Select>
                 </FormControl>
               )
           default:
@@ -124,12 +128,12 @@ class Themes {
       const { value, children, ...other } = props
       const checked = Array.isArray(val) ? val.indexOf(value) > -1 : false
       return multiCheckbox ? (
-        <MenuItem key={key} value={value} {...other}>
+        <MenuItem key={`option-${key}`} value={value} {...other}>
           <Checkbox checked={checked} />
           <ListItemText primary={children} />
         </MenuItem>
       ) : (
-        <MenuItem key={key} value={value} {...other}>
+        <MenuItem key={`option-${key}`} value={value} {...other}>
           <ListItemText primary={children} />
         </MenuItem>
       )

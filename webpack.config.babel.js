@@ -39,11 +39,11 @@ const base = {
         exclude: /node_modules/,
         options: { transpileOnly: true }
       },
-      {
-        enforce: 'pre',
-        test: /\.js$/,
-        loader: 'source-map-loader'
-      },
+      // {
+      //   enforce: 'pre',
+      //   test: /\.js$/,
+      //   loader: 'source-map-loader'
+      // },
       {
         test: /\.css$/,
         use: [
@@ -142,7 +142,7 @@ const developmentConfig = {
 
 const productionConfig = {
   entry: {
-    rapidForm: 'index'
+    rapidForm: ['material-ui', path.join(PATHS.app, 'index')]
   },
   output: {
     path: PATHS.build,
@@ -155,26 +155,27 @@ const productionConfig = {
   },
   optimization: {
     splitChunks: {
-      chunks: 'async'
+      // chunks: 'async'
       //   vendors: {
       //     test: /[\\/]node_modules[\\/]/,
       //     name: 'vendors',
       //     priority: -10
       //   }
       // }
-      // cacheGroups: {
-      //   vendors: {
-      //     test: /[\\/]node_modules[\\/]|material-ui|react-dom/,
-      //     name: 'vendors',
-      //     chunks: 'initial',
-      //     enforce: true
-      //   }
-      // }
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]|material-ui/,
+          name: 'vendors',
+          chunks: 'initial',
+          enforce: true
+        }
+      }
     },
     runtimeChunk: false
   },
   plugins: [
     new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production'),
       process: {
         env: {
           NODE_ENV: JSON.stringify('production')

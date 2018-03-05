@@ -38,7 +38,6 @@ export const setTheme = (theme: string): object => {
 export const checkAllReqFields = (id: string) => {
   return (dispatch: any, getState: any) => {
     const { form: { fields } } = getState()
-    debugger
     fields.get(id).map((cmps: any): void => {
       const key = cmps.get('key')
       const propsCmps = cmps.get('props').toJS()
@@ -97,11 +96,11 @@ export default function form (state = initialState, action = Action): any {
     case SET_FIELDS:
     case SET_CHECK_ERROR:
       const fs = state.fields.set(id, fields)
-      return {...state, fields: fs}
+      return { ...state, fields: fs }
     case SET_ERRORS:
-      return {...state, errors}
+      return { ...state, errors }
     case SET_THEME:
-      return {...state, theme}
+      return { ...state, theme }
     default:
       return state
   }
