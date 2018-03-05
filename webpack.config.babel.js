@@ -93,9 +93,7 @@ const base = {
     }
   },
   externals: {
-    'react': 'React',
-    'react-dom': 'ReactDOM',
-    'material-ui': 'MaterialUI'
+    'react': 'React'
   }
 }
 
