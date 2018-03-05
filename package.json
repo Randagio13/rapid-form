@@ -38,12 +38,10 @@
     "form-serialize": "^0.7.2",
     "global": "^4.3.2",
     "immutable": "^3.8.1",
-    "material-ui": "^1.0.0-beta.19",
+    "material-ui": "^1.0.0-beta.35",
     "material-ui-icons": "1.0.0-beta.35",
     "prop-types": "^15.6.0",
     "prop-types-ts": "^0.6.0",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0"
@@ -83,6 +81,7 @@
     "webpack-visualizer-plugin": "^0.1.11"
   },
   "peerDependencies": {
-    "react": "^15.6.1"
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
   }
 }

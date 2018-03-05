@@ -1,14 +1,14 @@
 Arguments: 
-  /usr/local/Cellar/node/9.6.1/bin/node /usr/local/Cellar/yarn/1.5.1/libexec/bin/yarn.js release
+  /usr/local/Cellar/node/9.7.1/bin/node /usr/local/Cellar/yarn/1.5.1/libexec/bin/yarn.js start
 
 PATH: 
-  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Users/alessandrocasazza/Library/Android/sdk/tools:/Users/alessandrocasazza/Library/Android/sdk/platform-tools:/usr/local/bin:/Users/alessandrocasazza/Library/Android/sdk/tools:/Users/alessandrocasazza/Library/Android/sdk/platform-tools
+  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Users/alessandrocasazza/Library/Android/sdk/tools:/Users/alessandrocasazza/Library/Android/sdk/platform-tools::/Users/alessandrocasazza/Library/Android/sdk/tools:/Users/alessandrocasazza/Library/Android/sdk/platform-tools
 
 Yarn version: 
   1.5.1
 
 Node version: 
-  9.6.1
+  9.7.1
 
 Platform: 
   darwin x64
@@ -54,12 +54,10 @@ npm manifest:
       "form-serialize": "^0.7.2",
       "global": "^4.3.2",
       "immutable": "^3.8.1",
-      "material-ui": "^1.0.0-beta.19",
+      "material-ui": "^1.0.0-beta.35",
       "material-ui-icons": "1.0.0-beta.35",
       "prop-types": "^15.6.0",
       "prop-types-ts": "^0.6.0",
-      "react": "^16.0.0",
-      "react-dom": "^16.0.0",
       "react-redux": "^5.0.6",
       "redux": "^3.7.2",
       "redux-thunk": "^2.2.0"
@@ -87,19 +85,20 @@ npm manifest:
       "source-map-loader": "^0.2.1",
       "standard": "^11.0.0",
       "ts-jest": "^22.4.1",
-      "ts-loader": "^4.0.0",
+      "ts-loader": "^4.0.1",
       "tslint": "^5.7.0",
       "tslint-config-standard": "^7.0.0",
       "tslint-react": "^3.2.0",
       "typescript": "^2.5.2",
       "uglifyjs-webpack-plugin": "^1.2.2",
-      "webpack": "^4.0.1",
+      "webpack": "^4.1.0",
       "webpack-cli": "^2.0.10",
       "webpack-dev-server": "^3.1.0",
       "webpack-visualizer-plugin": "^0.1.11"
     },
     "peerDependencies": {
-      "react": "^15.6.1"
+      "react": "^16.2.0",
+      "react-dom": "^16.2.0"
     }
   }
 
@@ -177,8 +176,8 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/@types/jest/-/jest-22.1.4.tgz#5c0c06a9bb495c67e0a78002a952f151e2ae58a1"
   
   "@types/jss@^9.3.0":
-    version "9.3.0"
-    resolved "https://registry.yarnpkg.com/@types/jss/-/jss-9.3.0.tgz#0f8484fd03ded206917be27b58217f274a0ad59f"
+    version "9.3.1"
+    resolved "https://registry.yarnpkg.com/@types/jss/-/jss-9.3.1.tgz#9e113f5d3e6bba6d8babca6be528b5cf19d37a16"
   
   "@types/mime@*":
     version "2.0.0"
@@ -5248,7 +5247,7 @@ Lockfile:
     dependencies:
       recompose "^0.26.0"
   
-  material-ui@^1.0.0-beta.19:
+  material-ui@^1.0.0-beta.35:
     version "1.0.0-beta.35"
     resolved "https://registry.yarnpkg.com/material-ui/-/material-ui-1.0.0-beta.35.tgz#eeac6be307c0469943c7686e5c6bd4eaa6b1b563"
     dependencies:
@@ -6449,15 +6448,6 @@ Lockfile:
     version "0.14.9"
     resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-0.14.9.tgz#05064a3dcf0fb1880a3b2bfc9d58c55d8d9f6293"
   
-  react-dom@^16.0.0:
-    version "16.2.0"
-    resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.2.0.tgz#69003178601c0ca19b709b33a83369fe6124c044"
-    dependencies:
-      fbjs "^0.8.16"
-      loose-envify "^1.1.0"
-      object-assign "^4.1.1"
-      prop-types "^15.6.0"
-  
   react-event-listener@^0.5.1:
     version "0.5.3"
     resolved "https://registry.yarnpkg.com/react-event-listener/-/react-event-listener-0.5.3.tgz#a8b492596ad601865314fcc2c18cb87b6ce3876e"
@@ -6540,7 +6530,7 @@ Lockfile:
       envify "^3.0.0"
       fbjs "^0.6.1"
   
-  "react@^15.0.0 || ^16.0.0", react@^16.0.0:
+  "react@^15.0.0 || ^16.0.0":
     version "16.2.0"
     resolved "https://registry.yarnpkg.com/react/-/react-16.2.0.tgz#a31bd2dab89bff65d42134fa187f24d054c273ba"
     dependencies:
@@ -7795,9 +7785,9 @@ Lockfile:
       pkg-dir "^2.0.0"
       yargs "^11.0.0"
   
-  ts-loader@^4.0.0:
-    version "4.0.0"
-    resolved "https://registry.yarnpkg.com/ts-loader/-/ts-loader-4.0.0.tgz#1d79f777e4f09de88a60697d8d4a96e55164caa9"
+  ts-loader@^4.0.1:
+    version "4.0.1"
+    resolved "https://registry.yarnpkg.com/ts-loader/-/ts-loader-4.0.1.tgz#3d920b059966efec9637133ab0ca9b04d625d59a"
     dependencies:
       chalk "^2.3.0"
       enhanced-resolve "^4.0.0"
@@ -8189,7 +8179,7 @@ Lockfile:
       exec-sh "^0.2.0"
       minimist "^1.2.0"
   
-  watchpack@^1.4.0:
+  watchpack@^1.5.0:
     version "1.5.0"
     resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.5.0.tgz#231e783af830a22f8966f65c4c4bacc814072eed"
     dependencies:
@@ -8317,9 +8307,9 @@ Lockfile:
       react "^0.14.0"
       react-dom "^0.14.0"
   
-  webpack@^4.0.1:
-    version "4.0.1"
-    resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.0.1.tgz#768d708beeca4c5f77f6c2d38a240fb6ff50ba5d"
+  webpack@^4.1.0:
+    version "4.1.0"
+    resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.1.0.tgz#91b6862e56eb3b18b79bb10b51866987ff10d2d6"
     dependencies:
       acorn "^5.0.0"
       acorn-dynamic-import "^3.0.0"
@@ -8338,7 +8328,7 @@ Lockfile:
       schema-utils "^0.4.2"
       tapable "^1.0.0"
       uglifyjs-webpack-plugin "^1.1.1"
-      watchpack "^1.4.0"
+      watchpack "^1.5.0"
       webpack-sources "^1.0.1"
   
   websocket-driver@>=0.5.1:
@@ -8629,9 +8619,9 @@ Lockfile:
 
 Trace: 
   Error: Command failed.
-  Exit code: 1
+  Exit signal: SIGBUS
   Command: sh
-  Arguments: -c rm -rf ./dist && webpack --progress
+  Arguments: -c webpack-dev-server
   Directory: /Volumes/Apple SD/Sites/rapid-form
   Output:
   
@@ -8639,5 +8629,5 @@ Trace:
       at new ProcessTermError (/usr/local/Cellar/yarn/1.5.1/libexec/lib/cli.js:226:113)
       at ChildProcess.<anonymous> (/usr/local/Cellar/yarn/1.5.1/libexec/lib/cli.js:30281:17)
       at ChildProcess.emit (events.js:127:13)
-      at maybeClose (internal/child_process.js:933:16)
+      at maybeClose (internal/child_process.js:936:16)
       at Process.ChildProcess._handle.onexit (internal/child_process.js:220:5)
