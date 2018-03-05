@@ -39,11 +39,11 @@ const base = {
         exclude: /node_modules/,
         options: { transpileOnly: true }
       },
-      // {
-      //   enforce: 'pre',
-      //   test: /\.js$/,
-      //   loader: 'source-map-loader'
-      // },
+      {
+        enforce: 'pre',
+        test: /\.js$/,
+        loader: 'source-map-loader'
+      },
       {
         test: /\.css$/,
         use: [
@@ -91,9 +91,6 @@ const base = {
       styles: PATHS.styles,
       helpers: PATHS.helpers
     }
-  },
-  externals: {
-    'react': 'React'
   }
 }
 
@@ -142,7 +139,7 @@ const developmentConfig = {
 
 const productionConfig = {
   entry: {
-    rapidForm: ['material-ui', path.join(PATHS.app, 'index')]
+    rapidForm: [path.join(PATHS.app, 'index')]
   },
   output: {
     path: PATHS.build,
@@ -164,14 +161,17 @@ const productionConfig = {
       // }
       cacheGroups: {
         vendors: {
-          test: /[\\/]node_modules[\\/]|material-ui/,
+          test: /node_modules/,
           name: 'vendors',
-          chunks: 'initial',
+          chunks: 'async',
           enforce: true
         }
       }
     },
     runtimeChunk: false
+  },
+  externals: {
+    'react': 'React'
   },
   plugins: [
     new webpack.DefinePlugin({
