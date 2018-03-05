@@ -8617,16 +8617,7 @@ Lockfile:
       yeoman-environment "^1.1.0"
 
 Trace: 
-  Error: Command failed.
-  Exit code: 1
-  Command: sh
-  Arguments: -c rm -rf ./dist && webpack --progress
-  Directory: /Volumes/Apple SD/Sites/rapid-form
-  Output:
-  
-      at ProcessTermError.MessageError (/usr/local/Cellar/yarn/1.5.1/libexec/lib/cli.js:186:110)
-      at new ProcessTermError (/usr/local/Cellar/yarn/1.5.1/libexec/lib/cli.js:226:113)
-      at ChildProcess.<anonymous> (/usr/local/Cellar/yarn/1.5.1/libexec/lib/cli.js:30281:17)
-      at ChildProcess.emit (events.js:127:13)
-      at maybeClose (internal/child_process.js:936:16)
-      at Process.ChildProcess._handle.onexit (internal/child_process.js:220:5)
+  Error: spawn sh EAGAIN
+      at Process.ChildProcess._handle.onexit (internal/child_process.js:201:19)
+      at onErrorNT (internal/child_process.js:379:16)
+      at process._tickCallback (internal/process/next_tick.js:114:19)

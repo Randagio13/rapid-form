@@ -139,48 +139,54 @@ const developmentConfig = {
 
 const productionConfig = {
   entry: {
-    rapidForm: [path.join(PATHS.app, 'index')]
+    rapidForm: 'index'
   },
   output: {
     path: PATHS.build,
     libraryTarget: 'umd',
     library: 'RapidForm',
-    filename: '[name].js',
-    chunkFilename: '[chunkhash].[name].js',
-    umdNamedDefine: true
+    filename: '[name].js'
+    // chunkFilename: '[chunkhash].[name].js',
+    // umdNamedDefine: true
     // jsonpScriptType: 'module',
   },
-  optimization: {
-    splitChunks: {
-      // chunks: 'async'
-      //   vendors: {
-      //     test: /[\\/]node_modules[\\/]/,
-      //     name: 'vendors',
-      //     priority: -10
-      //   }
-      // }
-      cacheGroups: {
-        vendors: {
-          test: /node_modules/,
-          name: 'vendors',
-          chunks: 'async',
-          enforce: true
-        }
-      }
-    },
-    runtimeChunk: false
-  },
+  // optimization: {
+  //   splitChunks: {
+  //     chunks: 'async'
+  //     //   vendors: {
+  //     //     test: /[\\/]node_modules[\\/]/,
+  //     //     name: 'vendors',
+  //     //     priority: -10
+  //     //   }
+  //     // }
+  //     // cacheGroups: {
+  //     //   vendors: {
+  //     //     test: /node_modules/,
+  //     //     name: 'vendors',
+  //     //     chunks: 'async',
+  //     //     enforce: true
+  //     //   }
+  //     // }
+  //   },
+  //   runtimeChunk: false
+  // },
+  // externals: {
+  //   'react': 'React'
+  // },
   externals: {
     'react': 'React'
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production'),
+      // 'process.env.NODE_ENV': JSON.stringify('production'),
       process: {
         env: {
           NODE_ENV: JSON.stringify('production')
         }
       }
+    }),
+    new webpack.ProvidePlugin({
+      React: 'react'
     }),
     // new webpack.NamedModulesPlugin(),
     new Visualizer({
