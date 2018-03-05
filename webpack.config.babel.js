@@ -145,37 +145,35 @@ const productionConfig = {
     path: PATHS.build,
     libraryTarget: 'umd',
     library: 'RapidForm',
-    filename: '[name].js'
-    // chunkFilename: '[chunkhash].[name].js',
+    filename: '[name].js',
+    chunkFilename: '[chunkhash].[name].js',
     // umdNamedDefine: true
     // jsonpScriptType: 'module',
   },
-  // optimization: {
-  //   splitChunks: {
-  //     chunks: 'async'
-  //     //   vendors: {
-  //     //     test: /[\\/]node_modules[\\/]/,
-  //     //     name: 'vendors',
-  //     //     priority: -10
-  //     //   }
-  //     // }
-  //     // cacheGroups: {
-  //     //   vendors: {
-  //     //     test: /node_modules/,
-  //     //     name: 'vendors',
-  //     //     chunks: 'async',
-  //     //     enforce: true
-  //     //   }
-  //     // }
-  //   },
-  //   runtimeChunk: false
-  // },
-  // externals: {
-  //   'react': 'React'
-  // },
-  // externals: {
-  //   'react': 'React'
-  // },
+  optimization: {
+    splitChunks: {
+      // chunks: 'async'
+      //   vendors: {
+      //     test: /[\\/]node_modules[\\/]/,
+      //     name: 'vendors',
+      //     priority: -10
+      //   }
+      // }
+      cacheGroups: {
+        vendors: {
+          test: /node_modules/,
+          name: 'vendors',
+          chunks: 'all',
+          enforce: true
+        }
+      }
+    },
+    runtimeChunk: false
+  },
+  externals: {
+    'react': 'react',
+    'react-dom': 'react-dom'
+  },
   plugins: [
     new webpack.DefinePlugin({
       // 'process.env.NODE_ENV': JSON.stringify('production'),
@@ -185,9 +183,6 @@ const productionConfig = {
         }
       }
     }),
-    // new webpack.ProvidePlugin({
-    //   React: 'react'
-    // }),
     // new webpack.NamedModulesPlugin(),
     new Visualizer({
       filename: '../statistics.prod.html'
