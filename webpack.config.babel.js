@@ -145,34 +145,35 @@ const productionConfig = {
     path: PATHS.build,
     libraryTarget: 'umd',
     library: 'RapidForm',
-    filename: '[name].js',
-    chunkFilename: '[chunkhash].[name].js',
+    filename: '[name].js'
+    // chunkFilename: '[chunkhash].[name].js',
     // umdNamedDefine: true
     // jsonpScriptType: 'module',
   },
-  optimization: {
-    splitChunks: {
-      // chunks: 'async'
-      //   vendors: {
-      //     test: /[\\/]node_modules[\\/]/,
-      //     name: 'vendors',
-      //     priority: -10
-      //   }
-      // }
-      cacheGroups: {
-        vendors: {
-          test: /node_modules/,
-          name: 'vendors',
-          chunks: 'all',
-          enforce: true
-        }
-      }
-    },
-    runtimeChunk: false
-  },
+  // optimization: {
+  //   splitChunks: {
+  //     chunks: 'all'
+  //     //   vendors: {
+  //     //     test: /[\\/]node_modules[\\/]/,
+  //     //     name: 'vendors',
+  //     //     priority: -10
+  //     //   }
+  //     // }
+  //     // cacheGroups: {
+  //     //   vendors: {
+  //     //     test: /node_modules/,
+  //     //     name: 'vendors',
+  //     //     chunks: 'all',
+  //     //     enforce: true
+  //     //   }
+  //     // }
+  //   },
+  //   runtimeChunk: false
+  // },
   externals: {
     'react': 'react',
-    'react-dom': 'react-dom'
+    'react-dom': 'react-dom',
+    'material-ui': 'material-ui'
   },
   plugins: [
     new webpack.DefinePlugin({
