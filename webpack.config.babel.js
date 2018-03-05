@@ -93,8 +93,7 @@ const base = {
     }
   },
   externals: {
-    'react': 'React',
-    'react-dom': 'ReactDOM'
+    'react': 'React'
   }
 }
 
@@ -117,6 +116,10 @@ const developmentConfig = {
     historyApiFallback: true,
     port: 1313,
     compress: true
+  },
+  externals: {
+    'react': 'React',
+    'react-dom': 'ReactDOM'
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
