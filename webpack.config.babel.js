@@ -91,6 +91,10 @@ const base = {
       styles: PATHS.styles,
       helpers: PATHS.helpers
     }
+  },
+  externals: {
+    'react': 'React',
+    'react-dom': 'ReactDOM'
   }
 }
 
@@ -113,10 +117,6 @@ const developmentConfig = {
     historyApiFallback: true,
     port: 1313,
     compress: true
-  },
-  externals: {
-    'react': 'React',
-    'react-dom': 'ReactDOM'
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
@@ -173,9 +173,9 @@ const productionConfig = {
   // externals: {
   //   'react': 'React'
   // },
-  externals: {
-    'react': 'React'
-  },
+  // externals: {
+  //   'react': 'React'
+  // },
   plugins: [
     new webpack.DefinePlugin({
       // 'process.env.NODE_ENV': JSON.stringify('production'),
@@ -185,9 +185,9 @@ const productionConfig = {
         }
       }
     }),
-    new webpack.ProvidePlugin({
-      React: 'react'
-    }),
+    // new webpack.ProvidePlugin({
+    //   React: 'react'
+    // }),
     // new webpack.NamedModulesPlugin(),
     new Visualizer({
       filename: '../statistics.prod.html'
