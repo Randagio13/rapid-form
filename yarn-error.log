@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/Cellar/node/9.7.1/bin/node /usr/local/Cellar/yarn/1.5.1/libexec/bin/yarn.js start
+  /usr/local/Cellar/node/9.7.1/bin/node /usr/local/Cellar/yarn/1.5.1/libexec/bin/yarn.js remove react-dom
 
 PATH: 
   /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Users/alessandrocasazza/Library/Android/sdk/tools:/Users/alessandrocasazza/Library/Android/sdk/platform-tools::/Users/alessandrocasazza/Library/Android/sdk/tools:/Users/alessandrocasazza/Library/Android/sdk/platform-tools
@@ -97,8 +97,7 @@ npm manifest:
       "webpack-visualizer-plugin": "^0.1.11"
     },
     "peerDependencies": {
-      "react": "^16.2.0",
-      "react-dom": "^16.2.0"
+      "react": "^16.2.0"
     }
   }
 
@@ -8618,16 +8617,10 @@ Lockfile:
       yeoman-environment "^1.1.0"
 
 Trace: 
-  Error: Command failed.
-  Exit signal: SIGBUS
-  Command: sh
-  Arguments: -c webpack-dev-server
-  Directory: /Volumes/Apple SD/Sites/rapid-form
-  Output:
-  
-      at ProcessTermError.MessageError (/usr/local/Cellar/yarn/1.5.1/libexec/lib/cli.js:186:110)
-      at new ProcessTermError (/usr/local/Cellar/yarn/1.5.1/libexec/lib/cli.js:226:113)
-      at ChildProcess.<anonymous> (/usr/local/Cellar/yarn/1.5.1/libexec/lib/cli.js:30281:17)
-      at ChildProcess.emit (events.js:127:13)
-      at maybeClose (internal/child_process.js:936:16)
-      at Process.ChildProcess._handle.onexit (internal/child_process.js:220:5)
+  Error: This module isn't specified in a manifest.
+      at new MessageError (/usr/local/Cellar/yarn/1.5.1/libexec/lib/cli.js:186:110)
+      at Object.<anonymous> (/usr/local/Cellar/yarn/1.5.1/libexec/lib/cli.js:60445:15)
+      at Generator.next (<anonymous>)
+      at step (/usr/local/Cellar/yarn/1.5.1/libexec/lib/cli.js:98:30)
+      at /usr/local/Cellar/yarn/1.5.1/libexec/lib/cli.js:109:13
+      at <anonymous>

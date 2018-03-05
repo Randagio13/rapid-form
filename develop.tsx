@@ -48,7 +48,7 @@ if (NODE_ENV !== 'production') {
           </div>
         </RapidForm>
       ) : (
-        <Dialog open={true} disableAutoFocus={true}>
+        <Dialog open={true} disableAutoFocus={true} disableEnforceFocus={true}>
           <RapidForm method='post' onSubmit={testOnSubmit} id='createUser' theme='material-ui' overrideTheme={themeOverride}>
             <input type='hidden' name='userId' value='13' />
             <div>

@@ -93,7 +93,8 @@ const base = {
     }
   },
   externals: {
-    'react': 'React'
+    'react': 'React',
+    'react-dom': 'ReactDOM'
   }
 }
 

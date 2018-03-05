@@ -31,7 +31,7 @@ interface IFormProps {
  * @extends {React.Component<IFormProps, any>}
  */
 class Form extends React.Component<IFormProps, any> {
-  static propTypes = {
+  public static propTypes = {
     checkAllReqFields: PropTypes.func.isRequired,
     fields: PropTypes.instanceOf(Map),
     id: PropTypes.string.isRequired,
@@ -42,7 +42,7 @@ class Form extends React.Component<IFormProps, any> {
     setTheme: PropTypes.func.isRequired,
     theme: PropTypes.oneOf(['material-ui'])
   }
-  componentDidMount (): void {
+  public componentDidMount (): void {
     const { fields, setFields, setTheme, theme, id } = this.props
     if (fields instanceof Map) {
       setFields(this.readChildren(), id)
@@ -51,7 +51,7 @@ class Form extends React.Component<IFormProps, any> {
       setTheme(theme)
     }
   }
-  componentWillUpdate (nextProps: any): void {
+  public componentWillUpdate (nextProps: any): void {
     const { fields, setFields } = this.props
     const { id } = nextProps
     const f = fields.find((v: any, k: any) => k === id)
@@ -79,13 +79,13 @@ class Form extends React.Component<IFormProps, any> {
       return children.map((i, k) => {
         const prc = Reflect.get(i.valueOf(), 'props')
         const typeCmp = Reflect.get(i.valueOf(), 'type')
-        const p = {...prc, formid: id}
+        const p = { ...prc, formid: id }
         return typesManager(typeCmp, p, `${k}`, i)
       })
     }
     const propsComponent = Reflect.get(children.valueOf(), 'props')
     const type = Reflect.get(children.valueOf(), 'type')
-    const ps = {...propsComponent, formid: id}
+    const ps = { ...propsComponent, formid: id }
     return [typesManager(type, ps, !key && id)]
   }
   private handleSubmit = (event: any): void => {
