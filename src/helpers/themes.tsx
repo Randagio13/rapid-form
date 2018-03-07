@@ -39,13 +39,13 @@ class Themes {
     switch (this.themeName) {
       case 'material-ui':
         const theme = createMuiTheme(override)
-        const styleNode = document.createComment('jss-rapid-form')
-        document.head.insertBefore(styleNode, document.head.firstChild)
-        const generateClassName = createGenerateClassName()
-        const jss: any = create(jssPreset())
-        jss.options.insertionPoint = 'jss-rapid-form'
+        // const styleNode = document.createComment('jss-rapid-form')
+        // document.head.insertBefore(styleNode, document.head.firstChild)
+        // const generateClassName = createGenerateClassName()
+        // const jss: any = create(jssPreset())
+        // jss.options.insertionPoint = 'jss-rapid-form'
         return (
-          <JssProvider jss={jss} generateClassName={generateClassName} classNamePrefix='rapidForm-'>
+          <JssProvider classNamePrefix='rapidForm-'>
             <MuiThemeProvider theme={theme}>{component}</MuiThemeProvider>
           </JssProvider>
         )
