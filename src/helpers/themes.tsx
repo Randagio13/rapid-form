@@ -41,7 +41,6 @@ class Themes {
         const theme = createMuiTheme(override)
         const styleNode = document.createComment('jss-rapid-form')
         document.head.insertBefore(styleNode, document.head.firstChild)
-        // const generateClassName = createGenerateClassName()
         const jss: any = create(jssPreset())
         jss.options.insertionPoint = 'jss-rapid-form'
         return (
@@ -49,14 +48,6 @@ class Themes {
             <MuiThemeProvider theme={theme}>{component}</MuiThemeProvider>
           </JssProvider>
         )
-      // return !dangerouslyUseGlobalCSS ? (
-      //   <MuiThemeProvider theme={theme}>{component}</MuiThemeProvider>
-      // ) : (
-      //   <JssProvider generateClassName={generateClassName}>
-      //     <MuiThemeProvider theme={theme}>{component}</MuiThemeProvider>
-      //   </JssProvider>
-      // )
-      // return component
       default:
         return component
     }
