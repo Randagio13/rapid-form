@@ -1,4 +1,5 @@
 import { create } from 'jss'
+import { create } from 'jss'
 import FileUpload from 'material-ui-icons/FileUpload'
 import Button from 'material-ui/Button'
 import Checkbox from 'material-ui/Checkbox'
@@ -8,7 +9,12 @@ import Input, { InputLabel } from 'material-ui/Input'
 import { ListItemText } from 'material-ui/List'
 import Menu, { MenuItem } from 'material-ui/Menu'
 import Select from 'material-ui/Select'
-import { createGenerateClassName, createMuiTheme, MuiThemeProvider } from 'material-ui/styles'
+import {
+  createGenerateClassName,
+  createMuiTheme,
+  jssPreset,
+  MuiThemeProvider
+} from 'material-ui/styles'
 import TextField from 'material-ui/TextField'
 import Typography from 'material-ui/Typography'
 import * as React from 'react'
@@ -25,27 +31,32 @@ class Themes {
   constructor (themeName: string) {
     this.themeName = themeName
   }
-  public renderByTheme (component: any, override = {}, dangerouslyUseGlobalCSS = true): JSX.Element {
+  public renderByTheme (
+    component: any,
+    override = {},
+    dangerouslyUseGlobalCSS = true
+  ): JSX.Element {
     switch (this.themeName) {
       case 'material-ui':
         const theme = createMuiTheme(override)
-        const generateClassName = createGenerateClassName({
-          dangerouslyUseGlobalCSS,
-          productionPrefix: 'c'
-        })
+        const styleNode = document.createComment('jss-insertion-point')
+        document.head.insertBefore(styleNode, document.head.firstChild)
+        const generateClassName = createGenerateClassName()
+        const jss: any = create(jssPreset())
+        jss.options.insertionPoint = 'jss-insertion-point'
         return (
           <JssProvider generateClassName={generateClassName}>
             <MuiThemeProvider theme={theme}>{component}</MuiThemeProvider>
           </JssProvider>
         )
-        // return !dangerouslyUseGlobalCSS ? (
-        //   <MuiThemeProvider theme={theme}>{component}</MuiThemeProvider>
-        // ) : (
-        //   <JssProvider generateClassName={generateClassName}>
-        //     <MuiThemeProvider theme={theme}>{component}</MuiThemeProvider>
-        //   </JssProvider>
-        // )
-        // return component
+      // return !dangerouslyUseGlobalCSS ? (
+      //   <MuiThemeProvider theme={theme}>{component}</MuiThemeProvider>
+      // ) : (
+      //   <JssProvider generateClassName={generateClassName}>
+      //     <MuiThemeProvider theme={theme}>{component}</MuiThemeProvider>
+      //   </JssProvider>
+      // )
+      // return component
       default:
         return component
     }
@@ -62,13 +73,24 @@ class Themes {
           case 'password':
           case 'hidden':
             const { value: val, key: ke } = props
-            return <TextField key={`${type}-${ke}`} type={type} {...props} value={val || ''} />
+            return (
+              <TextField
+                key={`${type}-${ke}`}
+                type={type}
+                {...props}
+                value={val || ''}
+              />
+            )
           case 'file':
             const { value: va, error: err, key, ...pr } = props
-            const ref = (r: any) => this.inputFile = r
+            const ref = (r: any) => (this.inputFile = r)
             return (
               <div>
-                <Button key={`${type}-${key}`} variant='raised' onClick={this.handleInputFile}>
+                <Button
+                  key={`${type}-${key}`}
+                  variant='raised'
+                  onClick={this.handleInputFile}
+                >
                   {'upload'}
                   <FileUpload />
                   <input
@@ -83,10 +105,22 @@ class Themes {
             )
           case 'button':
             const { children: child, key: k, ...other } = props
-            return <Button key={`${type}-${k}`} {...other}>{child}</Button>
+            return (
+              <Button key={`${type}-${k}`} {...other}>
+                {child}
+              </Button>
+            )
           case 'select':
-            const { children , ...p } = props
-            const { multiple, value, placeholder, withChip, multiCheckbox, error, required } = p
+            const { children, ...p } = props
+            const {
+              multiple,
+              value,
+              placeholder,
+              withChip,
+              multiCheckbox,
+              error,
+              required
+            } = p
             Reflect.deleteProperty(p, 'withChip')
             Reflect.deleteProperty(p, 'multiCheckbox')
             const input = <Input id='select-placeholder' />
@@ -98,34 +132,57 @@ class Themes {
                 ? (selected: any) => selected.join(', ')
                 : (selected: any): any => {
                   if (selected) {
-                    return selected.map((lab: any, ky: number) => {
-                      return <Chip key={`chip-${ky}`} label={lab} />
-                    })
-                  }
+                      return selected.map((lab: any, ky: number) => {
+                        return <Chip key={`chip-${ky}`} label={lab} />
+                      })
+                    }
                   return []
                 }
-              return !placeholder
-                ? (
-                  <Select value={v} renderValue={renderValue} inputProps={inputProps} {...p}>
+              return !placeholder ? (
+                <Select
+                  value={v}
+                  renderValue={renderValue}
+                  inputProps={inputProps}
+                  {...p}
+                >
+                  {this.renderMultipleSelect(children, v, multiCheckbox)}
+                </Select>
+              ) : (
+                <FormControl error={error}>
+                  <InputLabel htmlFor='select-placeholder'>
+                    {placeholder}
+                  </InputLabel>
+                  <Select
+                    inputProps={inputProps}
+                    value={v}
+                    renderValue={renderValue}
+                    input={input}
+                    {...p}
+                  >
                     {this.renderMultipleSelect(children, v, multiCheckbox)}
                   </Select>
-                ) : (
-                  <FormControl error={error}>
-                    <InputLabel htmlFor='select-placeholder'>{placeholder}</InputLabel>
-                    <Select inputProps={inputProps} value={v} renderValue={renderValue} input={input} {...p}>
-                      {this.renderMultipleSelect(children, v, multiCheckbox)}
-                    </Select>
-                  </FormControl>
-                )
-            }
-            return !placeholder
-              ? <Select native={true} inputProps={inputProps} {...p}>{children}</Select>
-              : (
-                <FormControl error={error}>
-                  <InputLabel htmlFor='select-placeholder'>{placeholder}</InputLabel>
-                  <Select native={true} input={input} inputProps={inputProps} {...p}>{children}</Select>
                 </FormControl>
               )
+            }
+            return !placeholder ? (
+              <Select native={true} inputProps={inputProps} {...p}>
+                {children}
+              </Select>
+            ) : (
+              <FormControl error={error}>
+                <InputLabel htmlFor='select-placeholder'>
+                  {placeholder}
+                </InputLabel>
+                <Select
+                  native={true}
+                  input={input}
+                  inputProps={inputProps}
+                  {...p}
+                >
+                  {children}
+                </Select>
+              </FormControl>
+            )
           default:
             return cmp
         }
@@ -133,7 +190,11 @@ class Themes {
         return cmp
     }
   }
-  private renderMultipleSelect = (options: any, val: any[], multiCheckbox?: boolean): any[] => {
+  private renderMultipleSelect = (
+    options: any,
+    val: any[],
+    multiCheckbox?: boolean
+  ): any[] => {
     const opts = Array.isArray(options) ? options : [options]
     return opts.map((option: any, key: number): JSX.Element => {
       const { props } = option
