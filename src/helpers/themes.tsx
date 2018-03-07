@@ -1,3 +1,4 @@
+import { create } from 'jss'
 import FileUpload from 'material-ui-icons/FileUpload'
 import Button from 'material-ui/Button'
 import Checkbox from 'material-ui/Checkbox'
@@ -7,10 +8,11 @@ import Input, { InputLabel } from 'material-ui/Input'
 import { ListItemText } from 'material-ui/List'
 import Menu, { MenuItem } from 'material-ui/Menu'
 import Select from 'material-ui/Select'
-import { createMuiTheme, MuiThemeProvider } from 'material-ui/styles'
+import { createGenerateClassName, createMuiTheme, MuiThemeProvider } from 'material-ui/styles'
 import TextField from 'material-ui/TextField'
 import Typography from 'material-ui/Typography'
 import * as React from 'react'
+import JssProvider from 'react-jss/lib/JssProvider'
 
 /**
  * Themes
@@ -23,15 +25,20 @@ class Themes {
   constructor (themeName: string) {
     this.themeName = themeName
   }
-  public renderByTheme (component: any, override = {}): JSX.Element {
+  public renderByTheme (component: any, override = {}, dangerouslyUseGlobalCSS = false): JSX.Element {
     switch (this.themeName) {
       case 'material-ui':
         const theme = createMuiTheme(override)
-        // Old material-UI
-        return (
-          <div>
+        const generateClassName = createGenerateClassName({
+          dangerouslyUseGlobalCSS,
+          productionPrefix: 'rapidForm'
+        })
+        return !dangerouslyUseGlobalCSS ? (
+          <MuiThemeProvider theme={theme}>{component}</MuiThemeProvider>
+        ) : (
+          <JssProvider generateClassName={generateClassName}>
             <MuiThemeProvider theme={theme}>{component}</MuiThemeProvider>
-          </div>
+          </JssProvider>
         )
         // return component
       default:

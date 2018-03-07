@@ -14,7 +14,8 @@ interface IFormProps {
   method: string,
   key?: string,
   name?: string,
-  disabled?: boolean
+  disabled?: boolean,
+  dangerouslyUseGlobalCSS?: boolean
   onSubmit?: callbackSubmit,
   children?: [React.ReactNode, any[]],
   fields?: any,
@@ -33,6 +34,7 @@ interface IFormProps {
 class Form extends React.Component<IFormProps, any> {
   public static propTypes = {
     checkAllReqFields: PropTypes.func.isRequired,
+    dangerouslyUseGlobalCSS: PropTypes.bool,
     fields: PropTypes.instanceOf(Map),
     id: PropTypes.string.isRequired,
     method: PropTypes.oneOf(['get', 'post']).isRequired,
@@ -69,9 +71,9 @@ class Form extends React.Component<IFormProps, any> {
     ))
   }
   private renderByThemes = (cmp: JSX.Element) => {
-    const { theme, overrideTheme } = this.props
+    const { theme, overrideTheme, dangerouslyUseGlobalCSS } = this.props
     const themes = new Themes(theme)
-    return themes.renderByTheme(cmp, overrideTheme)
+    return themes.renderByTheme(cmp, overrideTheme, dangerouslyUseGlobalCSS)
   }
   private readChildren = (): any[] => {
     const { children, id, key, theme } = this.props

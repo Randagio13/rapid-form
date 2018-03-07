@@ -42,6 +42,7 @@
     "material-ui-icons": "1.0.0-beta.35",
     "prop-types": "^15.6.0",
     "prop-types-ts": "^0.6.0",
+    "react-jss": "^8.3.3",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0"

@@ -35,21 +35,50 @@ if (NODE_ENV !== 'production') {
     public handleSwitch = () => {
       const { viewForm } = this.state
       return viewForm ? (
-        <RapidForm method='post' onSubmit={testOnSubmit} id='formId' theme='material-ui' overrideTheme={themeOverride}>
+        <RapidForm
+          method='post'
+          onSubmit={testOnSubmit}
+          id='formId'
+          theme='material-ui'
+          overrideTheme={themeOverride}
+          dangerouslyUseGlobalCSS={true}
+        >
           <input type='hidden' name='groupId' value={1} />
           <div className='testClass'>
-          <select multiple name='users' placeholder='select users' data-validation='empty' required displayEmpty autoWidth withChip multiCheckbox>
-            <option disabled key='0' value='Alessandro'>{'Alessandro'}</option>
-            <option key='1' value='Bruce'>{'Bruce'}</option>
-          </select>
+            <select
+              multiple
+              name='users'
+              placeholder='select users'
+              data-validation='empty'
+              required
+              displayEmpty
+              autoWidth
+              withChip
+              multiCheckbox
+            >
+              <option disabled key='0' value='Alessandro'>
+                {'Alessandro'}
+              </option>
+              <option key='1' value='Bruce'>
+                {'Bruce'}
+              </option>
+            </select>
           </div>
           <div className='testClass'>
-            <button type='submit' color='primary' variant='raised'>{'Sign up'}</button>
+            <button type='submit' color='primary' variant='raised'>
+              {'Sign up'}
+            </button>
           </div>
         </RapidForm>
       ) : (
         <Dialog open={true} disableAutoFocus={true} disableEnforceFocus={true}>
-          <RapidForm method='post' onSubmit={testOnSubmit} id='createUser' theme='material-ui' overrideTheme={themeOverride}>
+          <RapidForm
+            method='post'
+            onSubmit={testOnSubmit}
+            id='createUser'
+            theme='material-ui'
+            overrideTheme={themeOverride}
+          >
             <input type='hidden' name='userId' value='13' />
             <div>
               <input
@@ -73,7 +102,9 @@ if (NODE_ENV !== 'production') {
               />
             </div>
             <div>
-              <button disabled type='submit' color='primary' variant='raised'>{'create'}</button>
+              <button disabled type='submit' color='primary' variant='raised'>
+                {'create'}
+              </button>
             </div>
           </RapidForm>
         </Dialog>
@@ -89,11 +120,12 @@ if (NODE_ENV !== 'production') {
     }
   }
   const renderApp = (Component: any) => {
-    ReactDOM.render((
+    ReactDOM.render(
       <AppContainer>
         <Component />
-      </AppContainer>
-    ), document.getElementById('app'))
+      </AppContainer>,
+      document.getElementById('app')
+    )
   }
 
   const testOnSubmit = (event: any, data: object): void => {
@@ -126,7 +158,9 @@ if (NODE_ENV !== 'production') {
   if (Reflect.get(module, 'hot') !== undefined) {
     // tslint:disable-next-line:no-var-
     const nextApp = require('./src').default
-    Reflect.get(module, 'hot').accept('./src', () => { renderApp(nextApp) })
+    Reflect.get(module, 'hot').accept('./src', () => {
+      renderApp(nextApp)
+    })
   }
 }
 // ### Login form

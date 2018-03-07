@@ -133,6 +133,10 @@ const developmentConfig = {
     }),
     new Visualizer({
       filename: '../statistics.html'
+    }),
+    new webpack.ProvidePlugin({
+      ReactDOM: 'react-dom',
+      React: 'react'
     })
   ]
 }
@@ -172,8 +176,7 @@ const productionConfig = {
   // },
   externals: {
     'react': 'react',
-    'react-dom': 'react-dom',
-    'material-ui': 'material-ui'
+    'react-dom': 'react-dom'
   },
   plugins: [
     new webpack.DefinePlugin({
