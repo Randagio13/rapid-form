@@ -39,13 +39,13 @@ class Themes {
     switch (this.themeName) {
       case 'material-ui':
         const theme = createMuiTheme(override)
-        const styleNode = document.createComment('jss-insertion-point')
+        const styleNode = document.createComment('jss-rapid-form')
         document.head.insertBefore(styleNode, document.head.firstChild)
         const generateClassName = createGenerateClassName()
         const jss: any = create(jssPreset())
-        jss.options.insertionPoint = 'jss-insertion-point'
+        jss.options.insertionPoint = 'jss-rapid-form'
         return (
-          <JssProvider generateClassName={generateClassName}>
+          <JssProvider jss={jss} generateClassName={generateClassName} classNamePrefix='rapidForm-'>
             <MuiThemeProvider theme={theme}>{component}</MuiThemeProvider>
           </JssProvider>
         )
@@ -132,10 +132,10 @@ class Themes {
                 ? (selected: any) => selected.join(', ')
                 : (selected: any): any => {
                   if (selected) {
-                      return selected.map((lab: any, ky: number) => {
-                        return <Chip key={`chip-${ky}`} label={lab} />
-                      })
-                    }
+                    return selected.map((lab: any, ky: number) => {
+                      return <Chip key={`chip-${ky}`} label={lab} />
+                    })
+                  }
                   return []
                 }
               return !placeholder ? (
