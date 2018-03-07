@@ -25,21 +25,26 @@ class Themes {
   constructor (themeName: string) {
     this.themeName = themeName
   }
-  public renderByTheme (component: any, override = {}, dangerouslyUseGlobalCSS = false): JSX.Element {
+  public renderByTheme (component: any, override = {}, dangerouslyUseGlobalCSS = true): JSX.Element {
     switch (this.themeName) {
       case 'material-ui':
         const theme = createMuiTheme(override)
         const generateClassName = createGenerateClassName({
           dangerouslyUseGlobalCSS,
-          productionPrefix: 'rapidForm'
+          productionPrefix: 'c'
         })
-        return !dangerouslyUseGlobalCSS ? (
-          <MuiThemeProvider theme={theme}>{component}</MuiThemeProvider>
-        ) : (
+        return (
           <JssProvider generateClassName={generateClassName}>
             <MuiThemeProvider theme={theme}>{component}</MuiThemeProvider>
           </JssProvider>
         )
+        // return !dangerouslyUseGlobalCSS ? (
+        //   <MuiThemeProvider theme={theme}>{component}</MuiThemeProvider>
+        // ) : (
+        //   <JssProvider generateClassName={generateClassName}>
+        //     <MuiThemeProvider theme={theme}>{component}</MuiThemeProvider>
+        //   </JssProvider>
+        // )
         // return component
       default:
         return component
