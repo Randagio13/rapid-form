@@ -9,20 +9,21 @@ import { callbackSubmit } from 'types'
  * @interface IFormProps
  */
 interface IFormProps {
-  error?: any[],
-  id: string,
-  method: string,
-  key?: string,
-  name?: string,
-  disabled?: boolean,
+  error?: any[]
+  id: string
+  method: string
+  key?: string
+  name?: string
+  disabled?: boolean
+  className?: string
   dangerouslyUseGlobalCSS?: boolean
-  onSubmit?: callbackSubmit,
-  children?: [React.ReactNode, any[]],
-  fields?: any,
-  setFields?: (fields: any[], id: string) => void,
-  setTheme?: (theme: string) => void,
-  overrideTheme?: object,
-  checkAllReqFields?: (id: string) => void,
+  onSubmit?: callbackSubmit
+  children?: [React.ReactNode, any[]]
+  fields?: any
+  setFields?: (fields: any[], id: string) => void
+  setTheme?: (theme: string) => void
+  overrideTheme?: object
+  checkAllReqFields?: (id: string) => void
   theme: string
 }
 
@@ -34,6 +35,7 @@ interface IFormProps {
 class Form extends React.Component<IFormProps, any> {
   public static propTypes = {
     checkAllReqFields: PropTypes.func.isRequired,
+    className: PropTypes.string,
     dangerouslyUseGlobalCSS: PropTypes.bool,
     fields: PropTypes.instanceOf(Map),
     id: PropTypes.string.isRequired,
@@ -62,13 +64,28 @@ class Form extends React.Component<IFormProps, any> {
     }
   }
   public render (): any {
-    const { children, id, name, fields, onSubmit, method } = this.props
+    const {
+      children,
+      id,
+      name,
+      fields,
+      onSubmit,
+      method,
+      className
+    } = this.props
     const content = fields.get(id) ? fields.get(id).toJS() : null
-    return this.renderByThemes((
-      <form key={id} id={id} name={name || id} method={method} onSubmit={this.handleSubmit}>
+    return this.renderByThemes(
+      <form
+        key={id}
+        id={id}
+        name={name || id}
+        method={method}
+        className={className}
+        onSubmit={this.handleSubmit}
+      >
         {content}
       </form>
-    ))
+    )
   }
   private renderByThemes = (cmp: JSX.Element) => {
     const { theme, overrideTheme, dangerouslyUseGlobalCSS } = this.props

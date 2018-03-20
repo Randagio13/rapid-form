@@ -27,7 +27,7 @@ export interface IProps {
  * @extends {React.Component<IProps, any>}
  */
 class Select extends React.Component<IProps, any> {
-  static propTypes = {
+  public static propTypes = {
     children: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.element,
@@ -56,16 +56,16 @@ class Select extends React.Component<IProps, any> {
     const key = Reflect.get(props, 'data-key')
     const isValid = validationMethod(method, val)
     if (!method || !required) {
-      return checkError({...props, value: val}, key, Map())
+      return checkError({ ...props, value: val }, key, Map())
     }
-    checkError({...props, value: val}, key, isValid)
+    checkError({ ...props, value: val }, key, isValid)
   }
   private handleRenderByTheme = (): JSX.Element => {
     const { setCheckError: checkError, children, theme, errors, ...allProps } = this.props
     const themeClass = new Themes(theme)
     const cmp = <select {...allProps}>{children}</select>
     const props = { onChange: this.handleValidation, ...allProps }
-    return themeClass.renderField('select', {...props, children}, cmp)
+    return themeClass.renderField('select', { ...props, children }, cmp)
   }
 }
 

@@ -52,10 +52,7 @@ class Themes {
         return component
     }
   }
-  private handleInputFile = (): void => {
-    this.inputFile.click()
-  }
-  private renderField = (type: string, props: any, cmp?: any): JSX.Element => {
+  public renderField = (type: string, props: any, cmp?: any): JSX.Element => {
     switch (this.themeName) {
       case 'material-ui':
         switch (type) {
@@ -180,6 +177,9 @@ class Themes {
       default:
         return cmp
     }
+  }
+  private handleInputFile = (): void => {
+    this.inputFile.click()
   }
   private renderMultipleSelect = (
     options: any,

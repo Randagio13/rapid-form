@@ -43,32 +43,31 @@ if (NODE_ENV !== 'production') {
           overrideTheme={themeOverride}
           dangerouslyUseGlobalCSS={true}
         >
-          <input type='hidden' name='groupId' value={1} />
-          <div className='testClass'>
-            <select
-              multiple
-              name='users'
-              placeholder='select users'
-              data-validation='empty'
-              required
-              displayEmpty
-              autoWidth
-              withChip
-              multiCheckbox
-            >
-              <option disabled key='0' value='Alessandro'>
-                {'Alessandro'}
-              </option>
-              <option key='1' value='Bruce'>
-                {'Bruce'}
-              </option>
-            </select>
-          </div>
-          <div className='testClass'>
-            <button type='submit' color='primary' variant='raised'>
-              {'Sign up'}
-            </button>
-          </div>
+          <select
+            name='users'
+            placeholder='select users'
+            data-validation='empty'
+            required
+            autoWidth
+          >
+            <option key='0' value='Alessandro'>
+              {'Alessandro'}
+            </option>
+            <option key='1' value='Bruce'>
+              {'Bruce'}
+            </option>
+          </select>
+          <input
+            type='email'
+            name='username'
+            label='Email'
+            data-validation='empty'
+            required
+            fullWidth
+          />
+          <button type='submit' color='primary' variant='raised'>
+            {'Sign up'}
+          </button>
         </RapidForm>
       ) : (
         <Dialog open={true} disableAutoFocus={true} disableEnforceFocus={true}>
@@ -78,6 +77,7 @@ if (NODE_ENV !== 'production') {
             id='createUser'
             theme='material-ui'
             overrideTheme={themeOverride}
+            className='pippo'
           >
             <input type='hidden' name='userId' value='13' />
             <div>

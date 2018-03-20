@@ -1,13 +1,11 @@
 import { fromJS, List, Map } from 'immutable'
 import * as React from 'react'
 
-/**
- * analizeFields
- * @param formFields any[]
- * @param removeError any
- * @param value string
- */
-export const analizeFields = (formFields: any[], removeError?: any, value = '') => {
+export const analizeFields = (
+  formFields: any[],
+  removeError?: any,
+  value = ''
+) => {
   return formFields.map((cmps: any): any => {
     const type = cmps.get('type')
     const key = cmps.get('key')
@@ -18,22 +16,36 @@ export const analizeFields = (formFields: any[], removeError?: any, value = '') 
       if (Array.isArray(children)) {
         // TODO: You must complete this part
         return null
+        // const childs = children.map((child: any, i: number) => {
+        //   const { props: prs } = child
+        //   return React.cloneElement(child)
+        // })
+        // return fromJS(
+        //   React.createElement(
+        //     type,
+        //     { ...propsCmp, key },
+        //     childs
+        //   )
+        // )
       }
-      const nwProps = {...props, error: !removeError, value}
+      const nwProps = { ...props, error: !removeError, value }
       return fromJS(
-        React.createElement(type, {...propsCmp, key}, React.cloneElement(
-          children, nwProps
-        ))
+        React.createElement(
+          type,
+          { ...propsCmp, key },
+          React.cloneElement(children, nwProps)
+        )
       )
     }
-    const p = {...propsCmp, error: !removeError}
-    return fromJS(
-      React.createElement(type, {...p, key, value})
-    )
+    const p = { ...propsCmp, error: !removeError }
+    return fromJS(React.createElement(type, { ...p, key, value }))
   })
 }
 
-export const analizeRequiredFields = (formFields: any, submitResult: any): any[] => {
+export const analizeRequiredFields = (
+  formFields: any,
+  submitResult: any
+): any[] => {
   const checker: any[] = []
   formFields.map((cmps: any): any => {
     const type = cmps.get('type')
@@ -41,21 +53,21 @@ export const analizeRequiredFields = (formFields: any, submitResult: any): any[]
     const propsCmps = cmps.get('props').toJS()
     const { children, required, name, ...propsCmp } = propsCmps
     if (children) {
-      const { props } = children
-      const { required: requiredChild, name: nameChild } = props
       if (Array.isArray(children)) {
         // TODO: You must complete this part
       }
+      const { props } = children
+      const { required: requiredChild, name: nameChild } = props
       if (requiredChild && !Reflect.get(submitResult, nameChild)) {
-        checker.push({name: nameChild, check: false})
+        checker.push({ name: nameChild, check: false })
       } else if (name) {
-        checker.push({name: nameChild, check: true})
+        checker.push({ name: nameChild, check: true })
       }
     }
     if (required && !Reflect.get(submitResult, name)) {
-      checker.push({name, check: false})
+      checker.push({ name, check: false })
     } else if (name) {
-      checker.push({name, check: true})
+      checker.push({ name, check: true })
     }
   })
   return checker.find((el: { check: any }): any => {
@@ -67,10 +79,18 @@ export const analizeRequiredFields = (formFields: any, submitResult: any): any[]
   })
 }
 
-export const analizeErrors = (formid: string, key: number, name: string, errors: any, typeError: any) => {
+export const analizeErrors = (
+  formid: string,
+  key: number,
+  name: string,
+  errors: any,
+  typeError: any
+) => {
   const e = errors.get(formid)
   if (typeError.size > 0) {
-    return errors.setIn([formid, key], fromJS({name, ...typeError.toJS()})).filter((v: any) => v !== undefined)
+    return errors
+      .setIn([formid, key], fromJS({ name, ...typeError.toJS() }))
+      .filter((v: any) => v !== undefined)
   }
   if (e && e.size > 0 && e.getIn([`${key}`, 'name']) === name) {
     if (e.size === 1) {
@@ -92,7 +112,11 @@ const validationMethod = (method: string, val: any): any => {
     switch (m) {
       case 'empty':
       default:
-        if (val === '' || val === undefined || Array.isArray(val) && val.length === 0) {
+        if (
+          val === '' ||
+          val === undefined ||
+          (Array.isArray(val) && val.length === 0)
+        ) {
           r = r.set(m, true)
         }
         break
