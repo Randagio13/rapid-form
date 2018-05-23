@@ -1,7 +1,8 @@
+// TODO: Added mock Redux component
+import { Button } from 'components'
 import { shallow } from 'enzyme'
 import * as React from 'react'
 import { create } from 'react-test-renderer'
-import Button from '../../src/components/button/Button'
 
 const component = create(
   <Button type='submit'>{'Sign up'}</Button>

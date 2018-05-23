@@ -1,7 +1,8 @@
+// TODO: Added mock Redux component
+import { Text } from 'components'
 import { shallow } from 'enzyme'
 import * as React from 'react'
 import { create } from 'react-test-renderer'
-import Text from '../../src/components/input/Text'
 
 export const testOnSubmit = (event: any) => {
   alert(event)

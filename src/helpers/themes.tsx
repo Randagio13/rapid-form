@@ -1,22 +1,23 @@
-import { create } from 'jss'
-import { create } from 'jss'
-import FileUpload from 'material-ui-icons/FileUpload'
-import Button from 'material-ui/Button'
-import Checkbox from 'material-ui/Checkbox'
-import Chip from 'material-ui/Chip'
-import { FormControl } from 'material-ui/Form'
-import Input, { InputLabel } from 'material-ui/Input'
-import { ListItemText } from 'material-ui/List'
-import Menu, { MenuItem } from 'material-ui/Menu'
-import Select from 'material-ui/Select'
+import Button from '@material-ui/core/Button'
+import Checkbox from '@material-ui/core/Checkbox'
+import Chip from '@material-ui/core/Chip'
+import FormControl from '@material-ui/core/FormControl'
+import Input from '@material-ui/core/Input'
+import InputLabel from '@material-ui/core/InputLabel'
+import ListItemText from '@material-ui/core/ListItemText'
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
+import Select from '@material-ui/core/Select'
 import {
   createGenerateClassName,
   createMuiTheme,
   jssPreset,
   MuiThemeProvider
-} from 'material-ui/styles'
-import TextField from 'material-ui/TextField'
-import Typography from 'material-ui/Typography'
+} from '@material-ui/core/styles'
+import TextField from '@material-ui/core/TextField'
+import Typography from '@material-ui/core/Typography'
+import FileUpload from '@material-ui/icons/FileUpload'
+import { create } from 'jss'
 import * as React from 'react'
 import JssProvider from 'react-jss/lib/JssProvider'
 
