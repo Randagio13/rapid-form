@@ -176,6 +176,13 @@ class Themes {
             return cmp
         }
       default:
+        if (this.themeName) {
+          console.warn(
+            `%c'${this.themeName}' %cis not a valid theme, please insert correct name!`,
+            'fontWeight: bold',
+            ''
+          )
+        }
         return cmp
     }
   }
