@@ -55,13 +55,16 @@ export const analizeRequiredFields = (
     if (children) {
       if (Array.isArray(children)) {
         // TODO: You must complete this part
+        console.log('is ARRAY')
       }
       const { props } = children
-      const { required: requiredChild, name: nameChild } = props
-      if (requiredChild && !Reflect.get(submitResult, nameChild)) {
-        checker.push({ name: nameChild, check: false })
-      } else if (name) {
-        checker.push({ name: nameChild, check: true })
+      if (props !== undefined) {
+        const { required: requiredChild, name: nameChild } = props
+        if (requiredChild && !Reflect.get(submitResult, nameChild)) {
+          checker.push({ name: nameChild, check: false })
+        } else if (name) {
+          checker.push({ name: nameChild, check: true })
+        }
       }
     }
     if (required && !Reflect.get(submitResult, name)) {

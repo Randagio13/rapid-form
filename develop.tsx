@@ -47,8 +47,8 @@ if (NODE_ENV !== 'production') {
             name='users'
             placeholder='select users'
             data-validation='empty'
-            required
-            autoWidth
+            required={true}
+            autoWidth={true}
           >
             <option key='0' value='Alessandro'>
               {'Alessandro'}
@@ -62,8 +62,8 @@ if (NODE_ENV !== 'production') {
             name='username'
             label='Email'
             data-validation='empty'
-            required
-            fullWidth
+            required={true}
+            fullWidth={true}
           />
           <button type='submit' color='primary' variant='raised'>
             {'Sign up'}
@@ -79,30 +79,49 @@ if (NODE_ENV !== 'production') {
             overrideTheme={themeOverride}
             className='pippo'
           >
-            <input type='hidden' name='userId' value='13' />
             <div>
-              <input
-                type='email'
-                name='username'
-                label='Email'
-                data-validation='empty'
-                required
-                fullWidth
-              />
-            </div>
+                <input
+                  type='email'
+                  name='username'
+                  label='Email'
+                  data-validation='empty'
+                  required={true}
+                  fullWidth={true}
+                />
+              </div>
+              <div>
+                <input
+                  type='password'
+                  name='password'
+                  label='Password'
+                  data-validation='empty'
+                  required={true}
+                  fullWidth={true}
+                  autoComplete='new-password'
+                />
+              </div>
+              <div>
+                <input
+                  type='text'
+                  name='firstname'
+                  label='First Name'
+                  data-validation='empty'
+                  required={true}
+                  fullWidth={true}
+                />
+              </div>
+              <div>
+                <input
+                  type='text'
+                  name='lastname'
+                  label='Last Name'
+                  data-validation='empty'
+                  required={true}
+                  fullWidth={true}
+                />
+              </div>
             <div>
-              <input
-                type='password'
-                name='password'
-                label='Password'
-                data-validation='empty'
-                required
-                fullWidth
-                autoComplete='new-password'
-              />
-            </div>
-            <div>
-              <button disabled type='submit' color='primary' variant='raised'>
+              <button disabled={true} type='submit' color='primary' variant='raised'>
                 {'create'}
               </button>
             </div>
