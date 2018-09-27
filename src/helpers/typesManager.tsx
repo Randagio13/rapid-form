@@ -18,7 +18,7 @@ const typesManager = (typeCmp: any | string, props: IPropsTypes, key?: string, c
     case 'button':
       return <ButtonContainer key={key} {...props} />
     case 'select':
-      return <SelectContainer key={key} data-key={key} {...props} />
+      return <SelectContainer key={key} data-type={typeCmp} data-key={key} {...props} />
     case undefined:
       console.error('Warning: The prop `type` is marked as required, but its value is `undefined`')
       return null

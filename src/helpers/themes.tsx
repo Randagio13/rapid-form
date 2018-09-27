@@ -154,7 +154,12 @@ class Themes {
               )
             }
             return !placeholder ? (
-              <Select native={true} inputProps={inputProps} {...p}>
+              <Select
+                value={v}
+                native={true}
+                inputProps={inputProps}
+                {...p}
+              >
                 {children}
               </Select>
             ) : (
@@ -163,6 +168,7 @@ class Themes {
                   {placeholder}
                 </InputLabel>
                 <Select
+                  value={v}
                   native={true}
                   input={input}
                   inputProps={inputProps}

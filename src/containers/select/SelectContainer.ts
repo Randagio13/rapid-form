@@ -15,6 +15,6 @@ const mapStateToProps = ({ select, form: { theme, errors } }: IState, props: any
   return { ...select, ...props, theme, errors }
 }
 
-const mapDispatchToProps = (dispatch: any): any => bindActionCreators({setCheckError}, dispatch)
+const mapDispatchToProps = (dispatch: any): any => bindActionCreators({ setCheckError }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Select)
