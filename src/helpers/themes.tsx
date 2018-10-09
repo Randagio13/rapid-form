@@ -89,7 +89,7 @@ class Themes {
                     {...pr}
                   />
                 </Button>
-                <Typography variant='subheading'>{va || ''}</Typography>
+                <Typography variant='subtitle1'>{va || ''}</Typography>
               </div>
             )
           case 'button':
