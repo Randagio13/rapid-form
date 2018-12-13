@@ -24,7 +24,7 @@ const PATHS = {
   helpers: path.join(__dirname, 'src', 'helpers')
 }
 
-const devtool = isProduction ? 'source-map' : 'eval-source-map'
+const devtool = isProduction ? 'hidden-source-map' : 'eval-source-map'
 const mode = isProduction ? 'production' : 'development'
 
 const base = {
@@ -64,7 +64,6 @@ const base = {
             loader: 'css-loader',
             options: {
               camelCase: true,
-              minimize: true,
               modules: true,
               importLoaders: 1,
               localIdentName: '[path][name]__[local]--[hash:base64:5]'
