@@ -43,7 +43,60 @@ if (NODE_ENV !== 'production') {
           overrideTheme={themeOverride}
           dangerouslyUseGlobalCSS={true}
         >
-          <select
+        <div>
+              <select
+                key='column'
+                name='column'
+                data-validation='empty'
+                autoWidth={true}
+                required={true}
+              >
+                <option value={0}>
+                  {'field 0'}
+                </option>
+                <option value={1}>
+                  {'field 1'}
+                </option>
+                <option value={2}>
+                  {'field 2'}
+                </option>
+              </select>
+            </div>
+            <div>
+              <select
+                name='comparison'
+                key='comparison'
+                data-validation='empty'
+                autoWidth={true}
+                required={true}
+              >
+                <option key='egual' value='='>
+                  {'='}
+                </option>
+                <option key='greater' value='>'>
+                  {'>'}
+                </option>
+                <option key='less' value='<'>
+                  {'<'}
+                </option>
+              </select>
+            </div>
+            <div >
+              <input
+                key='value'
+                type='text'
+                name='value'
+                label='value'
+                data-validation='empty'
+                required={true}
+              />
+            </div>
+            <div >
+              <button key='add' type='submit' color='primary' variant='raised'>
+                {'add'}
+              </button>
+            </div>
+          {/* <select
             name='users'
             placeholder='select users'
             data-validation='empty'
@@ -67,7 +120,7 @@ if (NODE_ENV !== 'production') {
           />
           <button type='submit' color='primary' variant='raised'>
             {'Sign up'}
-          </button>
+          </button> */}
         </RapidForm>
       ) : (
         <Dialog open={true} disableAutoFocus={true} disableEnforceFocus={true}>
