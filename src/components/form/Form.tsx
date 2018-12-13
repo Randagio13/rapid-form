@@ -1,11 +1,125 @@
+import * as serialize from 'form-serialize'
+import { analizeRequiredFields, Themes, typesManager } from 'helpers'
+import { List, Map } from 'immutable'
+import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import { callbackSubmit } from 'types'
 
+/**
+ * @interface IFormProps
+ */
 interface IFormProps {
-  error?: object
+  error?: any[]
+  id: string
+  method: string
+  key?: string
+  name?: string
+  disabled?: boolean
+  className?: string
+  dangerouslyUseGlobalCSS?: boolean
+  onSubmit?: callbackSubmit
+  children?: [React.ReactNode, any[]]
+  fields?: any
+  setFields?: (fields: any[], id: string) => void
+  setTheme?: (theme: string) => void
+  overrideTheme?: object
+  checkAllReqFields?: (id: string) => void
+  theme: string
 }
 
-export class Form extends React.Component<IFormProps, undefined> {
-  render () {
-    return <div>{'Form ciao sono io'}</div>
+/**
+ * Main component
+ * @class Form
+ * @extends {React.Component<IFormProps, any>}
+ */
+class Form extends React.Component<IFormProps, any> {
+  public static propTypes = {
+    checkAllReqFields: PropTypes.func.isRequired,
+    className: PropTypes.string,
+    dangerouslyUseGlobalCSS: PropTypes.bool,
+    fields: PropTypes.instanceOf(Map),
+    id: PropTypes.string.isRequired,
+    method: PropTypes.oneOf(['get', 'post']).isRequired,
+    onSubmit: PropTypes.func,
+    overrideTheme: PropTypes.object,
+    setFields: PropTypes.func.isRequired,
+    setTheme: PropTypes.func.isRequired,
+    theme: PropTypes.oneOf(['material-ui'])
+  }
+  public componentDidMount (): void {
+    const { fields, setFields, setTheme, theme, id } = this.props
+    if (fields instanceof Map) {
+      setFields(this.readChildren(), id)
+    }
+    if (theme) {
+      setTheme(theme)
+    }
+  }
+  public componentWillUpdate (nextProps: any): void {
+    const { fields, setFields } = this.props
+    const { id } = nextProps
+    const f = fields.find((v: any, k: any) => k === id)
+    if (!f && fields.size > 0) {
+      setFields(this.readChildren(), id)
+    }
+  }
+  public render (): any {
+    const {
+      children,
+      id,
+      name,
+      fields,
+      onSubmit,
+      method,
+      className
+    } = this.props
+    const content = fields.get(id) ? fields.get(id).toJS() : null
+    return this.renderByThemes(
+      <form
+        key={id}
+        id={id}
+        name={name || id}
+        method={method}
+        className={className}
+        onSubmit={this.handleSubmit}
+      >
+        {content}
+      </form>
+    )
+  }
+  private renderByThemes = (cmp: JSX.Element) => {
+    const { theme, overrideTheme, dangerouslyUseGlobalCSS } = this.props
+    const themes = new Themes(theme)
+    return themes.renderByTheme(cmp, overrideTheme, dangerouslyUseGlobalCSS)
+  }
+  private readChildren = (): any[] => {
+    const { children, id, key, theme } = this.props
+    if (children.length > 1) {
+      return children.map((i, k) => {
+        const prc = Reflect.get(i.valueOf(), 'props')
+        const typeCmp = Reflect.get(i.valueOf(), 'type')
+        const p = { ...prc, formid: id }
+        return typesManager(typeCmp, p, `${k}`, i)
+      })
+    }
+    const propsComponent = Reflect.get(children.valueOf(), 'props')
+    const type = Reflect.get(children.valueOf(), 'type')
+    const ps = { ...propsComponent, formid: id }
+    return [typesManager(type, ps, !key && id)]
+  }
+  private handleSubmit = (event: any): void => {
+    const { onSubmit, id, fields, checkAllReqFields } = this.props
+    event.preventDefault()
+    const formElement = document.querySelector(`#${id}`)
+    const data = serialize(formElement, { hash: true })
+    const nElement = Object.keys(data).length
+    const isEmpty = nElement === 0
+    const isValid = analizeRequiredFields(fields.get(id), data)
+    if (typeof onSubmit === 'function' && !isEmpty && isValid === undefined) {
+      return onSubmit(event, data)
+    }
+    checkAllReqFields(id)
   }
 }
+
+export default Form

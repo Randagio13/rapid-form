@@ -1,6 +1,8 @@
 import webpack from 'webpack'
 import path from 'path'
-// import HtmlWebpackPlugin from 'html-webpack-plugin'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+// import UglifyJSPlugin from 'uglifyjs-webpack-plugin'
+import Visualizer from 'webpack-visualizer-plugin'
 
 const LAUNCH_COMMAND = process.env.npm_lifecycle_event
 const isProduction = LAUNCH_COMMAND === 'release'
@@ -14,25 +16,33 @@ const PATHS = {
   app: path.join(__dirname, 'src'),
   components: path.join(__dirname, 'src', 'components'),
   containers: path.join(__dirname, 'src', 'containers'),
+  constants: path.join(__dirname, 'src', 'constants'),
   settings: path.join(__dirname, 'src', 'settings'),
   build: path.join(__dirname, 'dist'),
-  reducers: path.join(__dirname, 'src', 'redux', 'modules'),
-  styles: path.join(__dirname, 'src', 'styles')
+  reducers: path.join(__dirname, 'src', 'reducers'),
+  styles: path.join(__dirname, 'src', 'styles'),
+  helpers: path.join(__dirname, 'src', 'helpers')
 }
 
-const devtool = isProduction ? 'cheap-module-source-map' : 'source-map'
+const devtool = isProduction ? 'source-map' : 'eval-source-map'
+const mode = isProduction ? 'production' : 'development'
 
 const base = {
+  mode: mode,
   devtool: devtool,
   context: PATHS.app,
   module: {
     rules: [
-      { test: /\.tsx?$/, loader: 'awesome-typescript-loader' },
-      { enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' },
       {
-        test: /\.js?$/,
+        test: /\.(ts|tsx)$/,
+        loader: 'ts-loader',
         exclude: /node_modules/,
-        loader: 'babel-loader'
+        options: { transpileOnly: true }
+      },
+      {
+        enforce: 'pre',
+        test: /\.js$/,
+        loader: 'source-map-loader'
       },
       {
         test: /\.css$/,
@@ -75,9 +85,11 @@ const base = {
       src: PATHS.app,
       components: PATHS.components,
       containers: PATHS.containers,
+      constants: PATHS.constants,
       settings: PATHS.settings,
       reducers: PATHS.reducers,
-      styles: PATHS.styles
+      styles: PATHS.styles,
+      helpers: PATHS.helpers
     }
   },
   externals: {
@@ -91,7 +103,7 @@ const developmentConfig = {
     'react-hot-loader/patch',
     'webpack-dev-server/client?http://localhost:1313',
     'webpack/hot/only-dev-server',
-    'index'
+    path.join(__dirname, 'develop')
   ],
   output: {
     path: PATHS.build,
@@ -108,34 +120,85 @@ const developmentConfig = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin()
-    // new HtmlWebpackPlugin({
-    //   template: path.join(__dirname, 'index.html')
-    // })
+    new webpack.NamedModulesPlugin(),
+    new webpack.DefinePlugin({
+      process: {
+        env: {
+          NODE_ENV: JSON.stringify(LAUNCH_COMMAND)
+        }
+      }
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, 'index.html')
+    }),
+    new Visualizer({
+      filename: '../statistics.html'
+    }),
+    new webpack.ProvidePlugin({
+      ReactDOM: 'react-dom',
+      React: 'react'
+    })
   ]
 }
 
 const productionConfig = {
-  entry: [
-    'index'
-  ],
+  entry: {
+    rapidForm: 'index'
+  },
   output: {
     path: PATHS.build,
-    filename: 'bundle.js'
+    libraryTarget: 'umd',
+    library: 'RapidForm',
+    filename: '[name].js'
+    // chunkFilename: '[chunkhash].[name].js',
+    // umdNamedDefine: true
+    // jsonpScriptType: 'module',
+  },
+  // optimization: {
+  //   splitChunks: {
+  //     chunks: 'all'
+  //     //   vendors: {
+  //     //     test: /[\\/]node_modules[\\/]/,
+  //     //     name: 'vendors',
+  //     //     priority: -10
+  //     //   }
+  //     // }
+  //     // cacheGroups: {
+  //     //   vendors: {
+  //     //     test: /node_modules/,
+  //     //     name: 'vendors',
+  //     //     chunks: 'all',
+  //     //     enforce: true
+  //     //   }
+  //     // }
+  //   },
+  //   runtimeChunk: false
+  // },
+  externals: {
+    'react': 'react',
+    'react-dom': 'react-dom'
   },
   plugins: [
     new webpack.DefinePlugin({
+      // 'process.env.NODE_ENV': JSON.stringify('production'),
       process: {
         env: {
           NODE_ENV: JSON.stringify('production')
         }
       }
     }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true
+    // new webpack.NamedModulesPlugin(),
+    new Visualizer({
+      filename: '../statistics.prod.html'
     })
-    // new HtmlWebpackPlugin({
-    //   template: path.join(PATHS.app, 'index.html')
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   names: ['reactVendor', 'materialUI'],
+    //   children: true,
+    //   async: true,
+    //   minChunks: 3
+    // }),
+    // new UglifyJSPlugin({
+    //   minimize: true
     // })
   ]
 }

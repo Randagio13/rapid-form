@@ -1,20 +1,24 @@
-import { Form } from 'components'
+import { FormContainer } from 'containers'
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
-import { AppContainer } from 'react-hot-loader'
+import { Provider } from 'react-redux'
+import reducers from 'reducers'
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
+import thunk from 'redux-thunk'
+const cps = composeWithDevTools(applyMiddleware(thunk))
+const store = createStore(reducers, cps)
 
-const renderApp = (Component: any) => {
-  ReactDOM.render((
-    <AppContainer>
-      <Component />
-    </AppContainer>
-  ), document.getElementById('app'))
+class RapidForm extends React.Component<any, any> {
+  public render (): JSX.Element {
+    const { children, ...props } = this.props
+    return (
+      <Provider store={store}>
+        <FormContainer {...props}>
+          {children}
+        </FormContainer>
+      </Provider>
+    )
+  }
 }
 
-renderApp(Form)
-
-if (Reflect.get(module, 'hot') !== undefined) {
-  // tslint:disable-next-line:no-var-requires
-  const nextApp = require('./components').default
-  Reflect.get(module, 'hot').accept('./components', () => { renderApp(nextApp) })
-}
+export default RapidForm
