@@ -3,15 +3,17 @@ import * as ReactDOM from 'react-dom'
 import useRapidForm from './components/useRapidForm'
 
 const Form = () => {
-  const { data, validation, errors } = useRapidForm()
-  const v = data ? data.username.value.length : ''
+  const { data, errors, validation } = useRapidForm()
   console.log('data :', data)
+  console.log('errors :', errors)
   return (
     <form>
       <input name='username' ref={validation} required />
       <br />
       <input name='name' ref={validation} required />
-      {`The field's value is ${v} character(s) long. And ${errors} errors`}
+      <br />
+      <pre>{`data: ${JSON.stringify(data, null, 2)}`}</pre>
+      <pre>{`errors: ${JSON.stringify(errors, null, 2)}`}</pre>
     </form>
   )
 }

@@ -6,7 +6,21 @@ const setErrors = (data: any, dispatch: any) => {
       type: 'empty',
       data: {
         [data.name]: {
+          ...data
+        }
+      },
+      errors: {
+        [data.name]: {
           message: `${data.name} is required`
+        }
+      }
+    })
+  } else {
+    dispatch({
+      type: 'change',
+      data: {
+        [data.name]: {
+          ...data
         }
       }
     })
@@ -16,18 +30,31 @@ const setErrors = (data: any, dispatch: any) => {
 const fetchReducer = (state: any, action: any) => {
   console.log('state fetch :', state)
   if (action.type === 'change') {
+    Object.keys(state.errors).map((k: any) => {
+      if (state.data.hasOwnProperty(k)) {
+        delete state.errors[k]
+      }
+    })
     return {
       ...state,
       data: {
         ...state.data,
         ...action.data
+      },
+      errors: {
+        ...state.errors
       }
     }
   } else if (action.type === 'empty') {
     return {
       ...state,
-      errors: {
+      data: {
+        ...state.data,
         ...action.data
+      },
+      errors: {
+        ...state.errors,
+        ...action.errors
       }
     }
   } else {
@@ -59,8 +86,8 @@ export const useValidation = (dispatch: any) =>
 
 export default function useRapidForm(): any {
   const [state, dispatch] = useReducer(fetchReducer, {
-    data: null,
-    errors: null
+    data: {},
+    errors: {}
   })
   const validation = useValidation(dispatch)
   useDebugValue(state.data)
