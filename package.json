@@ -5,9 +5,7 @@
   "repository": "git@github.com:iMasterAle/rapid-form.git",
   "author": "Alessandro Casazza <imasterale@gmail.com>",
   "license": "MIT",
-  "files": [
-    "./dist"
-  ],
+  "files": ["./dist"],
   "scripts": {
     "start": "react-scripts start",
     "test": "jest -u",
@@ -26,11 +24,7 @@
     "typescript": "^3.7.2"
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
+    "production": [">0.2%", "not dead", "not op_mini all"],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",

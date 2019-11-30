@@ -7,10 +7,15 @@ const Form = () => {
   console.log('data :', data)
   console.log('errors :', errors)
   return (
-    <form>
+    <form autoComplete='off'>
       <input name='username' ref={validation} required />
       <br />
+      <br />
       <input name='name' ref={validation} required />
+      <br />
+      <input name='privacy' type='checkbox' ref={validation} required />
+      <br />
+      <br />
       <br />
       <pre>{`data: ${JSON.stringify(data, null, 2)}`}</pre>
       <pre>{`errors: ${JSON.stringify(errors, null, 2)}`}</pre>

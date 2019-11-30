@@ -1,9 +1,11 @@
 import { useCallback, useDebugValue, useReducer } from 'react'
 
 const setErrors = (data: any, dispatch: any) => {
+  console.log('data :', data)
   if (!data.value) {
     dispatch({
       type: 'empty',
+      name: data.name,
       data: {
         [data.name]: {
           ...data
@@ -16,8 +18,10 @@ const setErrors = (data: any, dispatch: any) => {
       }
     })
   } else {
+    console.log('data change :', data)
     dispatch({
       type: 'change',
+      name: data.name,
       data: {
         [data.name]: {
           ...data
@@ -28,13 +32,12 @@ const setErrors = (data: any, dispatch: any) => {
 }
 
 const fetchReducer = (state: any, action: any) => {
-  console.log('state fetch :', state)
   if (action.type === 'change') {
-    Object.keys(state.errors).map((k: any) => {
-      if (state.data.hasOwnProperty(k)) {
-        delete state.errors[k]
-      }
-    })
+    console.log('state, action :', action)
+    if (state.errors.hasOwnProperty(action.name)) {
+      console.log('k sto eliminando :', action.name)
+      delete state.errors[action.name]
+    }
     return {
       ...state,
       data: {
@@ -42,7 +45,8 @@ const fetchReducer = (state: any, action: any) => {
         ...action.data
       },
       errors: {
-        ...state.errors
+        ...state.errors,
+        ...action.errors
       }
     }
   } else if (action.type === 'empty') {
@@ -64,18 +68,20 @@ const fetchReducer = (state: any, action: any) => {
 
 export const useValidation = (dispatch: any) =>
   useCallback(
-    (ref: any) => {
+    (ref: any): void => {
       ref.oninput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const v = e.target.value
         const n = e.target.name
         const t = e.target.type
         const r = e.target.required
+        const c = e.target.checked
         const data: any = {
           [n]: {
             value: v,
             name: n,
             type: t,
-            required: r
+            required: r,
+            checked: c
           }
         }
         setErrors(data[n], dispatch)
