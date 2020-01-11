@@ -26,7 +26,8 @@ const Form = () => {
       <br />
       <br />
       <label>Privacy:</label>
-      <input name="privacy" type="checkbox" ref={validation} />
+      <input name="privacy" type="checkbox" required ref={validation} />
+      <label id="privacy-error">{errors.privacy?.message}</label>
       <br />
       <br />
       <label>Calendar:</label>
