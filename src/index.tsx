@@ -22,7 +22,8 @@ const Form = () => {
       <br />
       <br />
       <label>Email:</label>
-      <input name="email" type="email" ref={validation} />
+      <input name="email" type="email" ref={validation} required />
+      <label id="email-error">{errors.email?.message}</label>
       <br />
       <br />
       <label>Privacy:</label>
@@ -31,20 +32,23 @@ const Form = () => {
       <br />
       <br />
       <label>Calendar:</label>
-      <input name="calendar" type="date" ref={validation} />
+      <input name="calendar" type="date" ref={validation} required />
+      <label id="calendar-error">{errors.calendar?.message}</label>
       <br />
       <br />
       <label>Number:</label>
-      <input name="number" type="number" ref={validation} />
+      <input name="number" type="number" ref={validation} required />
+      <label id="number-error">{errors.number?.message}</label>
       <br />
       <br />
       <label>Select:</label>
-      <select name="selectData" ref={validation} defaultValue="">
+      <select name="selectData" ref={validation} defaultValue="" required>
         <option value="">choose an option</option>
         <option value="selezione 1">selezione 1</option>
         <option value="selezione 2">selezione 2</option>
         <option value="selezione 3">selezione 3</option>
       </select>
+      <label id="selectData-error">{errors.selectData?.message}</label>
       <br />
       <br />
       <label>Multi-select:</label>

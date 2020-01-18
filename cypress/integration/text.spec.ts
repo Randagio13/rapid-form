@@ -5,9 +5,11 @@ it('Input text', function() {
   cy.get('[name="username"]')
     .as('username')
     .should('be.empty')
+
   cy.get('@username')
     .type('alessandro')
     .should('have.value', 'alessandro')
+
   cy.get('@username')
     .type('{selectall}{del}')
     .should('have.value', '')
