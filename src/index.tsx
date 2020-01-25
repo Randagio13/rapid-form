@@ -3,15 +3,14 @@ import * as ReactDOM from 'react-dom'
 import useRapidForm from './hooks/useRapidForm'
 
 const Form = () => {
-  const { data, errors, validation, handleSubmit, reset } = useRapidForm()
-  console.log('data :', data)
+  const { errors, validation, handleSubmit, reset } = useRapidForm()
   console.log('errors :', errors)
   const s = (values: any, errors: any) => {
     console.log('values s function :', values, errors)
     reset()
   }
   return (
-    <form autoComplete="off" onSubmit={handleSubmit(s)}>
+    <form id="rapidForm" autoComplete="off" onSubmit={handleSubmit(s)}>
       <label>Username:</label>
       <input name="username" ref={validation} required />
       <label id="username-error">{errors.username?.message}</label>
@@ -57,17 +56,21 @@ const Form = () => {
         name="selectDataMultiple"
         data-typevalue="array"
         ref={validation}
-        defaultValue={[]}
+        defaultValue={['']}
+        required
       >
         <option value="">choose an option</option>
         <option value="selezione 1">selezione 1</option>
         <option value="selezione 2">selezione 2</option>
         <option value="selezione 3">selezione 3</option>
       </select>
+      <label id="selectDataMultiple-error">
+        {errors.selectDataMultiple?.message}
+      </label>
       <br />
       <br />
       <label>Radio:</label>
-      <input name="radio" type="radio" ref={validation} value="male" />
+      <input required name="radio" type="radio" ref={validation} value="male" />
       Male
       <br />
       <input name="radio" type="radio" ref={validation} value="female" />
@@ -75,17 +78,12 @@ const Form = () => {
       <br />
       <input name="radio" type="radio" ref={validation} value="" />
       Nothing
+      <label id="radio-error">{errors.radio?.message}</label>
       <br />
       <br />
       <button type="submit">submit</button>
       <br />
       <br />
-      {/* <button type="reset" onClick={reset}>
-        reset
-      </button>
-      <br />
-      <br /> */}
-      <pre>{`data: ${JSON.stringify(data, null, 2)}`}</pre>
       <pre>{`errors: ${JSON.stringify(errors, null, 2)}`}</pre>
     </form>
   )
