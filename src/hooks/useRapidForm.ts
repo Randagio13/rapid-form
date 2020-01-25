@@ -15,7 +15,6 @@ export default function useRapidForm(): any {
       e.preventDefault()
       return c(state.data, state.errors, e)
     },
-    data: state.data,
     errors: state.errors,
     validation,
     reset

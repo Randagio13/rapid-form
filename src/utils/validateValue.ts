@@ -5,6 +5,9 @@ const isEmpty = ({ value, type, checked }: any) => {
   if (type === ('checkbox' || 'radio')) {
     return !checked
   }
+  if (Array.isArray(value)) {
+    value = value.find(v => v !== '')?.length
+  }
   return !value
 }
 

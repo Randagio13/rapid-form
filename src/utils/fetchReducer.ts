@@ -1,5 +1,4 @@
 const fetchReducer = (state: any, action: any) => {
-  console.log('action :', action)
   if (action.type === 'change') {
     if (state.errors.hasOwnProperty(action.name)) {
       delete state.errors[action.name]
