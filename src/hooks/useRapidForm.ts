@@ -1,7 +1,12 @@
-import { useReducer } from 'react'
+import { useReducer, SyntheticEvent } from 'react'
 import fetchReducer from '../utils/fetchReducer'
-import { useValidation } from './useValidation'
+import useValidation from './useValidation'
 import resetAll from '../utils/reset'
+import { resetInterface } from '../utils/reset'
+
+export interface SubmitCallback {
+  (data: object, errors: object, event?: SyntheticEvent<HTMLFormElement>): void
+}
 
 export default function useRapidForm(): any {
   const [state, dispatch] = useReducer(fetchReducer, {
@@ -9,9 +14,14 @@ export default function useRapidForm(): any {
     errors: {}
   })
   const validation = useValidation(dispatch)
-  const reset = () => resetAll(dispatch)
+  const reset: resetInterface = e => {
+    e.currentTarget.reset()
+    resetAll(dispatch)
+  }
   return {
-    handleSubmit: (c: any) => (e: any) => {
+    handleSubmit: (c: SubmitCallback) => (
+      e: SyntheticEvent<HTMLFormElement>
+    ) => {
       e.preventDefault()
       return c(state.data, state.errors, e)
     },

@@ -1,9 +1,20 @@
-const fetchReducer = (state: any, action: any) => {
+export interface StateInterface {
+  [key: string]: any
+}
+
+export interface ActionInterface {
+  type: 'change' | 'error' | 'reset'
+  data?: object
+  errors?: object
+  name?: string
+}
+
+const fetchReducer = (state: StateInterface, action: ActionInterface) => {
   if (action.type === 'change') {
-    if (state.errors.hasOwnProperty(action.name)) {
+    if (state.errors.hasOwnProperty(action.name) && action.name) {
       delete state.errors[action.name]
     }
-    return {
+    state = {
       ...state,
       data: {
         ...state.data,
@@ -14,8 +25,9 @@ const fetchReducer = (state: any, action: any) => {
         ...action.errors
       }
     }
-  } else if (action.type === 'error') {
-    return {
+  }
+  if (action.type === 'error') {
+    state = {
       ...state,
       data: {
         ...state.data,
@@ -26,15 +38,15 @@ const fetchReducer = (state: any, action: any) => {
         ...action.errors
       }
     }
-  } else if (action.type === 'reset') {
-    return {
+  }
+  if (action.type === 'reset') {
+    state = {
       ...state,
       data: {},
       errors: {}
     }
-  } else {
-    throw new Error(`That action type isn't supported.`)
   }
+  return state
 }
 
 export default fetchReducer

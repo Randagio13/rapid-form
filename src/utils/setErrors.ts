@@ -1,4 +1,11 @@
 import validateValue from './validateValue'
+import { Dispatch } from 'react'
+import { ActionInterface } from './fetchReducer'
+
+export interface setErrorsInterface {
+  (data: object, dispatch: Dispatch<ActionInterface>): void
+}
+
 const setErrors = (data: any, dispatch: any) => {
   const { error, message } = validateValue(data)
   if (error) {
