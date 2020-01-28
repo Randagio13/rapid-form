@@ -1,13 +1,16 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import useRapidForm from './hooks/useRapidForm'
+import { SubmitCallback } from './hooks/useRapidForm'
+import _ from 'lodash'
 
 const Form = () => {
   const { errors, validation, handleSubmit, reset } = useRapidForm()
-  console.log('errors :', errors)
-  const s = (values: any, errors: any) => {
-    console.log('values s function :', values, errors)
-    reset()
+  const s: SubmitCallback = (values, errors, e) => {
+    console.log('values s function :', values, errors, e)
+    if (_.isEmpty(errors)) {
+      reset(e)
+    }
   }
   return (
     <form id="rapidForm" autoComplete="off" onSubmit={handleSubmit(s)}>
@@ -79,6 +82,17 @@ const Form = () => {
       <input name="radio" type="radio" ref={validation} value="" />
       Nothing
       <label id="radio-error">{errors.radio?.message}</label>
+      <br />
+      <br />
+      Range
+      <input
+        name="range"
+        type="range"
+        ref={validation}
+        required
+        defaultValue="0"
+      />
+      <label id="radio-error">{errors.range?.message}</label>
       <br />
       <br />
       <button type="submit">submit</button>
