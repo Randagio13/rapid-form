@@ -1,6 +1,6 @@
 {
   "name": "rapid-form",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "A simple, rapid React Form",
   "repository": "git@github.com:iMasterAle/rapid-form.git",
   "author": "Alessandro Casazza <imasterale@gmail.com>",
