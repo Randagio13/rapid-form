@@ -1,31 +1,31 @@
 {
-    "compilerOptions": {
-        "outDir": "./dist/",
-        "sourceMap": true,
-        "noImplicitAny": true,
-        "target": "es5",
-        "jsx": "react",
-        "allowJs": true,
-        "baseUrl": "./",
-        "paths": {
-            "components": ["src/components", "../src/components", "../../src/components"],
-            "containers": ["src/containers"],
-            "constants": ["src/constants"],
-            "types": ["src/types"],
-            "reducers/*": ["src/reducers/*"],
-            "reducers": ["src/reducers"],
-            "helpers": ["src/helpers"]
-        },
-        "lib": [
-            "esnext",
-            "dom.iterable"
-        ]
-    },
-    "include": [
-        "src/**/*",
-        "tests/**/*"
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "module": "esnext",
+    "target": "es5",
+    "jsx": "react",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
     ],
-    "exclude": [
-        "node_modules"
-    ]
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "src"
+  ]
 }
