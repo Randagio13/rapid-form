@@ -1,27 +1,39 @@
 {
   "name": "rapid-form",
   "version": "1.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/hooks/useRapidForm.d.ts",
   "description": "A simple, rapid React Form",
   "repository": "git@github.com:iMasterAle/rapid-form.git",
   "author": "Alessandro Casazza <imasterale@gmail.com>",
   "license": "MIT",
   "files": [
-    "./dist"
+    "dist",
+    "package.json",
+    "README.md"
   ],
   "scripts": {
     "start": "react-scripts start",
-    "test:cypress": "cypress open"
+    "test:cypress": "cypress open",
+    "build": "tsdx build --tsconfig ./tsconfig.json --entry ./src/hooks/useRapidForm.ts",
+    "publish": "tsdx build --tsconfig ./tsconfig.json --entry ./src/hooks/useRapidForm.ts && npm publish"
   },
   "dependencies": {},
   "devDependencies": {
     "@types/lodash": "^4.14.149",
     "@types/react": "^16.9.19",
     "@types/react-dom": "^16.9.5",
+    "@typescript-eslint/eslint-plugin": "^2.19.0",
+    "@typescript-eslint/parser": "^2.19.0",
     "cypress": "^3.8.3",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-react": "^7.18.3",
+    "eslint-plugin-react-hooks": "^2.3.0",
     "lodash": "^4.17.15",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
-    "react-scripts": "^3.3.0",
+    "prettier": "^1.19.1",
+    "react-scripts": "^3.3.1",
     "source-map-loader": "^0.2.4",
     "ts-loader": "^6.2.1",
     "tsdx": "^0.12.3",
