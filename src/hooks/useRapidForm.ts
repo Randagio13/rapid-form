@@ -27,7 +27,7 @@ export interface UseRapidForm {
   (): {
     handleSubmit: HandleSubmit<SubmitCallback>
     errors: ErrorsObj
-    validation: any
+    validation: any // TODO: Add type
     reset: ResetFunc
   }
 }
@@ -44,6 +44,7 @@ const useRapidForm: UseRapidForm = () => {
   }
   return {
     handleSubmit: c => (e): void => {
+      // TODO: Add automatic check error
       e.preventDefault()
       return c(state.data, state.errors, e)
     },

@@ -5,7 +5,6 @@ export interface MultiSelectValues {
 }
 
 const multiSelectValues: MultiSelectValues = (options, returnType) => {
-  // FIXME: if it's an array doesn't check empty string
   const v = Array.from(options)
     .filter(o => o.selected)
     .map(o => o.value)
