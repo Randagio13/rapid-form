@@ -1,12 +1,12 @@
 import validateValue from './validateValue'
 import { Dispatch } from 'react'
-import { ActionInterface } from './fetchReducer'
+import { Action } from './fetchReducer'
 
-export interface setErrorsInterface {
-  (data: object, dispatch: Dispatch<ActionInterface>): void
+export interface SetErrors {
+  (data: any, dispatch: Dispatch<Action>): void
 }
 
-const setErrors = (data: any, dispatch: any) => {
+const setErrors: SetErrors = (data, dispatch) => {
   const { error, message } = validateValue(data)
   if (error) {
     dispatch({

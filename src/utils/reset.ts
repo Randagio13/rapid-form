@@ -1,15 +1,15 @@
 import { SyntheticEvent, Dispatch } from 'react'
-import { ActionInterface } from './fetchReducer'
+import { Action } from './fetchReducer'
 
-export interface resetInterface {
+export interface ResetFunc {
   (event: SyntheticEvent<HTMLFormElement>): void
 }
 
-export interface resetAllInterface {
-  (dispacth: Dispatch<ActionInterface>): void
+export interface ResetAll {
+  (dispacth: Dispatch<Action>): void
 }
 
-const resetAll: resetAllInterface = dispatch => {
+const resetAll: ResetAll = dispatch => {
   dispatch({
     type: 'reset'
   })

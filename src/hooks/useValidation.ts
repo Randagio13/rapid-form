@@ -1,19 +1,19 @@
 import { useCallback, Dispatch } from 'react'
-import handleChange from '../utils/handleChange'
-import { ActionInterface } from '../utils/fetchReducer'
+import handleChange, { GenericElement } from '../utils/handleChange'
+import { Action } from '../utils/fetchReducer'
 
-export interface useValidationInterface {
-  (dispatch: Dispatch<ActionInterface>): null
+export interface UseValidationInterface {
+  (dispatch: Dispatch<Action>): void
 }
 
-const useValidation: useValidationInterface = dispatch => {
-  useCallback(
-    (ref: any): void => {
-      ref.oninput = (e: React.ChangeEvent<any>) => handleChange(e, dispatch)
+const useValidation: UseValidationInterface = dispatch => {
+  return useCallback(
+    (ref): void => {
+      ref.oninput = (e: React.ChangeEvent<GenericElement>): void =>
+        handleChange(e, dispatch)
     },
     [dispatch]
   )
-  return null
 }
 
 export default useValidation

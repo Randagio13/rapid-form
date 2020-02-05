@@ -6,7 +6,7 @@ import _ from 'lodash'
 
 const Form = () => {
   const { errors, validation, handleSubmit, reset } = useRapidForm()
-  const s: SubmitCallback = (values, errors, e) => {
+  const s: SubmitCallback = (values, errors, e): void => {
     console.log('values s function :', values, errors, e)
     if (_.isEmpty(errors)) {
       reset(e)

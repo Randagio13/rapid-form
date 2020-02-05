@@ -1,17 +1,22 @@
-export interface StateInterface {
-  [key: string]: any
-}
+import { Reducer } from 'react'
+import { ErrorsObj } from '../hooks/useRapidForm'
 
-export interface ActionInterface {
-  type: 'change' | 'error' | 'reset'
-  data?: object
-  errors?: object
+export interface State {
+  data: object
+  errors: ErrorsObj
   name?: string
 }
 
-const fetchReducer = (state: StateInterface, action: ActionInterface) => {
+export interface Action {
+  type: 'change' | 'error' | 'reset'
+  data?: object
+  errors?: ErrorsObj
+  name?: string | number
+}
+
+const fetchReducer: Reducer<State, Action> = (state, action) => {
   if (action.type === 'change') {
-    if (state.errors.hasOwnProperty(action.name) && action.name) {
+    if (action.name && state.errors?.hasOwnProperty(action.name)) {
       delete state.errors[action.name]
     }
     state = {

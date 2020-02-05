@@ -1,22 +1,40 @@
 import setErrors from './setErrors'
 import multiSelectValues from './multiSelect'
 import { Dispatch, ChangeEvent } from 'react'
-import { ActionInterface } from './fetchReducer'
+import { Action } from './fetchReducer'
+import { GenericItemAttribute } from './validateValue'
 
-export interface handleChangeInterface {
-  (event: ChangeEvent<any>, dispatch: Dispatch<ActionInterface>): void
+export interface GenericElement {
+  multiple?: boolean
+  options: HTMLOptionsCollection
+  dataset?: {
+    typevalue?: 'array' | 'string'
+  }
+  name: string
+  value: string
+  type: string
+  required?: boolean
+  checked?: boolean
+  pattern?: string
 }
 
-const handleChange: handleChangeInterface = (e, dispatch) => {
-  const m = e.target.multiple
+export interface HandleChange {
+  (event: ChangeEvent<GenericElement>, dispatch: Dispatch<Action>): void
+}
+
+const handleChange: HandleChange = (e, dispatch) => {
+  const m = e.currentTarget.multiple
   const v = m
-    ? multiSelectValues(e.target?.options, e.target.dataset?.typevalue)
-    : e.target?.value
-  const n = e.target.name
-  const t = e.target.type
-  const r = e.target.required
-  const c = e.target?.checked
-  const p = e.target?.pattern
+    ? multiSelectValues(
+        e.currentTarget?.options,
+        e.currentTarget?.dataset?.typevalue
+      )
+    : e.currentTarget.value
+  const n = e.currentTarget.name
+  const t = e.currentTarget.type
+  const r = e.currentTarget?.required
+  const c = e.currentTarget?.checked
+  const p = e.currentTarget?.pattern
   const data = {
     [n]: {
       value: v,

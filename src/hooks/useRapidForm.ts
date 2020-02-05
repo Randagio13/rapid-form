@@ -1,45 +1,54 @@
-import { useReducer, SyntheticEvent, Ref } from 'react'
+import { useReducer, SyntheticEvent, ChangeEvent } from 'react'
 import fetchReducer from '../utils/fetchReducer'
 import useValidation from './useValidation'
 import resetAll from '../utils/reset'
-import { resetInterface } from '../utils/reset'
+import { ResetFunc } from '../utils/reset'
 
 export interface GeneralObject {
-  [key: string]: any
+  [key: string]: string | string[] | object
 }
 
-export interface SubmitCallback {
-  (data: object, errors: object, event: SyntheticEvent<HTMLFormElement>): void
-}
-
-export interface useRapidFormInterface {
-  (): {
-    handleSubmit: (
-      c: SubmitCallback
-    ) => (e: SyntheticEvent<HTMLFormElement>) => void
-    errors: GeneralObject
-    validation: Ref<any>
-    reset: resetInterface
+export interface ErrorsObj {
+  [key: string]: {
+    error?: boolean
+    message: string
   }
 }
 
-const useRapidForm: useRapidFormInterface = () => {
+export interface SubmitCallback<E = SyntheticEvent<HTMLFormElement>> {
+  (data: object, errors: ErrorsObj, event: E): void
+}
+
+export interface HandleSubmit<C> {
+  (callback: C): (event: SyntheticEvent<HTMLFormElement>) => void
+}
+
+export interface UseRapidForm {
+  (): {
+    handleSubmit: HandleSubmit<SubmitCallback>
+    errors: ErrorsObj
+    validation: any
+    reset: ResetFunc
+  }
+}
+
+const useRapidForm: UseRapidForm = () => {
   const [state, dispatch] = useReducer(fetchReducer, {
     data: {},
     errors: {}
   })
-  const validation = useValidation(dispatch)
-  const reset: resetInterface = e => {
+  const ValidationHook = useValidation(dispatch)
+  const reset: ResetFunc = e => {
     e.currentTarget.reset()
     resetAll(dispatch)
   }
   return {
-    handleSubmit: c => e => {
+    handleSubmit: c => (e): void => {
       e.preventDefault()
       return c(state.data, state.errors, e)
     },
     errors: state.errors,
-    validation,
+    validation: ValidationHook,
     reset
   }
 }
