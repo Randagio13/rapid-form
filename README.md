@@ -1,3 +1,1 @@
-# rapid-form
-
-Rapid React Form
+# Rapid React Form
