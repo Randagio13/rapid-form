@@ -14,6 +14,7 @@ export interface Action {
   name?: string | number
 }
 
+// TODO: refactor in one way
 const fetchReducer: Reducer<State, Action> = (state, action) => {
   if (action.type === 'change') {
     if (action.name && state.errors?.hasOwnProperty(action.name)) {

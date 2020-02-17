@@ -1,19 +1,20 @@
 const EMAIL_PATTERN = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/
 const PW_PATTERN = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{10,}$/
+const DEFAULT_PATTERN = /\w+/
 
 export type GenericValue = string | string[] | number | undefined | object
 
 export interface GenericItem {
   value: GenericValue
   type: string
-  checked: boolean
+  checked?: boolean
 }
 
 export interface GenericItemAttribute extends GenericItem {
   name: string
   required: boolean
   value: string
-  pattern: GenericPattern
+  pattern?: GenericPattern
 }
 
 export interface IsEmpty {
@@ -28,7 +29,7 @@ export type GenericPatternError = {
 export type GenericPattern = RegExp | string
 
 export interface IsValidPattern {
-  (value: string, type: string, pattern: GenericPattern): GenericPatternError
+  (value: string, type: string, pattern?: GenericPattern): GenericPatternError
 }
 
 export interface ValidateValue {
@@ -60,14 +61,20 @@ const isValidPattern: IsValidPattern = (val, type, pattern) => {
   if (type === 'password' && !val.match(pattern || PW_PATTERN)) {
     obj = { ...obj, ...objError }
   }
-  if (type === 'text' && !val.match(pattern)) {
+  if (type === 'text' && !val.match(pattern || DEFAULT_PATTERN)) {
     obj = { ...obj, ...objError }
   }
   return obj
 }
 
 const validateValue: ValidateValue = data => {
-  if (isEmpty(data) && data.required) {
+  if (!data.required) {
+    return {
+      error: false,
+      message: ''
+    }
+  }
+  if (isEmpty(data)) {
     return {
       error: true,
       message: `${data.name} is required`

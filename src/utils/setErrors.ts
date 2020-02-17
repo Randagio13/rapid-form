@@ -1,9 +1,10 @@
 import validateValue from './validateValue'
 import { Dispatch } from 'react'
 import { Action } from './fetchReducer'
+import { GenericItemAttribute } from './validateValue'
 
 export interface SetErrors {
-  (data: any, dispatch: Dispatch<Action>): void
+  (data: GenericItemAttribute, dispatch: Dispatch<Action>): void
 }
 
 const setErrors: SetErrors = (data, dispatch) => {
@@ -23,16 +24,34 @@ const setErrors: SetErrors = (data, dispatch) => {
         }
       }
     })
-  } else {
-    dispatch({
-      type: 'change',
-      name: data.name,
+    return {
       data: {
         [data.name]: {
           ...data
         }
+      },
+      errors: {
+        [data.name]: {
+          message
+        }
       }
-    })
+    }
+  }
+  dispatch({
+    type: 'change',
+    name: data.name,
+    data: {
+      [data.name]: {
+        ...data
+      }
+    }
+  })
+  return {
+    data: {
+      [data.name]: {
+        ...data
+      }
+    }
   }
 }
 

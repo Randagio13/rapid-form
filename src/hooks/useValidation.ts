@@ -9,8 +9,7 @@ export interface UseValidationInterface {
 const useValidation: UseValidationInterface = dispatch => {
   return useCallback(
     (ref): void => {
-      ref.oninput = (e: React.ChangeEvent<GenericElement>): void =>
-        handleChange(e, dispatch)
+      ref.oninput = (e: GenericElement): any => handleChange(e, dispatch)
     },
     [dispatch]
   )
