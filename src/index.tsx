@@ -1,21 +1,32 @@
-import * as React from 'react'
+import React from 'react'
 import * as ReactDOM from 'react-dom'
 import useRapidForm from './hooks/useRapidForm'
 import { SubmitCallback } from './hooks/useRapidForm'
 import _ from 'lodash'
-
 const Form = () => {
-  const { errors, validation, handleSubmit, reset } = useRapidForm()
-  const s: SubmitCallback = (values, errors, e): void => {
-    console.log('values s function :', values, errors, e)
-    if (_.isEmpty(errors)) {
+  const {
+    errors,
+    validation,
+    handleSubmit,
+    reset,
+    submitValidation
+  } = useRapidForm()
+  const s: SubmitCallback = (values, err, e): void => {
+    console.log('values s function :', values, err, e)
+    console.log('error', errors)
+    if (_.isEmpty(err)) {
       reset(e)
     }
   }
   return (
-    <form id="rapidForm" autoComplete="off" onSubmit={handleSubmit(s)}>
+    <form
+      id="rapidForm"
+      ref={submitValidation}
+      autoComplete="off"
+      onSubmit={handleSubmit(s)}
+    >
       <label>Username:</label>
-      <input name="username" ref={validation} required />
+      <input name="username" ref={validation} />
       <label id="username-error">{errors.username?.message}</label>
       <br />
       <br />
@@ -24,27 +35,27 @@ const Form = () => {
       <br />
       <br />
       <label>Email:</label>
-      <input name="email" type="email" ref={validation} required />
+      <input name="email" type="email" ref={validation} />
       <label id="email-error">{errors.email?.message}</label>
       <br />
       <br />
       <label>Privacy:</label>
-      <input name="privacy" type="checkbox" required ref={validation} />
+      <input name="privacy" type="checkbox" ref={validation} />
       <label id="privacy-error">{errors.privacy?.message}</label>
       <br />
       <br />
       <label>Calendar:</label>
-      <input name="calendar" type="date" ref={validation} required />
+      <input name="calendar" type="date" ref={validation} />
       <label id="calendar-error">{errors.calendar?.message}</label>
       <br />
       <br />
       <label>Number:</label>
-      <input name="number" type="number" ref={validation} required />
+      <input name="number" type="number" ref={validation} />
       <label id="number-error">{errors.number?.message}</label>
       <br />
       <br />
       <label>Select:</label>
-      <select name="selectData" ref={validation} defaultValue="" required>
+      <select name="selectData" ref={validation} defaultValue="">
         <option value="">choose an option</option>
         <option value="selezione 1">selezione 1</option>
         <option value="selezione 2">selezione 2</option>
@@ -57,7 +68,6 @@ const Form = () => {
       <select
         multiple
         name="selectDataMultiple"
-        data-typevalue="array"
         ref={validation}
         defaultValue={['']}
         required
@@ -73,7 +83,7 @@ const Form = () => {
       <br />
       <br />
       <label>Radio:</label>
-      <input required name="radio" type="radio" ref={validation} value="male" />
+      <input name="radio" type="radio" ref={validation} value="male" />
       Male
       <br />
       <input name="radio" type="radio" ref={validation} value="female" />
@@ -85,13 +95,7 @@ const Form = () => {
       <br />
       <br />
       Range
-      <input
-        name="range"
-        type="range"
-        ref={validation}
-        required
-        defaultValue="0"
-      />
+      <input name="range" type="range" ref={validation} defaultValue="0" />
       <label id="radio-error">{errors.range?.message}</label>
       <br />
       <br />
