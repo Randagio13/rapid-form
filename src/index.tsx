@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { FunctionComponent } from 'react'
 import * as ReactDOM from 'react-dom'
 import useRapidForm from './hooks/useRapidForm'
 import { SubmitCallback } from './hooks/useRapidForm'
 import _ from 'lodash'
-const Form = () => {
+const Form: FunctionComponent = () => {
   const {
     errors,
     validation,
@@ -12,8 +12,6 @@ const Form = () => {
     submitValidation
   } = useRapidForm()
   const s: SubmitCallback = (values, err, e): void => {
-    console.log('values s function :', values, err, e)
-    console.log('error', errors)
     if (_.isEmpty(err)) {
       reset(e)
     }
@@ -26,7 +24,7 @@ const Form = () => {
       onSubmit={handleSubmit(s)}
     >
       <label>Username:</label>
-      <input name="username" ref={validation} />
+      <input name="username" ref={validation} required />
       <label id="username-error">{errors.username?.message}</label>
       <br />
       <br />
@@ -35,27 +33,27 @@ const Form = () => {
       <br />
       <br />
       <label>Email:</label>
-      <input name="email" type="email" ref={validation} />
+      <input name="email" type="email" ref={validation} required />
       <label id="email-error">{errors.email?.message}</label>
       <br />
       <br />
       <label>Privacy:</label>
-      <input name="privacy" type="checkbox" ref={validation} />
+      <input name="privacy" type="checkbox" ref={validation} required />
       <label id="privacy-error">{errors.privacy?.message}</label>
       <br />
       <br />
       <label>Calendar:</label>
-      <input name="calendar" type="date" ref={validation} />
+      <input name="calendar" type="date" ref={validation} required />
       <label id="calendar-error">{errors.calendar?.message}</label>
       <br />
       <br />
       <label>Number:</label>
-      <input name="number" type="number" ref={validation} />
+      <input name="number" type="number" ref={validation} required />
       <label id="number-error">{errors.number?.message}</label>
       <br />
       <br />
       <label>Select:</label>
-      <select name="selectData" ref={validation} defaultValue="">
+      <select name="selectData" ref={validation} required defaultValue="">
         <option value="">choose an option</option>
         <option value="selezione 1">selezione 1</option>
         <option value="selezione 2">selezione 2</option>
@@ -69,8 +67,8 @@ const Form = () => {
         multiple
         name="selectDataMultiple"
         ref={validation}
-        defaultValue={['']}
         required
+        defaultValue={['']}
       >
         <option value="">choose an option</option>
         <option value="selezione 1">selezione 1</option>
@@ -83,7 +81,7 @@ const Form = () => {
       <br />
       <br />
       <label>Radio:</label>
-      <input name="radio" type="radio" ref={validation} value="male" />
+      <input name="radio" type="radio" ref={validation} required value="male" />
       Male
       <br />
       <input name="radio" type="radio" ref={validation} value="female" />
@@ -95,7 +93,13 @@ const Form = () => {
       <br />
       <br />
       Range
-      <input name="range" type="range" ref={validation} defaultValue="0" />
+      <input
+        name="range"
+        type="range"
+        ref={validation}
+        required
+        defaultValue="0"
+      />
       <label id="radio-error">{errors.range?.message}</label>
       <br />
       <br />

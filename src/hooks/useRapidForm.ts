@@ -1,4 +1,4 @@
-import { useReducer, SyntheticEvent, ChangeEvent } from 'react'
+import { useReducer, SyntheticEvent } from 'react'
 import fetchReducer from '../utils/fetchReducer'
 import useValidation from './useValidation'
 import resetAll from '../utils/reset'
@@ -6,6 +6,7 @@ import { ResetFunc } from '../utils/reset'
 import useSubmitValidation from './useSubmitValidation '
 import _ from 'lodash'
 import handleChange, { GenericElement } from '../utils/handleChange'
+import { State } from '../utils/fetchReducer'
 
 export interface GeneralObject {
   [key: string]: string | string[] | object
@@ -26,14 +27,16 @@ export interface HandleSubmit<C> {
   (callback: C): (event: SyntheticEvent<HTMLFormElement>) => void
 }
 
+export interface ReturnParams {
+  handleSubmit: HandleSubmit<SubmitCallback>
+  errors: ErrorsObj
+  validation: any
+  submitValidation: any
+  reset: ResetFunc
+}
+
 export interface UseRapidForm {
-  (): {
-    handleSubmit: HandleSubmit<SubmitCallback>
-    errors: ErrorsObj
-    validation: any // TODO: Add type
-    submitValidation: any // TODO: Add type
-    reset: ResetFunc
-  }
+  (): ReturnParams
 }
 
 const useRapidForm: UseRapidForm = () => {
@@ -56,11 +59,9 @@ const useRapidForm: UseRapidForm = () => {
       e.preventDefault()
       _.map(e.currentTarget.elements, (e: GenericElement) => {
         if (e.name) {
-          const st = handleChange(e, dispatch)
+          const st = handleChange(e, dispatch) as State
           tempState = {
-            // @ts-ignore
             data: { ...tempState.data, ...st.data },
-            // @ts-ignore
             errors: { ...tempState.errors, ...st.errors }
           }
         }
