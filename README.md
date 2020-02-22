@@ -50,8 +50,8 @@ function App() {
       <input name="email" type="email" ref={validation} required />
       {errors.email?.message}
       <label>Age:</label>
-      <input name="name" ref={validation} pattern={/\d+/} />
-      {errors.email?.message}
+      <input name="age" ref={validation} required pattern={/\d+/} />
+      {errors.age?.message}
       <button type="submit">Submit</button>
     </form>
   )
