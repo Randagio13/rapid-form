@@ -61,7 +61,7 @@ function App() {
 
 ## Error handler
 
-Our error object made as follows:
+Our error object is made as follows:
 
 ```tsx
 
