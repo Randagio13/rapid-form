@@ -7,16 +7,14 @@ import useSubmitValidation from './useSubmitValidation '
 import _ from 'lodash'
 import handleChange, { GenericElement } from '../utils/handleChange'
 import { State } from '../utils/fetchReducer'
+import { GenericError } from '../utils/validateValue'
 
 export interface GeneralObject {
   [key: string]: string | string[] | object
 }
 
 export interface ErrorsObj {
-  [key: string]: {
-    error?: boolean
-    message: string
-  }
+  [key: string]: GenericError
 }
 
 export interface SubmitCallback<E = SyntheticEvent<HTMLFormElement>> {

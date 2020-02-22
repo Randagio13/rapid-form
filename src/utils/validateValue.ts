@@ -21,19 +21,20 @@ export interface IsEmpty {
   (object: GenericItem): boolean
 }
 
-export type GenericPatternError = {
+export type GenericError = {
   error: boolean
   message: string
+  code?: 'EMPTY_ERROR' | 'VALIDATION_ERROR'
 }
 
 export type GenericPattern = RegExp | string
 
 export interface IsValidPattern {
-  (value: string, type: string, pattern?: GenericPattern): GenericPatternError
+  (value: string, type: string, pattern?: GenericPattern): GenericError
 }
 
 export interface ValidateValue {
-  (data: GenericItemAttribute): GenericPatternError
+  (data: GenericItemAttribute): GenericError
 }
 
 const isEmpty: IsEmpty = ({ value, type, checked }) => {
@@ -51,9 +52,10 @@ const isValidPattern: IsValidPattern = (val, type, pattern) => {
     error: false,
     message: ''
   }
-  const objError = {
+  const objError: GenericError = {
     error: true,
-    message: `please enter a valid format`
+    message: `please enter a valid format`,
+    code: 'VALIDATION_ERROR'
   }
   if (type === 'email' && !val.match(pattern || EMAIL_PATTERN)) {
     obj = { ...obj, ...objError }
@@ -77,7 +79,8 @@ const validateValue: ValidateValue = data => {
   if (isEmpty(data)) {
     return {
       error: true,
-      message: `${data.name} is required`
+      message: `${data.name} is required`,
+      code: 'EMPTY_ERROR'
     }
   }
   return isValidPattern(data.value, data.type, data.pattern)

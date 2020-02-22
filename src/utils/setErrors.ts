@@ -8,7 +8,7 @@ export interface SetErrors {
 }
 
 const setErrors: SetErrors = (data, dispatch) => {
-  const { error, message } = validateValue(data)
+  const { error, message, code } = validateValue(data)
   if (error) {
     dispatch({
       type: 'error',
@@ -20,7 +20,9 @@ const setErrors: SetErrors = (data, dispatch) => {
       },
       errors: {
         [data.name]: {
-          message
+          error,
+          message,
+          code
         }
       }
     })
@@ -32,7 +34,8 @@ const setErrors: SetErrors = (data, dispatch) => {
       },
       errors: {
         [data.name]: {
-          message
+          message,
+          code
         }
       }
     }
