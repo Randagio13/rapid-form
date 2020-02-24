@@ -10,12 +10,14 @@ export interface SubmitValidation {
 const useSubmitValidation: SubmitValidation = dispatch => {
   return useCallback(
     (ref): void => {
-      ref.onsubmit = (e: HTMLFormElement): void => {
-        _.map(e.currentTarget.elements, (e: GenericElement) => {
-          if (e.currentTarget?.name) {
-            handleChange(e, dispatch)
-          }
-        })
+      if (ref) {
+        ref.onsubmit = (e: HTMLFormElement): void => {
+          _.map(e.currentTarget.elements, (e: GenericElement) => {
+            if (e.currentTarget?.name) {
+              handleChange(e, dispatch)
+            }
+          })
+        }
       }
     },
     [dispatch]
