@@ -8,6 +8,7 @@
   "repository": "git@github.com:iMasterAle/rapid-form.git",
   "author": "Alessandro Casazza <imasterale@gmail.com>",
   "license": "MIT",
+  "keywords": ["react", "form", "hooks", "rapid", "quickly", "react-form", "react-hooks"],
   "files": [
     "dist",
     "package.json",
