@@ -4,11 +4,19 @@
   "private": false,
   "main": "dist/index.js",
   "types": "dist/hooks/useRapidForm.d.ts",
-  "description": "A simple, rapid React Form",
+  "description": "A quickly and easy way to do a form with react hooks",
   "repository": "git@github.com:iMasterAle/rapid-form.git",
   "author": "Alessandro Casazza <imasterale@gmail.com>",
   "license": "MIT",
-  "keywords": ["react", "form", "hooks", "rapid", "quickly", "react-form", "react-hooks"],
+  "keywords": [
+    "react",
+    "form",
+    "hooks",
+    "rapid",
+    "quickly",
+    "react-form",
+    "react-hooks"
+  ],
   "files": [
     "dist",
     "package.json",
@@ -29,15 +37,15 @@
   "dependencies": {},
   "devDependencies": {
     "@types/lodash": "^4.14.149",
-    "@types/react": "^16.9.22",
+    "@types/react": "^16.9.23",
     "@types/react-dom": "^16.9.5",
-    "@typescript-eslint/eslint-plugin": "^2.20.0",
-    "@typescript-eslint/parser": "^2.20.0",
+    "@typescript-eslint/eslint-plugin": "^2.21.0",
+    "@typescript-eslint/parser": "^2.21.0",
     "cypress": "^4.0.2",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-react": "^7.18.3",
-    "eslint-plugin-react-hooks": "^2.4.0",
+    "eslint-plugin-react-hooks": "^2.5.0",
     "lodash": "^4.17.15",
     "prettier": "^1.19.1",
     "react-scripts": "^3.4.0",
@@ -47,8 +55,8 @@
     "typescript": "^3.8.2"
   },
   "peerDependencies": {
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0"
   },
   "browserslist": {
     "production": [
