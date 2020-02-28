@@ -26,7 +26,6 @@
     "start": "react-scripts start",
     "test:cypress": "cypress open",
     "build": "tsdx build --tsconfig ./tsconfig.json --entry ./src/hooks/useRapidForm.ts",
-    "publish": "tsdx build --tsconfig ./tsconfig.json --entry ./src/hooks/useRapidForm.ts && npm publish",
     "version:patch": "npm version patch",
     "version:minor": "npm version minor",
     "version:major": "npm version major",
