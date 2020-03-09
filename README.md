@@ -97,3 +97,9 @@ Our error object is made as follows:
 ## License
 
 This repository is published under the [MIT](LICENSE) license.
+
+## Sponsor
+
+Would you like to offer me a ☕️?
+
+[![Become a patron](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/bePatron?u=24577462)
