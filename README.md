@@ -77,6 +77,23 @@ Our error object is made as follows:
 
 ```
 
+## API
+
+- errors:
+  An object with all errors
+
+- validation:
+  A function to control each field (only with required attribute)
+
+- handleSubmit:
+  A function to put your submit callback. (params: (values, errors, event))
+
+- reset:
+  A simple way to reset the form
+
+- submitValidation:
+  A function to add a plus fields control to the submit event
+
 ## License
 
 This repository is published under the [MIT](LICENSE) license.
