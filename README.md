@@ -2,7 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/rapid-form?style=for-the-badge)](https://www.npmjs.com/package/rapid-form)
 
-A react hook to manage your form in a rapid and easy way
+A React hook to manage your form rapidly and easily.
 
 ## Installation
 
