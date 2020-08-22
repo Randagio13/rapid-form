@@ -9,8 +9,10 @@ const Form: FunctionComponent = () => {
     validation,
     handleSubmit,
     reset,
-    submitValidation
+    submitValidation,
+    values,
   } = useRapidForm()
+  console.log('values', values)
   const s: SubmitCallback = (values, err, e): void => {
     if (_.isEmpty(err)) {
       reset(e)
