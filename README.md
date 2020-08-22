@@ -85,6 +85,9 @@ Our error object is made as follows:
 - **validation**:
   A function to control each field (only with required attribute)
 
+- **values**:
+  Object where you can get form values in real-time
+
 - **handleSubmit**:
   A function to put your submit callback. (params: (values, errors, event))
 
