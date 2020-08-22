@@ -31,6 +31,7 @@ export interface ReturnParams {
   validation: any
   submitValidation: any
   reset: ResetFunc
+  values: Record<string, any>
 }
 
 export interface UseRapidForm {
@@ -40,19 +41,19 @@ export interface UseRapidForm {
 const useRapidForm: UseRapidForm = () => {
   const [state, dispatch] = useReducer(fetchReducer, {
     data: {},
-    errors: {}
+    errors: {},
   })
   const ValidationHook = useValidation(dispatch)
   const SubmitValidation = useSubmitValidation(dispatch)
-  const reset: ResetFunc = e => {
+  const reset: ResetFunc = (e) => {
     e.currentTarget.reset()
     resetAll(dispatch)
   }
   return {
-    handleSubmit: c => (e): void => {
+    handleSubmit: (c) => (e): void => {
       let tempState = {
         data: {},
-        errors: {}
+        errors: {},
       }
       e.preventDefault()
       _.map(e.currentTarget.elements, (e: GenericElement) => {
@@ -60,20 +61,21 @@ const useRapidForm: UseRapidForm = () => {
           const st = handleChange(e, dispatch) as State
           tempState = {
             data: { ...tempState.data, ...st.data },
-            errors: { ...tempState.errors, ...st.errors }
+            errors: { ...tempState.errors, ...st.errors },
           }
         }
       })
       const newState = {
         data: _.isEmpty(state.data) ? tempState.data : state.data,
-        errors: _.isEmpty(state.errors) ? tempState.errors : state.errors
+        errors: _.isEmpty(state.errors) ? tempState.errors : state.errors,
       }
       return c(newState.data, newState.errors, e)
     },
     errors: state.errors,
     validation: ValidationHook,
     submitValidation: SubmitValidation,
-    reset
+    reset,
+    values: state.data,
   }
 }
 
