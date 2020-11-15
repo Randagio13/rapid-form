@@ -12,8 +12,8 @@ const Form: FunctionComponent = () => {
     submitValidation,
     values,
   } = useRapidForm()
-  console.log('values', values)
   const s: SubmitCallback = (values, err, e): void => {
+    console.log('values', values)
     if (_.isEmpty(err)) {
       reset(e)
     }
@@ -37,6 +37,11 @@ const Form: FunctionComponent = () => {
       <label>Email:</label>
       <input name="email" type="email" ref={validation} required />
       <label id="email-error">{errors.email?.message}</label>
+      <br />
+      <br />
+      <label>Password:</label>
+      <input name="password" type="password" ref={validation} required />
+      <label id="password-error">{errors.password?.message}</label>
       <br />
       <br />
       <label>Privacy:</label>
@@ -105,7 +110,9 @@ const Form: FunctionComponent = () => {
       <label id="radio-error">{errors.range?.message}</label>
       <br />
       <br />
-      <button type="submit">submit</button>
+      <button type="submit" disabled={_.isEmpty(values)}>
+        submit
+      </button>
       <br />
       <br />
       <pre>{`errors: ${JSON.stringify(errors, null, 2)}`}</pre>
