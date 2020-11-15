@@ -58,8 +58,8 @@ const handleChange: HandleChange = (e, dispatch) => {
       type: t,
       required: r,
       checked: c,
-      pattern: p
-    }
+      pattern: p,
+    },
   }
   return setErrors(data[n], dispatch)
 }

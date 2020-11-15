@@ -1,13 +1,19 @@
 const DEFAULT_PATTERN = /\w+/
 const EMAIL_PATTERN = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/
-const PW_PATTERN = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{10,}$/
+const PW_PATTERN = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/
+// const PW_PATTERN = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{10,}$/
 // NOTE: At least one lower case English letter, (?=.*?[a-z])
 // NOTE: At least one upper case English letter, (?=.*?[A-Z])
 // NOTE: At least one digit, (?=.*\d)
-// NOTE: At least one special character, (?=.*?[#?!@$%^&*-])
-// NOTE: Minimum ten in length .{10,} (with the anchors)
+// NOTE: At least one special character, (?=.*?[#?!@$%^&*-]) (Removed)
+// NOTE: Minimum ten in length .{6,} (with the anchors)
 
-export type GenericValue = string | string[] | number | undefined | object
+export type GenericValue =
+  | string
+  | string[]
+  | number
+  | undefined
+  | Record<string, any>
 
 export interface GenericItem {
   value: GenericValue
@@ -47,7 +53,7 @@ const isEmpty: IsEmpty = ({ value, type, checked }) => {
     return !checked
   }
   if (Array.isArray(value)) {
-    value = value.find(v => v !== '')?.length
+    value = value.find((v) => v !== '')?.length
   }
   return !value
 }
@@ -55,12 +61,12 @@ const isEmpty: IsEmpty = ({ value, type, checked }) => {
 const isValidPattern: IsValidPattern = (val, type, pattern) => {
   let obj = {
     error: false,
-    message: ''
+    message: '',
   }
   const objError: GenericError = {
     error: true,
     message: `please enter a valid format`,
-    code: 'VALIDATION_ERROR'
+    code: 'VALIDATION_ERROR',
   }
   if (type === 'email' && !val.match(pattern || EMAIL_PATTERN)) {
     obj = { ...obj, ...objError }
@@ -74,18 +80,18 @@ const isValidPattern: IsValidPattern = (val, type, pattern) => {
   return obj
 }
 
-const validateValue: ValidateValue = data => {
+const validateValue: ValidateValue = (data) => {
   if (!data.required) {
     return {
       error: false,
-      message: ''
+      message: '',
     }
   }
   if (isEmpty(data)) {
     return {
       error: true,
       message: `${data.name} is required`,
-      code: 'EMPTY_ERROR'
+      code: 'EMPTY_ERROR',
     }
   }
   return isValidPattern(data.value, data.type, data.pattern)

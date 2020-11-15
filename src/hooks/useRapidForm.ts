@@ -10,7 +10,7 @@ import { State } from '../utils/fetchReducer'
 import { GenericError } from '../utils/validateValue'
 
 export interface GeneralObject {
-  [key: string]: string | string[] | object
+  [key: string]: string | string[] | Record<string, any>
 }
 
 export interface ErrorsObj {
@@ -18,7 +18,7 @@ export interface ErrorsObj {
 }
 
 export interface SubmitCallback<E = SyntheticEvent<HTMLFormElement>> {
-  (data: object, errors: ErrorsObj, event: E): void
+  (data: Record<string, any>, errors: ErrorsObj, event: E): void
 }
 
 export interface HandleSubmit<C> {
@@ -46,7 +46,12 @@ const useRapidForm: UseRapidForm = () => {
   const ValidationHook = useValidation(dispatch)
   const SubmitValidation = useSubmitValidation(dispatch)
   const reset: ResetFunc = (e) => {
-    e.currentTarget.reset()
+    if (e.currentTarget) {
+      e.currentTarget.reset()
+    } else if (_.has(e.target, 'reset')) {
+      // @ts-ignore
+      e.target.reset()
+    }
     resetAll(dispatch)
   }
   return {
