@@ -2,7 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/rapid-form?style=for-the-badge)](https://www.npmjs.com/package/rapid-form)
 
-A React hook to manage your form rapidly and easily.
+A React hook to manage your form quickly.
 
 ## Installation
 
@@ -78,6 +78,9 @@ Our error object is made as follows:
 ```
 
 ## API
+
+- **values**:
+  An object with all values
 
 - **errors**:
   An object with all errors
