@@ -1,8 +1,8 @@
-# Rapid React Form
+# React Rapid Form
 
 [![npm](https://img.shields.io/npm/v/rapid-form?style=for-the-badge)](https://www.npmjs.com/package/rapid-form)
 
-A React hook to manage your form quickly.
+Create your form quickly with an easy react hook.
 
 ## Installation
 

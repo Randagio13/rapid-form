@@ -89,18 +89,20 @@ const useRapidForm: UseRapidForm = () => {
     values: state.data,
     setValue: (name: string, value: string) => {
       const field = state.refs[name]
-      field.value = value
-      setErrors(
-        {
-          checked: field.checked,
-          name,
-          pattern: field.pattern,
-          required: field.required,
-          type: field.type,
-          value,
-        },
-        dispatch
-      )
+      if (field) {
+        field.value = value
+        setErrors(
+          {
+            checked: field.checked,
+            name,
+            pattern: field.pattern,
+            required: field.required,
+            type: field.type,
+            value,
+          },
+          dispatch
+        )
+      }
     },
     setError: (error) => {
       const { name, ...e } = error
