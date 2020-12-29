@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useEffect } from 'react'
 import * as ReactDOM from 'react-dom'
 import useRapidForm from './hooks/useRapidForm'
 import { SubmitCallback } from './hooks/useRapidForm'
@@ -14,6 +14,9 @@ const Form: FunctionComponent = () => {
     setValue,
     setError,
   } = useRapidForm()
+  useEffect(() => {
+    console.log('errors', errors)
+  }, [errors])
   const s: SubmitCallback = (values, err, e): void => {
     console.log('values', values)
     if (_.isEmpty(err)) {
@@ -47,7 +50,13 @@ const Form: FunctionComponent = () => {
       <br />
       <br />
       <label>Email:</label>
-      <input name="email" type="email" ref={validation} required />
+      <input
+        name="email"
+        type="email"
+        ref={validation}
+        defaultValue="ale"
+        required
+      />
       <label id="email-error">{errors.email?.message}</label>
       <br />
       <br />
