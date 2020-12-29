@@ -6,10 +6,16 @@ export interface UseValidationInterface {
   (dispatch: Dispatch<Action>): void
 }
 
-const useValidation: UseValidationInterface = dispatch => {
+const useValidation: UseValidationInterface = (dispatch) => {
   return useCallback(
     (ref): void => {
       if (ref) {
+        dispatch({
+          type: 'setRef',
+          data: {
+            [ref.name]: ref,
+          },
+        })
         ref.oninput = (e: GenericElement): any => handleChange(e, dispatch)
       }
     },

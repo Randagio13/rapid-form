@@ -11,12 +11,24 @@ const Form: FunctionComponent = () => {
     reset,
     submitValidation,
     values,
+    setValue,
+    setError,
   } = useRapidForm()
   const s: SubmitCallback = (values, err, e): void => {
     console.log('values', values)
     if (_.isEmpty(err)) {
       reset(e)
     }
+  }
+  const setDefaultValue = () => {
+    setValue('selectData', 'selezione 1')
+  }
+  const setDefaultError = () => {
+    setError({
+      name: 'password',
+      message: 'Custom error',
+      code: 'VALIDATION_ERROR',
+    })
   }
   return (
     <form
@@ -110,11 +122,17 @@ const Form: FunctionComponent = () => {
       <label id="radio-error">{errors.range?.message}</label>
       <br />
       <br />
-      <button type="submit" disabled={_.isEmpty(values)}>
-        submit
+      <button type="button" onClick={setDefaultValue}>
+        Set defaultValue
       </button>
       <br />
       <br />
+      <button type="button" onClick={setDefaultError}>
+        Set Error
+      </button>
+      <br />
+      <br />
+      <pre>{`values: ${JSON.stringify(values, null, 2)}`}</pre>
       <pre>{`errors: ${JSON.stringify(errors, null, 2)}`}</pre>
     </form>
   )

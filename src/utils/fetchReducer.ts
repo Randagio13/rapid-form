@@ -2,14 +2,15 @@ import { Reducer } from 'react'
 import { ErrorsObj } from '../hooks/useRapidForm'
 
 export interface State {
-  data: object
+  data: Record<string, any>
   errors: ErrorsObj
+  refs: Record<string, any>
   name?: string
 }
 
 export interface Action {
-  type: 'change' | 'error' | 'reset'
-  data?: object
+  type: 'change' | 'error' | 'reset' | 'setRef'
+  data?: Record<string, any>
   errors?: ErrorsObj
   name?: string | number
 }
@@ -24,12 +25,21 @@ const fetchReducer: Reducer<State, Action> = (state, action) => {
       ...state,
       data: {
         ...state.data,
-        ...action.data
+        ...action.data,
       },
       errors: {
         ...state.errors,
-        ...action.errors
-      }
+        ...action.errors,
+      },
+    }
+  }
+  if (action.type === 'setRef') {
+    state = {
+      ...state,
+      refs: {
+        ...state.refs,
+        ...action.data,
+      },
     }
   }
   if (action.type === 'error') {
@@ -37,19 +47,19 @@ const fetchReducer: Reducer<State, Action> = (state, action) => {
       ...state,
       data: {
         ...state.data,
-        ...action.data
+        ...action.data,
       },
       errors: {
         ...state.errors,
-        ...action.errors
-      }
+        ...action.errors,
+      },
     }
   }
   if (action.type === 'reset') {
     state = {
       ...state,
       data: {},
-      errors: {}
+      errors: {},
     }
   }
   return state

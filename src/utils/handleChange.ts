@@ -53,12 +53,12 @@ const handleChange: HandleChange = (e, dispatch) => {
   const p = element?.pattern
   const data = {
     [n]: {
-      value: v,
-      name: n,
-      type: t,
-      required: r,
       checked: c,
+      name: n,
       pattern: p,
+      required: r,
+      type: t,
+      value: v,
     },
   }
   return setErrors(data[n], dispatch)
