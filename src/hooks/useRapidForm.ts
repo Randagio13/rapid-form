@@ -6,7 +6,6 @@ import { ResetFunc, resetSingleField } from '../utils/reset'
 import useSubmitValidation from './useSubmitValidation '
 import isEmpty from 'lodash/isEmpty'
 import map from 'lodash/map'
-import has from 'lodash/has'
 import handleChange, { GenericElement } from '../utils/handleChange'
 import { State } from '../utils/fetchReducer'
 import { GenericError } from '../utils/validateValue'
@@ -54,19 +53,15 @@ const useRapidForm: UseRapidForm = () => {
   const ValidationHook = useValidation(dispatch)
   const SubmitValidation = useSubmitValidation(dispatch)
   const reset: ResetFunc = (e, name) => {
+    const target = e.currentTarget || (e.target as typeof e.currentTarget)
     if (name) {
-      const field = e.currentTarget.elements.namedItem(name) as any
+      const field = target.elements.namedItem(name) as any
       if (field.type === 'checkbox' || field.type === 'radio')
         field.checked = false
       field.value = ''
       resetSingleField(dispatch, name)
     } else {
-      if (e.currentTarget) {
-        e.currentTarget.reset()
-      } else if (has(e.target, 'reset')) {
-        // @ts-ignore
-        e.target.reset()
-      }
+      target.reset()
     }
 
     resetAll(dispatch)
