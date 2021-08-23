@@ -2,7 +2,7 @@ import { useReducer, SyntheticEvent } from 'react'
 import fetchReducer from '../utils/fetchReducer'
 import useValidation from './useValidation'
 import resetAll from '../utils/reset'
-import { ResetFunc } from '../utils/reset'
+import { ResetFunc, resetSingleField } from '../utils/reset'
 import useSubmitValidation from './useSubmitValidation '
 import _ from 'lodash'
 import handleChange, { GenericElement } from '../utils/handleChange'
@@ -51,37 +51,40 @@ const useRapidForm: UseRapidForm = () => {
   })
   const ValidationHook = useValidation(dispatch)
   const SubmitValidation = useSubmitValidation(dispatch)
-  const reset: ResetFunc = (e) => {
+  const reset: ResetFunc = (e, name) => {
     if (e.currentTarget) {
       e.currentTarget.reset()
     } else if (_.has(e.target, 'reset')) {
       // @ts-ignore
       e.target.reset()
     }
-    resetAll(dispatch)
+    if (name) resetSingleField(dispatch, name)
+    else resetAll(dispatch)
   }
   return {
-    handleSubmit: (c) => (e): void => {
-      let tempState = {
-        data: {},
-        errors: {},
-      }
-      e.preventDefault()
-      _.map(e.currentTarget.elements, (e: GenericElement) => {
-        if (e.name) {
-          const st = handleChange(e, dispatch) as State
-          tempState = {
-            data: { ...tempState.data, ...st.data },
-            errors: { ...tempState.errors, ...st.errors },
-          }
+    handleSubmit:
+      (c) =>
+      (e): void => {
+        let tempState = {
+          data: {},
+          errors: {},
         }
-      })
-      const newState = {
-        data: _.isEmpty(state.data) ? tempState.data : state.data,
-        errors: _.isEmpty(state.errors) ? tempState.errors : state.errors,
-      }
-      return c(newState.data, newState.errors, e)
-    },
+        e.preventDefault()
+        _.map(e.currentTarget.elements, (e: GenericElement) => {
+          if (e.name) {
+            const st = handleChange(e, dispatch) as State
+            tempState = {
+              data: { ...tempState.data, ...st.data },
+              errors: { ...tempState.errors, ...st.errors },
+            }
+          }
+        })
+        const newState = {
+          data: _.isEmpty(state.data) ? tempState.data : state.data,
+          errors: _.isEmpty(state.errors) ? tempState.errors : state.errors,
+        }
+        return c(newState.data, newState.errors, e)
+      },
     errors: state.errors,
     validation: ValidationHook,
     submitValidation: SubmitValidation,
