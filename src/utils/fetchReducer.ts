@@ -9,7 +9,7 @@ export interface State {
 }
 
 export interface Action {
-  type: 'change' | 'error' | 'reset' | 'setRef'
+  type: 'change' | 'error' | 'reset' | 'setRef' | 'resetField'
   data?: Record<string, any>
   errors?: ErrorsObj
   name?: string | number
@@ -42,7 +42,7 @@ const fetchReducer: Reducer<State, Action> = (state, action) => {
       },
     }
   }
-  if (action.type === 'error') {
+  if (action.type === 'error' || action.type === 'resetField') {
     state = {
       ...state,
       data: {
