@@ -4,7 +4,9 @@ import useValidation from './useValidation'
 import resetAll from '../utils/reset'
 import { ResetFunc, resetSingleField } from '../utils/reset'
 import useSubmitValidation from './useSubmitValidation '
-import _ from 'lodash'
+import isEmpty from 'lodash/isEmpty'
+import map from 'lodash/map'
+import has from 'lodash/has'
 import handleChange, { GenericElement } from '../utils/handleChange'
 import { State } from '../utils/fetchReducer'
 import { GenericError } from '../utils/validateValue'
@@ -54,7 +56,7 @@ const useRapidForm: UseRapidForm = () => {
   const reset: ResetFunc = (e, name) => {
     if (e.currentTarget) {
       e.currentTarget.reset()
-    } else if (_.has(e.target, 'reset')) {
+    } else if (has(e.target, 'reset')) {
       // @ts-ignore
       e.target.reset()
     }
@@ -70,7 +72,7 @@ const useRapidForm: UseRapidForm = () => {
           errors: {},
         }
         e.preventDefault()
-        _.map(e.currentTarget.elements, (e: GenericElement) => {
+        map(e.currentTarget.elements, (e: GenericElement) => {
           if (e.name) {
             const st = handleChange(e, dispatch) as State
             tempState = {
@@ -80,8 +82,8 @@ const useRapidForm: UseRapidForm = () => {
           }
         })
         const newState = {
-          data: _.isEmpty(state.data) ? tempState.data : state.data,
-          errors: _.isEmpty(state.errors) ? tempState.errors : state.errors,
+          data: isEmpty(state.data) ? tempState.data : state.data,
+          errors: isEmpty(state.errors) ? tempState.errors : state.errors,
         }
         return c(newState.data, newState.errors, e)
       },
