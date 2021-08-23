@@ -18,7 +18,7 @@ export default function Page() {
   const s: SubmitCallback = (values, err, e): void => {
     console.log('values', values)
     if (_.isEmpty(err)) {
-      reset(e)
+      reset(e, 'username')
     }
   }
   const setDefaultValue = () => {

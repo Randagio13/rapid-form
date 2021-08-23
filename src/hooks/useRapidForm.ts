@@ -54,14 +54,22 @@ const useRapidForm: UseRapidForm = () => {
   const ValidationHook = useValidation(dispatch)
   const SubmitValidation = useSubmitValidation(dispatch)
   const reset: ResetFunc = (e, name) => {
-    if (e.currentTarget) {
-      e.currentTarget.reset()
-    } else if (has(e.target, 'reset')) {
-      // @ts-ignore
-      e.target.reset()
+    if (name) {
+      const field = e.currentTarget.elements.namedItem(name) as any
+      if (field.type === 'checkbox' || field.type === 'radio')
+        field.checked = false
+      field.value = ''
+      resetSingleField(dispatch, name)
+    } else {
+      if (e.currentTarget) {
+        e.currentTarget.reset()
+      } else if (has(e.target, 'reset')) {
+        // @ts-ignore
+        e.target.reset()
+      }
     }
-    if (name) resetSingleField(dispatch, name)
-    else resetAll(dispatch)
+
+    resetAll(dispatch)
   }
   return {
     handleSubmit:
