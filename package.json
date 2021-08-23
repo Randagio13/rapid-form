@@ -22,6 +22,9 @@
     "package.json",
     "README.md"
   ],
+  "release": {
+    "branches": ["main"]
+  },
   "scripts": {
     "start": "NODE_OPTIONS='--inspect' next dev",
     "test:cypress": "cypress open",
