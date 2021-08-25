@@ -62,20 +62,6 @@ const fetchReducer: Reducer<State, Action> = (state, action) => {
       errors: {},
     }
   }
-  if (action.type === 'resetField') {
-    debugger
-    state = {
-      ...state,
-      data: {
-        ...state.data,
-        ...action.data,
-      },
-      errors: {
-        ...state.errors,
-        ...action.errors,
-      },
-    }
-  }
   return state
 }
 
