@@ -1,5 +1,6 @@
 import { SyntheticEvent, Dispatch } from 'react'
 import { Action } from './fetchReducer'
+import handleChange, { GenericElement } from './handleChange'
 
 export interface ResetFunc {
   (event: SyntheticEvent<HTMLFormElement>, name?: string): void
@@ -10,7 +11,7 @@ export interface ResetAll {
 }
 
 export interface ResetSingleField {
-  (dispacth: Dispatch<Action>, name: string): void
+  (field: GenericElement, dispacth: Dispatch<Action>): void
 }
 
 const resetAll: ResetAll = (dispatch) => {
@@ -19,21 +20,8 @@ const resetAll: ResetAll = (dispatch) => {
   })
 }
 
-export const resetSingleField: ResetSingleField = (dispatch, name) => {
-  dispatch({
-    type: 'resetField',
-    data: {
-      [name]: {
-        value: '',
-      },
-    },
-    errors: {
-      [name]: {
-        error: false,
-        message: '',
-      },
-    },
-  })
+export const resetSingleField: ResetSingleField = (field, dispatch) => {
+  return handleChange(field, dispatch)
 }
 
 export default resetAll

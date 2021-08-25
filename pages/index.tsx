@@ -43,7 +43,7 @@ export default function Page() {
       <label id="username-error">{errors.username?.message}</label>
       <br />
       <br />
-      {/* <label>Name:</label>
+      <label>Name:</label>
       <input name="name" ref={validation} />
       <br />
       <br />
@@ -56,7 +56,7 @@ export default function Page() {
         required
       />
       <label id="email-error">{errors.email?.message}</label>
-      <br />
+      {/* <br />
       <br />
       <label>Password:</label>
       <input name="password" type="password" ref={validation} required />
@@ -126,9 +126,9 @@ export default function Page() {
         required
         defaultValue="0"
       />
-      <label id="radio-error">{errors.range?.message}</label>
+      <label id="radio-error">{errors.range?.message}</label> */}
       <br />
-      <br /> */}
+      <br />
       <button type="submit">Submit</button>
       <br />
       <br />

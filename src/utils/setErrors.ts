@@ -15,29 +15,29 @@ const setErrors: SetErrors = (data, dispatch) => {
       name: data.name,
       data: {
         [data.name]: {
-          ...data
-        }
+          ...data,
+        },
       },
       errors: {
         [data.name]: {
           error,
           message,
-          code
-        }
-      }
+          code,
+        },
+      },
     })
     return {
       data: {
         [data.name]: {
-          ...data
-        }
+          ...data,
+        },
       },
       errors: {
         [data.name]: {
           message,
-          code
-        }
-      }
+          code,
+        },
+      },
     }
   }
   dispatch({
@@ -45,16 +45,16 @@ const setErrors: SetErrors = (data, dispatch) => {
     name: data.name,
     data: {
       [data.name]: {
-        ...data
-      }
-    }
+        ...data,
+      },
+    },
   })
   return {
     data: {
       [data.name]: {
-        ...data
-      }
-    }
+        ...data,
+      },
+    },
   }
 }
 

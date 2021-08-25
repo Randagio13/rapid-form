@@ -59,12 +59,11 @@ const useRapidForm: UseRapidForm = () => {
       if (field.type === 'checkbox' || field.type === 'radio')
         field.checked = false
       field.value = ''
-      resetSingleField(dispatch, name)
+      resetSingleField(field, dispatch)
     } else {
       target.reset()
+      resetAll(dispatch)
     }
-
-    resetAll(dispatch)
   }
   return {
     handleSubmit:
