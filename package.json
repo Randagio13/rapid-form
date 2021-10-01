@@ -47,26 +47,26 @@
     "semantic-release": "semantic-release"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.172",
-    "@types/react": "^17.0.19",
+    "@types/lodash": "^4.14.175",
+    "@types/react": "^17.0.26",
     "@types/react-dom": "^17.0.9",
-    "@typescript-eslint/eslint-plugin": "^4.29.2",
-    "@typescript-eslint/parser": "^4.29.2",
-    "cypress": "^8.3.0",
+    "@typescript-eslint/eslint-plugin": "^4.32.0",
+    "@typescript-eslint/parser": "^4.32.0",
+    "cypress": "^8.5.0",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
-    "next": "^11.1.0",
-    "prettier": "^2.3.2",
+    "next": "^11.1.2",
+    "prettier": "^2.4.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "semantic-release": "^17.4.5",
+    "semantic-release": "^18.0.0",
     "source-map-loader": "^3.0.0",
-    "ts-loader": "^9.2.5",
+    "ts-loader": "^9.2.6",
     "tsdx": "^0.14.1",
-    "typescript": "^4.3.5"
+    "typescript": "^4.4.3"
   },
   "browserslist": {
     "production": [

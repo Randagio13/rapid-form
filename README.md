@@ -100,12 +100,28 @@ Our error object is made as follows:
 - **submitValidation**:
   A function to add a plus fields control to the submit event
 
-## Sponsor
+## Contributors
 
-Would you like to offer me a ☕️?
+Any contribution is appreciated. You can get started with the steps below:
 
-[![Become a patron](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://www.patreon.com/bePatron?u=24577462)
+1. Fork [this repository](https://github.com/Randagio13/rapid-form) (learn how to do this [here](https://help.github.com/articles/fork-a-repo)).
+
+2. Clone the forked repository.
+
+3. Make your changes and create a pull request ([learn how to do this](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request)).
+
+4. I will attend to your pull request and provide some feedback.
+
+## Need help?
+
+Ping me [on Twitter](https://twitter.com/randagio19)
 
 ## License
 
-This repository is published under the [MIT](LICENSE) license.
+This repository is licensed under the [MIT](LICENSE) License.
+
+## Sponsor
+
+Don't be shy! 😜
+
+[:heart: Sponsor](https://github.com/sponsors/Randagio13)
