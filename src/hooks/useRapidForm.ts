@@ -40,17 +40,19 @@ export interface ReturnParams {
   ) => void
 }
 
+export type EventType = 'blur' | 'change'
+
 export interface UseRapidForm {
-  (): ReturnParams
+  (config?: { fieldEvent: EventType }): ReturnParams
 }
 
-const useRapidForm: UseRapidForm = () => {
+const useRapidForm: UseRapidForm = (config) => {
   const [state, dispatch] = useReducer(fetchReducer, {
     data: {},
     errors: {},
     refs: {},
   })
-  const ValidationHook = useValidation(dispatch)
+  const ValidationHook = useValidation(dispatch, config?.fieldEvent)
   const SubmitValidation = useSubmitValidation(dispatch)
   const reset: ResetFunc = (e, name) => {
     const target = e.currentTarget || (e.target as typeof e.currentTarget)

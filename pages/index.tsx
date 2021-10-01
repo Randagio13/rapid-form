@@ -11,7 +11,7 @@ export default function Page() {
     values,
     setValue,
     setError,
-  } = useRapidForm()
+  } = useRapidForm({ fieldEvent: 'blur' })
   useEffect(() => {
     console.log('errors', errors)
   }, [errors])
