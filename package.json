@@ -31,7 +31,13 @@
       "@semantic-release/release-notes-generator",
       "@semantic-release/changelog",
       "@semantic-release/npm",
-      "@semantic-release/git"
+      "@semantic-release/git",
+      [
+        "@semantic-release/github",
+        {
+          "addReleases": "top"
+        }
+      ]
     ]
   },
   "scripts": {
@@ -52,6 +58,7 @@
     "@semantic-release/changelog": "^6.0.0",
     "@semantic-release/commit-analyzer": "^9.0.1",
     "@semantic-release/git": "^10.0.0",
+    "@semantic-release/github": "^8.0.1",
     "@semantic-release/npm": "^8.0.0",
     "@semantic-release/release-notes-generator": "^10.0.2",
     "@types/lodash": "^4.14.175",
