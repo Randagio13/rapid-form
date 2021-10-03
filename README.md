@@ -1,12 +1,18 @@
-# React Rapid Form
+<div align="center">
+  
+# Rapid Form
 
-[![npm](https://img.shields.io/npm/v/rapid-form?style=for-the-badge)](https://www.npmjs.com/package/rapid-form)
+[![NPM](https://nodei.co/npm/rapid-form.png?compact=true)](https://nodei.co/npm/rapid-form/)
+<br />
+[![](https://img.shields.io/npm/dt/rapid-form.svg?style=flat-square)](https://www.npmjs.com/package/rapid-form)
 
-Create your form quickly with an easy react hook.
+</div>
+
+The Rapid Form is a React hook to develop an HTML form quickly.
 
 ## Installation
 
-The rapid form is available as npm package
+The Rapid Form is available as NPM package
 
 ```bash
   # NPM
