@@ -1,5 +1,5 @@
 const DEFAULT_PATTERN = /\w+/
-const EMAIL_PATTERN = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/
+const EMAIL_PATTERN = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/
 const PW_PATTERN = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/
 // const PW_PATTERN = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{10,}$/
 // NOTE: At least one lower case English letter, (?=.*?[a-z])
