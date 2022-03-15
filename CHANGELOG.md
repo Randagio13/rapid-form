@@ -1,3 +1,10 @@
+## [1.6.2](https://github.com/Randagio13/rapid-form/compare/v1.6.1...v1.6.2) (2022-03-15)
+
+
+### Bug Fixes
+
+* Improve email regex ([5ce095c](https://github.com/Randagio13/rapid-form/commit/5ce095c537d8bfb5fd41acfacf9aa9ef3d072c07))
+
 ## [1.6.1](https://github.com/Randagio13/rapid-form/compare/v1.6.0...v1.6.1) (2022-02-08)
 
 
