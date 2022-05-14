@@ -5,10 +5,8 @@ on:
   pull_request:
     branches: [ main, next, beta ]
 jobs:
-  release:
-    name: Release
-    steps:
-      runs-on: ubuntu-20.04
+  build:
+    runs-on: ubuntu-20.04
     strategy:
       matrix:
         node-version: [15]
