@@ -1,0 +1,35 @@
+[36mweb:build: [0mcache hit, replaying output [2md7ee0c8bc8e37e11[0m
+[36mweb:build: [0m
+[36mweb:build: [0m> web@0.0.0 build /Users/alessandrocasazza/Documents/GitHub/rapid-form/apps/web
+[36mweb:build: [0m> next build
+[36mweb:build: [0m
+[36mweb:build: [0minfo  - Checking validity of types...
+[36mweb:build: [0merror - ESLint: Failed to load config "custom" to extend from. Referenced from: /Users/alessandrocasazza/Documents/GitHub/rapid-form/apps/web/.eslintrc.js
+[36mweb:build: [0minfo  - Creating an optimized production build...
+[36mweb:build: [0minfo  - Compiled successfully
+[36mweb:build: [0minfo  - Collecting page data...
+[36mweb:build: [0minfo  - Generating static pages (0/3)
+[36mweb:build: [0mform {
+[36mweb:build: [0m  handleSubmit: [Function: handleSubmit],
+[36mweb:build: [0m  errors: {},
+[36mweb:build: [0m  validation: [Function (anonymous)],
+[36mweb:build: [0m  submitValidation: [Function (anonymous)],
+[36mweb:build: [0m  reset: [Function: reset],
+[36mweb:build: [0m  values: {},
+[36mweb:build: [0m  setValue: [Function: setValue],
+[36mweb:build: [0m  setError: [Function: setError]
+[36mweb:build: [0m}
+[36mweb:build: [0minfo  - Generating static pages (3/3)
+[36mweb:build: [0minfo  - Finalizing page optimization...
+[36mweb:build: [0m
+[36mweb:build: [0mPage                                       Size     First Load JS
+[36mweb:build: [0m┌ ○ /                                      8.16 kB        79.4 kB
+[36mweb:build: [0m└ ○ /404                                   192 B          71.4 kB
+[36mweb:build: [0m+ First Load JS shared by all              71.2 kB
+[36mweb:build: [0m  ├ chunks/framework-18dbf282fc9f86dd.js   42 kB
+[36mweb:build: [0m  ├ chunks/main-7adb95b49d154e8e.js        26.9 kB
+[36mweb:build: [0m  ├ chunks/pages/_app-5e74c22d5551a606.js  1.37 kB
+[36mweb:build: [0m  └ chunks/webpack-f8fe1f0eb2299c5d.js     883 B
+[36mweb:build: [0m
+[36mweb:build: [0m○  (Static)  automatically rendered as static HTML (uses no initial props)
+[36mweb:build: [0m

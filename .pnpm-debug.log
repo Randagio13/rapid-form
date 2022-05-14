@@ -1,0 +1,1051 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 6,
+    "total": 6,
+    "workspacePrefix": "/Users/alessandrocasazza/Documents/GitHub/rapid-form"
+  },
+  "1 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "turborepo-basic-shared",
+      "version": "0.0.0",
+      "private": true,
+      "workspaces": [
+        "apps/*",
+        "packages/*"
+      ],
+      "scripts": {
+        "build": "turbo run build",
+        "dev": "turbo run dev --parallel",
+        "lint": "turbo run lint",
+        "format": "prettier --write \"**/*.{ts,tsx,md}\""
+      },
+      "devDependencies": {
+        "prettier": "latest",
+        "turbo": "latest"
+      },
+      "engines": {
+        "npm": ">=7.0.0",
+        "node": ">=14.0.0"
+      },
+      "packageManager": "pnpm@6.11.0"
+    },
+    "prefix": "/Users/alessandrocasazza/Documents/GitHub/rapid-form"
+  },
+  "2 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "tsconfig",
+      "version": "0.0.0",
+      "private": true,
+      "main": "index.js",
+      "files": [
+        "base.json",
+        "nextjs.json",
+        "react-library.json"
+      ]
+    },
+    "prefix": "/Users/alessandrocasazza/Documents/GitHub/rapid-form/packages/tsconfig"
+  },
+  "3 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "rapid-form",
+      "version": "1.6.2",
+      "private": false,
+      "main": "dist/index.js",
+      "types": "dist/hooks/useRapidForm.d.ts",
+      "description": "The best way to make a rapid form with react hooks",
+      "repository": "git@github.com:Randagio13/rapid-form.git",
+      "author": "Alessandro Casazza <imasterale@gmail.com>",
+      "license": "MIT",
+      "keywords": [
+        "react-rapid-form",
+        "react-form",
+        "react-hooks",
+        "rapid-form",
+        "hooks",
+        "rapid",
+        "form"
+      ],
+      "files": [
+        "dist",
+        "package.json",
+        "README.md"
+      ],
+      "release": {
+        "branches": [
+          "main"
+        ],
+        "plugins": [
+          "@semantic-release/commit-analyzer",
+          "@semantic-release/release-notes-generator",
+          "@semantic-release/changelog",
+          "@semantic-release/npm",
+          "@semantic-release/git",
+          [
+            "@semantic-release/github",
+            {
+              "addReleases": "top"
+            }
+          ]
+        ]
+      },
+      "scripts": {
+        "start": "NODE_OPTIONS='--inspect' next dev",
+        "test": "tsdx test",
+        "test:coverage": "tsdx test --coverage",
+        "build": "tsdx build --tsconfig ./tsconfig.prod.json --entry ./src/hooks/useRapidForm.ts",
+        "semantic-release": "semantic-release"
+      },
+      "devDependencies": {
+        "@semantic-release/changelog": "^6.0.1",
+        "@semantic-release/commit-analyzer": "^9.0.2",
+        "@semantic-release/git": "^10.0.1",
+        "@semantic-release/github": "^8.0.2",
+        "@semantic-release/npm": "^9.0.0",
+        "@semantic-release/release-notes-generator": "^10.0.3",
+        "@types/lodash": "^4.14.178",
+        "@types/react": "^17.0.39",
+        "@types/react-dom": "^17.0.11",
+        "@typescript-eslint/eslint-plugin": "^5.11.0",
+        "@typescript-eslint/parser": "^5.11.0",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-react": "^7.28.0",
+        "eslint-plugin-react-hooks": "^4.3.0",
+        "lodash": "^4.17.21",
+        "lodash-es": "^4.17.21",
+        "prettier": "^2.5.1",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
+        "semantic-release": "^19.0.2",
+        "typescript": "^4.5.5",
+        "tsconfig": "workspace:*"
+      }
+    },
+    "prefix": "/Users/alessandrocasazza/Documents/GitHub/rapid-form/packages/rapid-form"
+  },
+  "4 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "ui",
+      "version": "0.0.0",
+      "main": "./index.tsx",
+      "types": "./index.tsx",
+      "license": "MIT",
+      "scripts": {
+        "lint": "eslint *.ts*"
+      },
+      "devDependencies": {
+        "@types/react": "^17.0.37",
+        "@types/react-dom": "^17.0.11",
+        "eslint": "^7.32.0",
+        "react": "^17.0.2",
+        "tsconfig": "workspace:*",
+        "typescript": "^4.5.2"
+      }
+    },
+    "prefix": "/Users/alessandrocasazza/Documents/GitHub/rapid-form/packages/ui"
+  },
+  "5 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "docs",
+      "version": "0.0.0",
+      "private": true,
+      "scripts": {
+        "dev": "next dev --port 3001",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint"
+      },
+      "dependencies": {
+        "next": "12.0.8",
+        "react": "17.0.2",
+        "react-dom": "17.0.2",
+        "ui": "workspace:*"
+      },
+      "devDependencies": {
+        "eslint-config-custom": "workspace:*",
+        "eslint": "7.32.0",
+        "next-transpile-modules": "9.0.0",
+        "@types/node": "^17.0.12",
+        "@types/react": "17.0.37",
+        "typescript": "^4.5.3"
+      }
+    },
+    "prefix": "/Users/alessandrocasazza/Documents/GitHub/rapid-form/apps/docs"
+  },
+  "6 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "web",
+      "version": "0.0.0",
+      "private": true,
+      "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint"
+      },
+      "dependencies": {
+        "next": "12.0.8",
+        "react": "17.0.2",
+        "react-dom": "17.0.2",
+        "ui": "workspace:*"
+      },
+      "devDependencies": {
+        "eslint": "7.32.0",
+        "next-transpile-modules": "9.0.0",
+        "tsconfig": "workspace:*",
+        "@types/node": "^17.0.12",
+        "@types/react": "17.0.37",
+        "typescript": "^4.5.3"
+      }
+    },
+    "prefix": "/Users/alessandrocasazza/Documents/GitHub/rapid-form/apps/web"
+  },
+  "7 debug pnpm:context": {
+    "currentLockfileExists": false,
+    "storeDir": "/Users/alessandrocasazza/.pnpm-store/v3",
+    "virtualStoreDir": "/Users/alessandrocasazza/Documents/GitHub/rapid-form/node_modules/.pnpm"
+  },
+  "8 debug pnpm:stage": {
+    "prefix": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "stage": "resolution_started"
+  },
+  "9 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@types/react/17.0.45",
+    "wanted": {
+      "dependentId": "packages/ui",
+      "name": "@types/react",
+      "rawSpec": "^17.0.37"
+    }
+  },
+  "10 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@types/react-dom/17.0.16",
+    "wanted": {
+      "dependentId": "packages/ui",
+      "name": "@types/react-dom",
+      "rawSpec": "^17.0.11"
+    }
+  },
+  "11 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/eslint/7.32.0",
+    "wanted": {
+      "dependentId": "packages/ui",
+      "name": "eslint",
+      "rawSpec": "^7.32.0"
+    }
+  },
+  "12 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/react/17.0.2",
+    "wanted": {
+      "dependentId": "packages/ui",
+      "name": "react",
+      "rawSpec": "^17.0.2"
+    }
+  },
+  "13 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/typescript/4.6.4",
+    "wanted": {
+      "dependentId": "packages/ui",
+      "name": "typescript",
+      "rawSpec": "^4.5.2"
+    }
+  },
+  "14 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/eslint/7.32.0",
+    "wanted": {
+      "dependentId": "apps/docs",
+      "name": "eslint",
+      "rawSpec": "7.32.0"
+    }
+  },
+  "15 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/next-transpile-modules/9.0.0",
+    "wanted": {
+      "dependentId": "apps/docs",
+      "name": "next-transpile-modules",
+      "rawSpec": "9.0.0"
+    }
+  },
+  "16 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@types/node/17.0.32",
+    "wanted": {
+      "dependentId": "apps/docs",
+      "name": "@types/node",
+      "rawSpec": "^17.0.12"
+    }
+  },
+  "17 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@types/react/17.0.37",
+    "wanted": {
+      "dependentId": "apps/docs",
+      "name": "@types/react",
+      "rawSpec": "17.0.37"
+    }
+  },
+  "18 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/typescript/4.6.4",
+    "wanted": {
+      "dependentId": "apps/docs",
+      "name": "typescript",
+      "rawSpec": "^4.5.3"
+    }
+  },
+  "19 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/next/12.0.8",
+    "wanted": {
+      "dependentId": "apps/docs",
+      "name": "next",
+      "rawSpec": "12.0.8"
+    }
+  },
+  "20 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/react/17.0.2",
+    "wanted": {
+      "dependentId": "apps/docs",
+      "name": "react",
+      "rawSpec": "17.0.2"
+    }
+  },
+  "21 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/react-dom/17.0.2",
+    "wanted": {
+      "dependentId": "apps/docs",
+      "name": "react-dom",
+      "rawSpec": "17.0.2"
+    }
+  },
+  "22 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/eslint/7.32.0",
+    "wanted": {
+      "dependentId": "apps/web",
+      "name": "eslint",
+      "rawSpec": "7.32.0"
+    }
+  },
+  "23 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/next-transpile-modules/9.0.0",
+    "wanted": {
+      "dependentId": "apps/web",
+      "name": "next-transpile-modules",
+      "rawSpec": "9.0.0"
+    }
+  },
+  "24 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@types/node/17.0.32",
+    "wanted": {
+      "dependentId": "apps/web",
+      "name": "@types/node",
+      "rawSpec": "^17.0.12"
+    }
+  },
+  "25 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@types/react/17.0.37",
+    "wanted": {
+      "dependentId": "apps/web",
+      "name": "@types/react",
+      "rawSpec": "17.0.37"
+    }
+  },
+  "26 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/typescript/4.6.4",
+    "wanted": {
+      "dependentId": "apps/web",
+      "name": "typescript",
+      "rawSpec": "^4.5.3"
+    }
+  },
+  "27 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/next/12.0.8",
+    "wanted": {
+      "dependentId": "apps/web",
+      "name": "next",
+      "rawSpec": "12.0.8"
+    }
+  },
+  "28 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/react/17.0.2",
+    "wanted": {
+      "dependentId": "apps/web",
+      "name": "react",
+      "rawSpec": "17.0.2"
+    }
+  },
+  "29 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/react-dom/17.0.2",
+    "wanted": {
+      "dependentId": "apps/web",
+      "name": "react-dom",
+      "rawSpec": "17.0.2"
+    }
+  },
+  "30 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@types/react-dom/17.0.16",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "resolved"
+  },
+  "31 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@types/react-dom/17.0.16",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "found_in_store"
+  },
+  "32 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@types/react/17.0.45",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "resolved"
+  },
+  "33 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@types/react/17.0.45",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "found_in_store"
+  },
+  "34 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/react/17.0.2",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "resolved"
+  },
+  "35 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/react/17.0.2",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "found_in_store"
+  },
+  "36 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/next-transpile-modules/9.0.0",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "resolved"
+  },
+  "37 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/next-transpile-modules/9.0.0",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "found_in_store"
+  },
+  "38 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@types/node/17.0.32",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "resolved"
+  },
+  "39 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@types/node/17.0.32",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "found_in_store"
+  },
+  "40 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/eslint/7.32.0",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "resolved"
+  },
+  "41 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/eslint/7.32.0",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "found_in_store"
+  },
+  "42 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/typescript/4.6.4",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "resolved"
+  },
+  "43 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/typescript/4.6.4",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "found_in_store"
+  },
+  "44 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@types/react/17.0.37",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "resolved"
+  },
+  "45 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@types/react/17.0.37",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "found_in_store"
+  },
+  "46 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/react-dom/17.0.2",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "resolved"
+  },
+  "47 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/react-dom/17.0.2",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "found_in_store"
+  },
+  "48 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/next/12.0.8",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "resolved"
+  },
+  "49 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/next/12.0.8",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "found_in_store"
+  },
+  "50 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/turbo/1.2.8",
+    "wanted": {
+      "dependentId": ".",
+      "name": "turbo",
+      "rawSpec": "latest"
+    }
+  },
+  "51 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/turbo/1.2.8",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "resolved"
+  },
+  "52 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/turbo/1.2.8",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "found_in_store"
+  },
+  "53 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/lodash/4.17.21",
+    "wanted": {
+      "dependentId": "packages/rapid-form",
+      "name": "lodash",
+      "rawSpec": "^4.17.21"
+    }
+  },
+  "54 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/lodash/4.17.21",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "resolved"
+  },
+  "55 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/lodash/4.17.21",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "found_in_store"
+  },
+  "56 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/lodash-es/4.17.21",
+    "wanted": {
+      "dependentId": "packages/rapid-form",
+      "name": "lodash-es",
+      "rawSpec": "^4.17.21"
+    }
+  },
+  "57 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/lodash-es/4.17.21",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "resolved"
+  },
+  "58 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/lodash-es/4.17.21",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "found_in_store"
+  },
+  "59 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@semantic-release/release-notes-generator/10.0.3",
+    "wanted": {
+      "dependentId": "packages/rapid-form",
+      "name": "@semantic-release/release-notes-generator",
+      "rawSpec": "^10.0.3"
+    }
+  },
+  "60 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@semantic-release/release-notes-generator/10.0.3",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "resolved"
+  },
+  "61 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@semantic-release/git/10.0.1",
+    "wanted": {
+      "dependentId": "packages/rapid-form",
+      "name": "@semantic-release/git",
+      "rawSpec": "^10.0.1"
+    }
+  },
+  "62 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@semantic-release/git/10.0.1",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "resolved"
+  },
+  "63 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@types/react/17.0.45",
+    "wanted": {
+      "dependentId": "packages/rapid-form",
+      "name": "@types/react",
+      "rawSpec": "^17.0.39"
+    }
+  },
+  "64 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@semantic-release/github/8.0.4",
+    "wanted": {
+      "dependentId": "packages/rapid-form",
+      "name": "@semantic-release/github",
+      "rawSpec": "^8.0.2"
+    }
+  },
+  "65 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@semantic-release/github/8.0.4",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "resolved"
+  },
+  "66 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/eslint-plugin-react-hooks/4.5.0",
+    "wanted": {
+      "dependentId": "packages/rapid-form",
+      "name": "eslint-plugin-react-hooks",
+      "rawSpec": "^4.3.0"
+    }
+  },
+  "67 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/eslint-plugin-react-hooks/4.5.0",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "resolved"
+  },
+  "68 debug pnpm:fetching-progress": {
+    "attempt": 1,
+    "packageId": "registry.npmjs.org/@semantic-release/release-notes-generator/10.0.3",
+    "size": 5511,
+    "status": "started"
+  },
+  "69 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/eslint-plugin-react-hooks/4.5.0",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "found_in_store"
+  },
+  "70 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@semantic-release/release-notes-generator/10.0.3",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "fetched"
+  },
+  "71 debug pnpm:fetching-progress": {
+    "attempt": 1,
+    "packageId": "registry.npmjs.org/@semantic-release/github/8.0.4",
+    "size": 16677,
+    "status": "started"
+  },
+  "72 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/@semantic-release/github/8.0.4",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "fetched"
+  },
+  "73 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/eslint-config-prettier/8.5.0",
+    "wanted": {
+      "dependentId": "packages/rapid-form",
+      "name": "eslint-config-prettier",
+      "rawSpec": "^8.3.0"
+    }
+  },
+  "74 debug pnpm:progress": {
+    "packageId": "registry.npmjs.org/eslint-config-prettier/8.5.0",
+    "requester": "/Users/alessandrocasazza/Documents/GitHub/rapid-form",
+    "status": "resolved"
+  },
+  "75 debug pnpm:_dependency_resolved": {
+    "resolution": "link:../tsconfig",
+    "wanted": {
+      "dependentId": "packages/rapid-form",
+      "name": "tsconfig",
+      "rawSpec": "workspace:*"
+    }
+  },
+  "76 debug pnpm:_dependency_resolved": {
+    "resolution": "link:../tsconfig",
+    "wanted": {
+      "dependentId": "packages/ui",
+      "name": "tsconfig",
+      "rawSpec": "workspace:*"
+    }
+  },
+  "77 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@types/react/17.0.45",
+    "wanted": {
+      "dependentId": "/@types/react-dom/17.0.16",
+      "name": "@types/react",
+      "rawSpec": "^17"
+    }
+  },
+  "78 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@types/prop-types/15.7.5",
+    "wanted": {
+      "dependentId": "/@types/react/17.0.45",
+      "name": "@types/prop-types",
+      "rawSpec": "*"
+    }
+  },
+  "79 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@types/scheduler/0.16.2",
+    "wanted": {
+      "dependentId": "/@types/react/17.0.45",
+      "name": "@types/scheduler",
+      "rawSpec": "*"
+    }
+  },
+  "80 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/csstype/3.0.11",
+    "wanted": {
+      "dependentId": "/@types/react/17.0.45",
+      "name": "csstype",
+      "rawSpec": "^3.0.2"
+    }
+  },
+  "81 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/loose-envify/1.4.0",
+    "wanted": {
+      "dependentId": "/react/17.0.2",
+      "name": "loose-envify",
+      "rawSpec": "^1.1.0"
+    }
+  },
+  "82 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/object-assign/4.1.1",
+    "wanted": {
+      "dependentId": "/react/17.0.2",
+      "name": "object-assign",
+      "rawSpec": "^4.1.1"
+    }
+  },
+  "83 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@babel/code-frame/7.12.11",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "@babel/code-frame",
+      "rawSpec": "7.12.11"
+    }
+  },
+  "84 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@eslint/eslintrc/0.4.3",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "@eslint/eslintrc",
+      "rawSpec": "^0.4.3"
+    }
+  },
+  "85 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@humanwhocodes/config-array/0.5.0",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "@humanwhocodes/config-array",
+      "rawSpec": "^0.5.0"
+    }
+  },
+  "86 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/ajv/6.12.6",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "ajv",
+      "rawSpec": "^6.10.0"
+    }
+  },
+  "87 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/chalk/4.1.2",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "chalk",
+      "rawSpec": "^4.0.0"
+    }
+  },
+  "88 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/cross-spawn/7.0.3",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "cross-spawn",
+      "rawSpec": "^7.0.2"
+    }
+  },
+  "89 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/debug/4.3.4",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "debug",
+      "rawSpec": "^4.0.1"
+    }
+  },
+  "90 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/doctrine/3.0.0",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "doctrine",
+      "rawSpec": "^3.0.0"
+    }
+  },
+  "91 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/enquirer/2.3.6",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "enquirer",
+      "rawSpec": "^2.3.5"
+    }
+  },
+  "92 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/escape-string-regexp/4.0.0",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "escape-string-regexp",
+      "rawSpec": "^4.0.0"
+    }
+  },
+  "93 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/eslint-scope/5.1.1",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "eslint-scope",
+      "rawSpec": "^5.1.1"
+    }
+  },
+  "94 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/eslint-utils/2.1.0",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "eslint-utils",
+      "rawSpec": "^2.1.0"
+    }
+  },
+  "95 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/eslint-visitor-keys/2.1.0",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "eslint-visitor-keys",
+      "rawSpec": "^2.0.0"
+    }
+  },
+  "96 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/espree/7.3.1",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "espree",
+      "rawSpec": "^7.3.1"
+    }
+  },
+  "97 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/esquery/1.4.0",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "esquery",
+      "rawSpec": "^1.4.0"
+    }
+  },
+  "98 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/esutils/2.0.3",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "esutils",
+      "rawSpec": "^2.0.2"
+    }
+  },
+  "99 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/fast-deep-equal/3.1.3",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "fast-deep-equal",
+      "rawSpec": "^3.1.3"
+    }
+  },
+  "100 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/file-entry-cache/6.0.1",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "file-entry-cache",
+      "rawSpec": "^6.0.1"
+    }
+  },
+  "101 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/functional-red-black-tree/1.0.1",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "functional-red-black-tree",
+      "rawSpec": "^1.0.1"
+    }
+  },
+  "102 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/glob-parent/5.1.2",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "glob-parent",
+      "rawSpec": "^5.1.2"
+    }
+  },
+  "103 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/globals/13.14.0",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "globals",
+      "rawSpec": "^13.6.0"
+    }
+  },
+  "104 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/ignore/4.0.6",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "ignore",
+      "rawSpec": "^4.0.6"
+    }
+  },
+  "105 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/import-fresh/3.3.0",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "import-fresh",
+      "rawSpec": "^3.0.0"
+    }
+  },
+  "106 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/imurmurhash/0.1.4",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "imurmurhash",
+      "rawSpec": "^0.1.4"
+    }
+  },
+  "107 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/is-glob/4.0.3",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "is-glob",
+      "rawSpec": "^4.0.0"
+    }
+  },
+  "108 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/js-yaml/3.14.1",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "js-yaml",
+      "rawSpec": "^3.13.1"
+    }
+  },
+  "109 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/json-stable-stringify-without-jsonify/1.0.1",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "json-stable-stringify-without-jsonify",
+      "rawSpec": "^1.0.1"
+    }
+  },
+  "110 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/levn/0.4.1",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "levn",
+      "rawSpec": "^0.4.1"
+    }
+  },
+  "111 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/lodash.merge/4.6.2",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "lodash.merge",
+      "rawSpec": "^4.6.2"
+    }
+  },
+  "112 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/minimatch/3.1.2",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "minimatch",
+      "rawSpec": "^3.0.4"
+    }
+  },
+  "113 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/natural-compare/1.4.0",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "natural-compare",
+      "rawSpec": "^1.4.0"
+    }
+  },
+  "114 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/optionator/0.9.1",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "optionator",
+      "rawSpec": "^0.9.1"
+    }
+  },
+  "115 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/progress/2.0.3",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "progress",
+      "rawSpec": "^2.0.0"
+    }
+  },
+  "116 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/regexpp/3.2.0",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "regexpp",
+      "rawSpec": "^3.1.0"
+    }
+  },
+  "117 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/semver/7.3.7",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "semver",
+      "rawSpec": "^7.2.1"
+    }
+  },
+  "118 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/strip-ansi/6.0.1",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "strip-ansi",
+      "rawSpec": "^6.0.0"
+    }
+  },
+  "119 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/strip-json-comments/3.1.1",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "strip-json-comments",
+      "rawSpec": "^3.1.0"
+    }
+  },
+  "120 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/table/6.8.0",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "table",
+      "rawSpec": "^6.0.9"
+    }
+  },
+  "121 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/text-table/0.2.0",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "text-table",
+      "rawSpec": "^0.2.0"
+    }
+  },
+  "122 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/v8-compile-cache/2.3.0",
+    "wanted": {
+      "dependentId": "/eslint/7.32.0",
+      "name": "v8-compile-cache",
+      "rawSpec": "^2.0.3"
+    }
+  },
+  "123 debug pnpm:_dependency_resolved": {
+    "resolution": "link:../../packages/ui",
+    "wanted": {
+      "dependentId": "apps/docs",
+      "name": "ui",
+      "rawSpec": "workspace:*"
+    }
+  },
+  "124 debug pnpm:_dependency_resolved": {
+    "resolution": "link:../../packages/tsconfig",
+    "wanted": {
+      "dependentId": "apps/web",
+      "name": "tsconfig",
+      "rawSpec": "workspace:*"
+    }
+  },
+  "125 debug pnpm:_dependency_resolved": {
+    "resolution": "link:../../packages/ui",
+    "wanted": {
+      "dependentId": "apps/web",
+      "name": "ui",
+      "rawSpec": "workspace:*"
+    }
+  },
+  "126 error pnpm": {
+    "code": "ERR_PNPM_NO_MATCHING_VERSION_INSIDE_WORKSPACE",
+    "pkgsStack": [],
+    "err": {
+      "name": "Error",
+      "message": "In apps/docs: No matching version found for eslint-config-custom@* inside the workspace",
+      "code": "ERR_PNPM_NO_MATCHING_VERSION_INSIDE_WORKSPACE",
+      "stack": "Error: In apps/docs: No matching version found for eslint-config-custom@* inside the workspace\n    at tryResolveFromWorkspace (/Users/alessandrocasazza/.node/corepack/pnpm/6.11.0/dist/pnpm.cjs:79854:15)\n    at resolveNpm (/Users/alessandrocasazza/.node/corepack/pnpm/6.11.0/dist/pnpm.cjs:79756:39)\n    at Object.resolve (/Users/alessandrocasazza/.node/corepack/pnpm/6.11.0/dist/pnpm.cjs:79961:40)\n    at ctx.requestsQueue.add.priority (/Users/alessandrocasazza/.node/corepack/pnpm/6.11.0/dist/pnpm.cjs:66288:75)\n    at run (/Users/alessandrocasazza/.node/corepack/pnpm/6.11.0/dist/pnpm.cjs:66040:90)\n    at PQueue._tryToStartAnother (/Users/alessandrocasazza/.node/corepack/pnpm/6.11.0/dist/pnpm.cjs:65994:13)\n    at PQueue._next (/Users/alessandrocasazza/.node/corepack/pnpm/6.11.0/dist/pnpm.cjs:65943:14)\n    at run (/Users/alessandrocasazza/.node/corepack/pnpm/6.11.0/dist/pnpm.cjs:66050:18)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+    }
+  }
+}

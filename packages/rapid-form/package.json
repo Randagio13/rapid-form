@@ -1,0 +1,62 @@
+{
+  "name": "rapid-form",
+  "version": "1.6.2",
+  "private": false,
+  "main": "dist/rapid-form.cjs.js",
+  "module": "dist/rapid-form.esm.js",
+  "types": "dist/rapid-form.cjs.d.ts",
+  "description": "The best way to make a rapid form with react hooks",
+  "repository": "git@github.com:Randagio13/rapid-form.git",
+  "author": "Alessandro Casazza <imasterale@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "react-rapid-form",
+    "react-form",
+    "react-hooks",
+    "rapid-form",
+    "hooks",
+    "rapid",
+    "form"
+  ],
+  "files": [
+    "dist",
+    "package.json",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "pnpm preconstruct build && pnpm postbuild",
+    "postbuild": "minimize-js dist -w -s -d",
+    "semantic-release": "semantic-release"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.10",
+    "@babel/preset-typescript": "^7.16.7",
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/commit-analyzer": "^9.0.2",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^8.0.2",
+    "@semantic-release/npm": "^9.0.0",
+    "@semantic-release/release-notes-generator": "^10.0.3",
+    "@types/lodash": "^4.14.178",
+    "@types/react": "^17.0.39",
+    "@types/react-dom": "^17.0.11",
+    "@typescript-eslint/eslint-plugin": "^5.11.0",
+    "@typescript-eslint/parser": "^5.11.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "lodash-es": "^4.17.21",
+    "minimize-js": "^1.3.0",
+    "prettier": "^2.5.1",
+    "react": "^17.0.2",
+    "semantic-release": "^19.0.2",
+    "tsconfig": "workspace:*",
+    "typescript": "^4.5.5"
+  },
+  "peerDependencies": {
+    "react": "^17.0.2"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
+}

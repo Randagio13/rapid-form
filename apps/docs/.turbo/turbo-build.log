@@ -1,0 +1,25 @@
+[34mdocs:build: [0mcache hit, replaying output [2m57e6e086d595c3e4[0m
+[34mdocs:build: [0m
+[34mdocs:build: [0m> docs@0.0.0 build /Users/alessandrocasazza/Documents/GitHub/rapid-form/apps/docs
+[34mdocs:build: [0m> next build
+[34mdocs:build: [0m
+[34mdocs:build: [0minfo  - Checking validity of types...
+[34mdocs:build: [0merror - ESLint: Failed to load config "custom" to extend from. Referenced from: /Users/alessandrocasazza/Documents/GitHub/rapid-form/apps/docs/.eslintrc.js
+[34mdocs:build: [0minfo  - Creating an optimized production build...
+[34mdocs:build: [0minfo  - Compiled successfully
+[34mdocs:build: [0minfo  - Collecting page data...
+[34mdocs:build: [0minfo  - Generating static pages (0/3)
+[34mdocs:build: [0minfo  - Generating static pages (3/3)
+[34mdocs:build: [0minfo  - Finalizing page optimization...
+[34mdocs:build: [0m
+[34mdocs:build: [0mPage                                       Size     First Load JS
+[34mdocs:build: [0m┌ ○ /                                      300 B          71.3 kB
+[34mdocs:build: [0m└ ○ /404                                   192 B          71.2 kB
+[34mdocs:build: [0m+ First Load JS shared by all              71 kB
+[34mdocs:build: [0m  ├ chunks/framework-18dbf282fc9f86dd.js   42 kB
+[34mdocs:build: [0m  ├ chunks/main-7adb95b49d154e8e.js        26.9 kB
+[34mdocs:build: [0m  ├ chunks/pages/_app-5e74c22d5551a606.js  1.37 kB
+[34mdocs:build: [0m  └ chunks/webpack-45f9f9587e6c08e1.js     729 B
+[34mdocs:build: [0m
+[34mdocs:build: [0m○  (Static)  automatically rendered as static HTML (uses no initial props)
+[34mdocs:build: [0m

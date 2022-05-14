@@ -1,97 +1,35 @@
 {
-  "name": "rapid-form",
-  "version": "1.6.2",
-  "private": false,
-  "main": "dist/index.js",
-  "types": "dist/hooks/useRapidForm.d.ts",
-  "description": "The best way to make a rapid form with react hooks",
-  "repository": "git@github.com:Randagio13/rapid-form.git",
-  "author": "Alessandro Casazza <imasterale@gmail.com>",
-  "license": "MIT",
-  "keywords": [
-    "react-rapid-form",
-    "react-form",
-    "react-hooks",
-    "rapid-form",
-    "hooks",
-    "rapid",
-    "form"
+  "name": "turborepo-basic-shared",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
   ],
-  "files": [
-    "dist",
-    "package.json",
-    "README.md"
-  ],
-  "release": {
-    "branches": [
-      "main"
-    ],
-    "plugins": [
-      "@semantic-release/commit-analyzer",
-      "@semantic-release/release-notes-generator",
-      "@semantic-release/changelog",
-      "@semantic-release/npm",
-      "@semantic-release/git",
-      [
-        "@semantic-release/github",
-        {
-          "addReleases": "top"
-        }
-      ]
-    ]
-  },
   "scripts": {
-    "start": "NODE_OPTIONS='--inspect' next dev",
-    "test:cypress": "cypress open",
-    "test": "tsdx test",
-    "test:coverage": "tsdx test --coverage",
-    "build": "tsdx build --tsconfig ./tsconfig.prod.json --entry ./src/hooks/useRapidForm.ts",
-    "version:patch": "npm version patch",
-    "version:minor": "npm version minor",
-    "version:major": "npm version major",
-    "publish:patch": "npm run build && npm run version:patch && git push --follow-tags && npm publish",
-    "publish:minor": "npm run build && npm run version:minor && git push --follow-tags && npm publish",
-    "publish:major": "npm run build && npm run version:major && git push --follow-tags && npm publish",
-    "semantic-release": "semantic-release"
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "postinstall": "preconstruct dev"
   },
   "devDependencies": {
-    "@semantic-release/changelog": "^6.0.1",
-    "@semantic-release/commit-analyzer": "^9.0.2",
-    "@semantic-release/git": "^10.0.1",
-    "@semantic-release/github": "^8.0.2",
-    "@semantic-release/npm": "^9.0.0",
-    "@semantic-release/release-notes-generator": "^10.0.3",
-    "@types/lodash": "^4.14.178",
-    "@types/react": "^17.0.39",
-    "@types/react-dom": "^17.0.11",
-    "@typescript-eslint/eslint-plugin": "^5.11.0",
-    "@typescript-eslint/parser": "^5.11.0",
-    "cypress": "^9.4.1",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-react": "^7.28.0",
-    "eslint-plugin-react-hooks": "^4.3.0",
-    "lodash": "^4.17.21",
-    "lodash-es": "^4.17.21",
-    "next": "^12.0.10",
-    "prettier": "^2.5.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "semantic-release": "^19.0.2",
-    "source-map-loader": "^3.0.1",
-    "ts-loader": "^9.2.6",
-    "tsdx": "^0.14.1",
-    "typescript": "^4.5.5"
+    "prettier": "latest",
+    "turbo": "latest"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
+  "engines": {
+    "npm": ">=7.0.0",
+    "node": ">=14.0.0"
+  },
+  "packageManager": "pnpm@6.11.0",
+  "dependencies": {
+    "@babel/core": "^7.17.10",
+    "@babel/preset-typescript": "^7.16.7",
+    "@preconstruct/cli": "^2.1.5"
+  },
+  "preconstruct": {
+    "packages": [
+      "packages/rapid-form"
     ]
   }
 }

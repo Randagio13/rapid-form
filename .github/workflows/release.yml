@@ -1,26 +1,35 @@
 name: Release
 on:
   push:
-    branches: [ main ]
+    branches: [ main, next, beta ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, next, beta ]
 jobs:
   release:
     name: Release
-    runs-on: ubuntu-18.04
     steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-      - name: Setup Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14
-      - name: Install dependencies
-        run: npm i
-      - name: Build package
-        run: npm run build
-      - name: Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npx semantic-release
+      runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        node-version: [15]
+    steps:
+    - uses: actions/checkout@v2
+    - uses: pnpm/action-setup@v2.0.1
+      with:
+        version: 7.0.0
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'pnpm'
+    - name: Install dependencies
+      run: pnpm install
+    - name: Build package
+      run: pnpm build
+    - name: Move to package
+      run: cd packages/rapid-form
+    - name: Release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      run: npx semantic-release
