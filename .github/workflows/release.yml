@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        node-version: latest
+        node-version: [17]
     steps:
     - uses: actions/checkout@v3
     - uses: pnpm/action-setup@v2.0.1
@@ -24,10 +24,8 @@ jobs:
       run: pnpm install
     - name: Build package
       run: pnpm build
-    - name: Move to package
-      run: cd packages/rapid-form
     - name: Release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      run: npx semantic-release
+      run: cd ./packages/rapid-form && npx semantic-release
