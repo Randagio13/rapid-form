@@ -1,3 +1,1 @@
-import useRapidForm from './hooks/useRapidForm'
-
-export default useRapidForm
+export * from './hooks/useRapidForm'

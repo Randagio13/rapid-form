@@ -42,11 +42,9 @@ export interface ReturnParams {
 
 export type EventType = 'blur' | 'change'
 
-export interface UseRapidForm {
-  (config?: { fieldEvent: EventType }): ReturnParams
-}
+type Config = { fieldEvent: EventType }
 
-const useRapidForm: UseRapidForm = (config) => {
+export function useRapidForm(config: Config) {
   const [state, dispatch] = useReducer(fetchReducer, {
     data: {},
     errors: {},
@@ -69,8 +67,8 @@ const useRapidForm: UseRapidForm = (config) => {
   }
   return {
     handleSubmit:
-      (c) =>
-      (e): void => {
+      (c: any) =>
+      (e: any): void => {
         let tempState = {
           data: {},
           errors: {},
@@ -113,7 +111,7 @@ const useRapidForm: UseRapidForm = (config) => {
         )
       }
     },
-    setError: (error) => {
+    setError: (error: any) => {
       const { name, ...e } = error
       dispatch({
         type: 'error',
@@ -128,5 +126,3 @@ const useRapidForm: UseRapidForm = (config) => {
     },
   }
 }
-
-export default useRapidForm
