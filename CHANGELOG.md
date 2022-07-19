@@ -1,3 +1,10 @@
+## [2.0.3](https://github.com/Randagio13/rapid-form/compare/v2.0.2...v2.0.3) (2022-07-19)
+
+
+### Bug Fixes
+
+* Add named export ([89d3d83](https://github.com/Randagio13/rapid-form/commit/89d3d8390945c9f88239a244ca80bb4351b2f765))
+
 ## [2.0.2](https://github.com/Randagio13/rapid-form/compare/v2.0.1...v2.0.2) (2022-07-19)
 
 
