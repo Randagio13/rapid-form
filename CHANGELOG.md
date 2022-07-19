@@ -1,3 +1,10 @@
+## [2.0.2](https://github.com/Randagio13/rapid-form/compare/v2.0.1...v2.0.2) (2022-07-19)
+
+
+### Bug Fixes
+
+* Add index to lib ([6f31391](https://github.com/Randagio13/rapid-form/commit/6f31391f26041e152cbd73a4c27434c828327e63))
+
 ## [2.0.1](https://github.com/Randagio13/rapid-form/compare/v2.0.0...v2.0.1) (2022-07-19)
 
 
