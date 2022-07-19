@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/Randagio13/rapid-form/compare/v1.6.2...v2.0.0) (2022-07-19)
+
+
+### Performance Improvements
+
+* Compile in ESM version ([9f1583c](https://github.com/Randagio13/rapid-form/commit/9f1583c9d1f6cdda64f57d47d8232c2893f40529))
+
+
+### BREAKING CHANGES
+
+* CommonJS version is not supported anymore.
+
 ## [1.6.2](https://github.com/Randagio13/rapid-form/compare/v1.6.1...v1.6.2) (2022-03-15)
 
 
