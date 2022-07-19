@@ -1,3 +1,10 @@
+## [2.0.4](https://github.com/Randagio13/rapid-form/compare/v2.0.3...v2.0.4) (2022-07-19)
+
+
+### Bug Fixes
+
+* Add optional config ([bd49134](https://github.com/Randagio13/rapid-form/commit/bd4913421ac502aa0e4294058b2de1ab7b29240e))
+
 ## [2.0.3](https://github.com/Randagio13/rapid-form/compare/v2.0.2...v2.0.3) (2022-07-19)
 
 
