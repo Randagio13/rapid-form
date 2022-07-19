@@ -2,6 +2,7 @@ import validateValue from './validateValue'
 import { Dispatch } from 'react'
 import { Action } from './fetchReducer'
 import { GenericItemAttribute } from './validateValue'
+import { ErrorsObj } from '../hooks/useRapidForm'
 
 export interface SetErrors {
   (data: GenericItemAttribute, dispatch: Dispatch<Action>): void
@@ -24,7 +25,7 @@ const setErrors: SetErrors = (data, dispatch) => {
           message,
           code,
         },
-      },
+      } as ErrorsObj,
     })
     return {
       data: {

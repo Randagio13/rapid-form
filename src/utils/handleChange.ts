@@ -61,7 +61,7 @@ const handleChange: HandleChange = (e, dispatch) => {
       value: v,
     },
   }
-  return setErrors(data[n], dispatch)
+  return setErrors(data[n] as any, dispatch)
 }
 
 export default handleChange
