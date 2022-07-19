@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect } from 'react'
-import useRapidForm, { SubmitCallback } from '../src/hooks/useRapidForm'
+import { SubmitCallback, useRapidForm } from '../src'
 import _ from 'lodash'
 export default function Page() {
   const {
