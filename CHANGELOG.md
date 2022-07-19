@@ -1,3 +1,10 @@
+## [2.0.5](https://github.com/Randagio13/rapid-form/compare/v2.0.4...v2.0.5) (2022-07-19)
+
+
+### Bug Fixes
+
+* Remove `type: module` from package.json ([ab5c723](https://github.com/Randagio13/rapid-form/commit/ab5c7234159ee318c54723d3c5583c4049b192f6))
+
 ## [2.0.4](https://github.com/Randagio13/rapid-form/compare/v2.0.3...v2.0.4) (2022-07-19)
 
 
