@@ -44,7 +44,7 @@ export type EventType = 'blur' | 'change'
 
 type Config = { fieldEvent: EventType }
 
-export function useRapidForm(config: Config) {
+export function useRapidForm(config?: Config) {
   const [state, dispatch] = useReducer(fetchReducer, {
     data: {},
     errors: {},
