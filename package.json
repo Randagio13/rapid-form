@@ -20,7 +20,7 @@
     "form"
   ],
   "files": [
-    "dist",
+    "lib",
     "package.json",
     "README.md"
   ],
