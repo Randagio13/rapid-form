@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/Randagio13/rapid-form/compare/v2.0.0...v2.0.1) (2022-07-19)
+
+
+### Bug Fixes
+
+* Add lib to files ([59382e4](https://github.com/Randagio13/rapid-form/commit/59382e48533b08a8fe7969e06954dd053f621910))
+
 # [2.0.0](https://github.com/Randagio13/rapid-form/compare/v1.6.2...v2.0.0) (2022-07-19)
 
 
