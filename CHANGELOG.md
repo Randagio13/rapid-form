@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/Randagio13/rapid-form/compare/v2.0.5...v2.1.0) (2022-07-20)
+
+
+### Features
+
+* Build cjs and esm version for tree-shaking ([04ee916](https://github.com/Randagio13/rapid-form/commit/04ee9168ef7360b7fafdaab0defe7e852a18fcac))
+
 ## [2.0.5](https://github.com/Randagio13/rapid-form/compare/v2.0.4...v2.0.5) (2022-07-19)
 
 
