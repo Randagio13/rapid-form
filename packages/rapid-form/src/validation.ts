@@ -32,12 +32,13 @@ export interface ValidationProps {
   dispatch?: Dispatch<Action>
   /**
    * Configure event type for validation (change, blur, input)
-   * @default { eventType: 'input' }
+   * @default { eventType: 'input', resetOnSubmit: true }
    */
   config?:
     | {
         eventType?: EventType
         validations?: ValidationConfig
+        resetOnSubmit?: boolean
       }
     | undefined
 }
@@ -94,6 +95,17 @@ function inputValidation({ type, value, element }: InputValidationProps): boolea
 export function validation({ ref, dispatch, config }: ValidationProps): void {
   const elements = ref?.elements
   let eventType = config?.eventType ?? 'input'
+  const resetOnSubmit = config?.resetOnSubmit ?? true
+  if (resetOnSubmit) {
+    ref?.addEventListener('submit', function () {
+      ref?.reset()
+      dispatch?.({
+        type: 'reset',
+        values: {},
+        errors: {}
+      })
+    })
+  }
   if (elements != null) {
     for (let i = 0; i < elements.length; i++) {
       const element = elements[i]

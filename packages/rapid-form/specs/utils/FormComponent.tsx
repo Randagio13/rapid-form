@@ -76,6 +76,7 @@ export function Form({ elements, config }: FormProps): JSX.Element {
       }}
     >
       {components}
+      <button data-testid="submit-button" type="submit">Submit</button>
     </form>
   )
 }

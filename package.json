@@ -12,7 +12,8 @@
     "test": "pnpm -r test",
     "docs:dev": "pnpm --filter docs dev",
     "docs:build": "pnpm --filter docs build",
-    "rapid-form:test": "pnpm --filter rapid-form test",
+    "rapid-form:test": "pnpm --filter rapid-form test:dev",
+    "rapid-form:test:coverage": "pnpm --filter rapid-form test:coverage",
     "rapid-form:build": "pnpm --filter rapid-form build"
   },
   "devDependencies": {

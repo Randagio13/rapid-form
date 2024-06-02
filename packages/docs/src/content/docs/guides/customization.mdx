@@ -1,0 +1,52 @@
+---
+title: Customization
+description: Customize your form with Rapid Form.
+---
+
+To customize your form, you can use the `useRapidForm` hook to access the form state and validation functions using the `refValidation` function to validate the form fields.
+
+Let's see how to customize the form with Rapid Form:
+
+import { Steps } from '@astrojs/starlight/components';
+
+<Steps>
+
+1. Import the `useRapidForm` hook into your file:
+
+   ```tsx
+   import { useRapidForm } from 'rapid-form';
+   ```
+
+2. Add `useRapidForm` hook to your component:
+
+    ```tsx
+    export function MyComponent() {
+      const { refValidation } = useRapidForm()
+      // Your component code goes here
+    }
+    ```
+
+3. Add `refValidation` to your form and customize your form fields validation:
+
+    ```tsx
+    <form
+      ref={(ref) => {
+        const config = {
+          validations: {
+            'input-name': {
+              eventType: 'blur'
+              validation: ({ value }) => value.length > 10,
+              message: 'The input must be more than 10 characters'
+            }
+          }
+        }
+        refValidation(ref, config)
+      }}
+    >
+      <input type="text" required name="input-name" />
+      <input type="email" required name="email" />
+      <button type="submit">Submit</button>
+    </form>
+    ```
+
+</Steps>

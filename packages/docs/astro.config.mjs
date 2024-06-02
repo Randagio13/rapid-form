@@ -5,16 +5,24 @@ import starlight from '@astrojs/starlight';
 export default defineConfig({
 	integrations: [
 		starlight({
-			title: 'Rapid Form Docs',
+			title: 'Rapid Form',
 			social: {
 				github: 'https://github.com/Randagio13/rapid-form',
 			},
 			sidebar: [
 				{
+					label: 'Getting started',
+					items: [
+						// Each item here is one entry in the navigation menu.
+						{ label: 'Installation', link: '/getting-started/installation/' },
+						{ label: 'Quick start', link: '/getting-started/quick-start/' },
+					],
+				},
+				{
 					label: 'Guides',
 					items: [
 						// Each item here is one entry in the navigation menu.
-						{ label: 'Example Guide', link: '/guides/example/' },
+						{ label: 'Customization', link: '/guides/customization/' },
 					],
 				},
 				{

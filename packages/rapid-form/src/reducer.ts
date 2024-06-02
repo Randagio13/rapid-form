@@ -28,7 +28,7 @@ export interface State {
 /**
  * Represents the type of action that can be dispatched to the reducer.
  */
-type ActionType = 'setValue' | 'setError'
+type ActionType = 'setValue' | 'setError' | 'reset'
 
 /**
  * Represents an action that can be dispatched to the reducer.
@@ -56,6 +56,8 @@ export const reducer: Reducer<State, Action> = (state, action) => {
     case 'setValue':
     case 'setError':
       return { ...state, values: action.values, errors: action.errors }
+    case 'reset':
+      return { values: action.values, errors: action.errors }
   }
 }
 

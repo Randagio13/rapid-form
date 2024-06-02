@@ -1,0 +1,74 @@
+---
+title: Quick Start
+description: Quick start example
+---
+
+To get started with Rapid Form, let's create a simple form that collects user information.
+
+import { Steps } from '@astrojs/starlight/components';
+
+<Steps>
+
+1. Import the `useRapidForm` hook into your file:
+
+   ```tsx
+   import { useRapidForm } from 'rapid-form';
+   ```
+
+2. Add `useRapidForm` hook to your component:
+
+    ```tsx
+    export function MyComponent() {
+      const { refValidation } = useRapidForm()
+      // Your component code goes here
+    }
+    ```
+
+3. Add `refValidation` to your form:
+
+    ```tsx
+    <form
+      ref={(ref) => {
+        refValidation(ref)
+      }}
+    >
+      {/* Your form fields go here */}
+    </form>
+    ```
+
+4. Add form required fields to your form:
+
+    ```tsx
+    <form
+      ref={(ref) => {
+        refValidation(ref)
+      }}
+    >
+      <input type="text" required name="name" />
+      <input type="email" required name="email" />
+      <button type="submit">Submit</button>
+    </form>
+    ```
+
+5. Show errors and disable the submit button based on form validation:
+
+    ```tsx
+    export function MyComponent() {
+      const { refValidation, errors } = useRapidForm()
+      const isValid = Object.keys(errors).lenght === 0
+      return (
+        <form
+          ref={(ref) => {
+            refValidation(ref)
+          }}
+        >
+          <input type="text" required name="name" />
+          <span>{errors.name}</span>
+          <input type="email" required name="email" />
+          <span>{errors.email}</span>
+          <button type="submit" disabled={!isValid}>Submit</button>
+        </form>
+      )
+    }
+    ```
+</Steps>

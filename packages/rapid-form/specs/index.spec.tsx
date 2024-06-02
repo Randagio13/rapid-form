@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, test } from 'vitest'
 import { type ElementType, Form } from './utils/FormComponent'
@@ -22,8 +22,36 @@ describe('Default settings', () => {
     expect(input).toHaveProperty('value', 'test')
     const inputError = screen.getByTestId('input-text-error')
     expect(inputError.textContent).toBe('')
+    const submitButton = screen.getByTestId('submit-button')
+    await fireEvent.submit(submitButton)
+    input = screen.getByTestId('input-text')
+    expect(input).toHaveProperty('value', '')
   })
 
+  test('Input type text by blur event with no errors and reset', async () => {
+    const elements: ElementType[] = [
+      {
+        as: 'input',
+        name: 'input-text',
+        type: 'text',
+        required: true
+      }
+    ]
+    const user = userEvent.setup()
+    render(<Form elements={elements} config={{ eventType: 'blur', resetOnSubmit: false }} />)
+    let input = screen.getByTestId('input-text')
+    expect(input).toHaveProperty('type', 'text')
+    await user.type(input, 'test')
+    input = screen.getByTestId('input-text')
+    expect(input).toHaveProperty('value', 'test')
+    const inputError = screen.getByTestId('input-text-error')
+    expect(inputError.textContent).toBe('')
+    const submitButton = screen.getByTestId('submit-button')
+    await fireEvent.submit(submitButton)
+    input = screen.getByTestId('input-text')
+    expect(input).toHaveProperty('value', 'test')
+  })
+  
   test('Input type text by blur event with no errors', async () => {
     const elements: ElementType[] = [
       {
@@ -62,7 +90,6 @@ describe('Default settings', () => {
     input = screen.getByTestId('input-text')
     expect(input).toHaveProperty('value', ' ')
     const inputError = screen.getByTestId('input-text-error')
-    console.debug('input error', inputError.textContent)
     expect(inputError.textContent).not.toBe('')
   })
 
@@ -231,7 +258,6 @@ describe('Default settings', () => {
     expect(input).toHaveProperty('checked', true)
     expect(input).toHaveProperty('value', 'on')
     const inputError = screen.getByTestId('input-checkbox-error')
-    console.debug('input error', inputError.textContent)
     expect(inputError.textContent).toBe('')
   })
   
