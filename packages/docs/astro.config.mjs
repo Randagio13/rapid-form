@@ -3,6 +3,8 @@ import starlight from '@astrojs/starlight';
 
 // https://astro.build/config
 export default defineConfig({
+	site: 'https://rapid-form.github.io',
+	base: 'rapid-form',
 	integrations: [
 		starlight({
 			title: 'Rapid Form',
