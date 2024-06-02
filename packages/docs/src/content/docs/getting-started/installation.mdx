@@ -1,0 +1,26 @@
+---
+title: Installation
+description: A guide in my new Starlight docs site.
+---
+import { Tabs, TabItem, Code } from '@astrojs/starlight/components';
+
+The `rapid-form` package is a tool designed to simplify the creation and management of forms in [React](https://react.dev/) web applications. It provides a streamlined way to handle form state, validation, and submission, making it easier for developers to implement complex forms without having to write repetitive boilerplate code.
+
+Install via Package managers such as npm or pnpm or yarn
+
+export const npmCode = `npm install rapid-form`;
+export const pnpmCode = `pnpm add rapid-form`;
+export const yarnCode = `yarn add rapid-form`;
+export const fileName = 'Terminal';
+
+<Tabs>
+  <TabItem label="npm">
+    <Code code={npmCode} lang="bash" title={fileName} />
+  </TabItem>
+  <TabItem label="pnpm">
+    <Code code={pnpmCode} lang="bash" title={fileName} />
+  </TabItem>
+  <TabItem label="yarn">
+    <Code code={yarnCode} lang="bash" title={fileName} />
+  </TabItem>
+</Tabs>
