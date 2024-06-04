@@ -103,11 +103,6 @@ export function validation({ ref, dispatch, config, state }: ValidationProps): v
   if (resetOnSubmit) {
     ref?.addEventListener('submit', function () {
       ref?.reset()
-      dispatch?.({
-        type: 'reset',
-        values: {},
-        errors: {}
-      })
     })
   }
   if (elements != null) {
