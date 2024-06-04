@@ -3,6 +3,7 @@ import { defineConfig } from 'tsup'
 const env = process.env['NODE_ENV']
 
 export default defineConfig(() => ({
+  treeshake: true,
   sourcemap: true, // source map is only available in prod
   clean: true, // clean dist before build
   dts: true, // generate dts file for main module
