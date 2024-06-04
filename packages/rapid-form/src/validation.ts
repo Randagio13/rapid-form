@@ -126,7 +126,6 @@ export function validation({ ref, dispatch, config, state }: ValidationProps): v
             config?.validations?.[currentElementName]?.eventType ?? eventType
           element?.addEventListener(eventType, function (e) {
             const target = e.target as HTMLInputElement
-            console.log('target', target)
             const val = target.value.trim()
             const isValid =
               config?.validations?.[target.name]?.validation != null
