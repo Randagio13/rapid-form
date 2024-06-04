@@ -1,5 +1,5 @@
 import { type Dispatch } from 'react'
-import { type Action } from 'reducer'
+import { type Action } from 'reducer.js'
 
 type EventType = 'change' | 'blur' | 'input'
 

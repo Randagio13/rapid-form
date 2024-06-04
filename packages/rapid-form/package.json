@@ -16,13 +16,15 @@
   "author": "Alessandro Casazza <imasterale@gmail.com>",
   "license": "MIT",
   "keywords": [
-    "react-rapid-form",
-    "react-form",
-    "react-hooks",
     "rapid-form",
+    "react",
     "hooks",
-    "rapid",
-    "form"
+    "form",
+    "forms",
+    "form-validation",
+    "validation",
+    "typescript",
+    "react-hooks"
   ],
   "files": [
     "dist",
@@ -49,5 +51,8 @@
     "typescript": "^5.4.5",
     "vite-tsconfig-paths": "^4.3.2",
     "vitest": "^1.6.0"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17 || ^18 || ^19"
   }
 }

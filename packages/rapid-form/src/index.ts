@@ -1,6 +1,6 @@
 import { useReducer } from 'react'
-import reducer, { type State, initialState } from 'reducer'
-import { type ValidationProps, validation } from 'validation'
+import reducer, { type State, initialState } from 'reducer.js'
+import { type ValidationProps, validation } from 'validation.js'
 
 /**
  * Rapid form hook
