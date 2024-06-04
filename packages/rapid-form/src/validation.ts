@@ -1,5 +1,5 @@
 import { type Dispatch } from 'react'
-import { type Action } from 'reducer.js'
+import { State, type Action } from 'reducer.js'
 
 type EventType = 'change' | 'blur' | 'input'
 
@@ -40,7 +40,11 @@ export interface ValidationProps {
         validations?: ValidationConfig
         resetOnSubmit?: boolean
       }
-    | undefined
+  | undefined
+  /**
+   * State of the reducer
+   */
+  state?: State
 }
 
 /**
@@ -92,7 +96,7 @@ function inputValidation({ type, value, element }: InputValidationProps): boolea
  * Perform validation on form elements
  * @param props - The validation properties
  */
-export function validation({ ref, dispatch, config }: ValidationProps): void {
+export function validation({ ref, dispatch, config, state }: ValidationProps): void {
   const elements = ref?.elements
   let eventType = config?.eventType ?? 'input'
   const resetOnSubmit = config?.resetOnSubmit ?? true
@@ -110,6 +114,11 @@ export function validation({ ref, dispatch, config }: ValidationProps): void {
     for (let i = 0; i < elements.length; i++) {
       const element = elements[i]
       if (element != null) {
+        const name = element.getAttribute('name')
+        const hasEvent = name ? state?.values?.[name] != null : true
+        if (hasEvent) {
+          continue
+        }
         const isRequired = element?.hasAttribute('required')
         if (isRequired) {
           const currentElementName = element.getAttribute('name') as string
@@ -117,6 +126,7 @@ export function validation({ ref, dispatch, config }: ValidationProps): void {
             config?.validations?.[currentElementName]?.eventType ?? eventType
           element?.addEventListener(eventType, function (e) {
             const target = e.target as HTMLInputElement
+            console.log('target', target)
             const val = target.value.trim()
             const isValid =
               config?.validations?.[target.name]?.validation != null
