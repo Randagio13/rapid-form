@@ -35,7 +35,8 @@
     "test": "vitest run",
     "test:dev": "vitest",
     "test:coverage": "vitest run --coverage",
-    "build": "tsup"
+    "build": "tsup",
+    "build:watch": "tsup --watch"
   },
   "devDependencies": {
     "@testing-library/react": "^15.0.7",

@@ -16,7 +16,7 @@ export function useRapidForm(): {
   const [state, dispatch] = useReducer(reducer, initialState)
   return {
     refValidation: (ref, config) => {
-      validation({ ref, dispatch, config })
+      validation({ ref, dispatch, config, state })
     },
     ...state
   }
