@@ -14,7 +14,8 @@
     "docs:build": "pnpm --filter docs build",
     "rapid-form:test": "pnpm --filter rapid-form test:dev",
     "rapid-form:test:coverage": "pnpm --filter rapid-form test:coverage",
-    "rapid-form:build": "pnpm --filter rapid-form build"
+    "rapid-form:build": "pnpm --filter rapid-form build",
+    "rapid-form:watch": "pnpm --filter rapid-form build:watch"
   },
   "devDependencies": {
     "@commercelayer/eslint-config-ts-react": "^1.4.5",
