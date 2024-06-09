@@ -100,12 +100,26 @@ export function validation({ ref, dispatch, config, state }: ValidationProps): v
   const elements = ref?.elements
   let eventType = config?.eventType ?? 'input'
   const resetOnSubmit = config?.resetOnSubmit ?? true
-  if (resetOnSubmit) {
-    ref?.addEventListener('submit', function () {
-      ref?.reset()
-    })
-  }
   if (elements != null) {
+    if (resetOnSubmit) {
+      ref?.addEventListener('submit', function () {
+        ref?.reset()
+        const resetsValues: State['values'] = {}
+        for (let i = 0; i < elements.length; i++) {
+          const element = elements[i]
+          if (element != null) {
+            const name = element.getAttribute('name') as string
+            if (name != null) {
+              resetsValues[`${name}`] = { 
+                value: '',
+                name
+               }
+            }
+          }
+        }
+        dispatch?.({ type: 'reset', values: resetsValues, errors: {} })
+      })
+    }
     for (let i = 0; i < elements.length; i++) {
       const element = elements[i]
       if (element != null) {

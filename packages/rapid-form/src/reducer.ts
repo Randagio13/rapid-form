@@ -57,7 +57,7 @@ export const reducer: Reducer<State, Action> = (state, action) => {
     case 'setError':
       return { ...state, values: action.values, errors: action.errors }
     case 'reset':
-      return { values: action.values, errors: action.errors }
+      return { ...state, values: action.values, errors: {} }
   }
 }
 
