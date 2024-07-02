@@ -10,6 +10,8 @@
 
 The `rapid-form` npm package is a tool designed to simplify the creation and management of forms in web applications. It provides a streamlined way to handle form state, validation, and submission, making it easier for developers to implement complex forms without having to write repetitive boilerplate code.
 
+Please refer to the [interactive documentation](https://randagio13.github.io/rapid-form/) that will provide you with all the necessary information about the involved hook and help you get started in a snap.
+
 ## Installation
 
 ```bash
