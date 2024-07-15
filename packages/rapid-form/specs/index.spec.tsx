@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, test } from 'vitest'
-import { type ElementType, Form } from './utils/FormComponent'
+import { type ElementType, Form } from './utils/FormComponent.js'
 
 describe('Default settings', () => {
   test('Input type text by default event with no errors', async () => {
@@ -239,6 +239,26 @@ describe('Default settings', () => {
     const inputError = screen.getByTestId('input-password-error')
     expect(inputError.textContent).toBe('Invalid format or required field')
   })
+
+  test('Input type textarea by default event with errors', async () => {
+    const elements: ElementType[] = [
+      {
+        as: 'textarea',
+        name: 'textarea-element',
+        type: 'password',
+        required: true
+      }
+    ]
+    const user = userEvent.setup()
+    const text = ' '
+    render(<Form elements={elements} />)
+    let input = screen.getByTestId('textarea-element')
+    await user.type(input, text)
+    input = screen.getByTestId('textarea-element')
+    expect(input).toHaveProperty('value', text)
+    const inputError = screen.getByTestId('textarea-element-error')
+    expect(inputError.textContent).toBe('Invalid format or required field')
+  })
   
   test('Input type checkbox by default event with no errors', async () => {
     const elements: ElementType[] = [
@@ -351,5 +371,60 @@ describe('Default settings', () => {
     expect(select).toHaveProperty('value', '')
     const selectError = screen.getByTestId('select-element-error')
     expect(selectError.textContent).not.toBe('')
+  })
+
+  test('Input type email and password by default event with no errors', async () => {
+    const elements: ElementType[] = [
+      {
+        as: 'input',
+        name: 'input-email',
+        type: 'email',
+        required: true
+      },
+      {
+        as: 'input',
+        name: 'input-password',
+        type: 'password',
+        required: true
+      },
+      {
+        as: 'textarea',
+        name: 'textarea-element',
+        required: false
+      }
+    ]
+    const user = userEvent.setup()
+    render(<Form elements={elements} />)
+    
+    let input = screen.getByTestId('input-email')
+    expect(input).toHaveProperty('type', 'email')
+    await user.type(input, 'demo@demo.co')
+    input = screen.getByTestId('input-email')
+    expect(input).toHaveProperty('value', 'demo@demo.co')
+    const inputError = screen.getByTestId('input-email-error')
+    expect(inputError.textContent).toBe('')
+    
+    let inputPassword = screen.getByTestId('input-password')
+    expect(inputPassword).toHaveProperty('type', 'password')
+    await user.type(inputPassword, 'Test123')
+    inputPassword = screen.getByTestId('input-password')
+    expect(inputPassword).toHaveProperty('value', 'Test123')
+    const inputPasswordError = screen.getByTestId('input-password-error')
+    expect(inputPasswordError.textContent).toBe('')
+    
+    let textarea = screen.getByTestId('textarea-element')
+    await user.type(textarea, 'Hello World')
+    textarea = screen.getByTestId('textarea-element')
+    expect(textarea).toHaveProperty('value', 'Hello World')
+    const textareaError = screen.getByTestId('textarea-element-error')
+    expect(textareaError.textContent).toBe('')
+    const submitButton = screen.getByTestId('submit-button')
+    await fireEvent.submit(submitButton)
+    input = screen.getByTestId('input-email')
+    expect(input).toHaveProperty('value', '')
+    inputPassword = screen.getByTestId('input-password')
+    expect(inputPassword).toHaveProperty('value', '')
+    textarea = screen.getByTestId('textarea-element')
+    expect(textarea).toHaveProperty('value', '')
   })
 })

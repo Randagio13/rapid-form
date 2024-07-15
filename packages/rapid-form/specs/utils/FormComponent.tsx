@@ -1,5 +1,5 @@
-import { useRapidForm } from 'index'
-import { type ValidationProps } from 'validation'
+import { useRapidForm } from '../../src/index.js'
+import { type ValidationProps } from '../../src/validation.js'
 
 export interface ElementType {
   as: 'input' | 'select' | 'textarea'
@@ -19,6 +19,7 @@ export function Form({ elements, config }: FormProps): JSX.Element {
   const components = elements.map((element, key) => {
     switch (element.as) {
       case 'input':
+      default:
         return (
           <div key={key}>
             <input
@@ -65,8 +66,6 @@ export function Form({ elements, config }: FormProps): JSX.Element {
             </span>
           </div>
         )
-      default:
-        return null
     }
   })
   return (
