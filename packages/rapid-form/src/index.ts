@@ -1,6 +1,6 @@
 import { useReducer } from 'react'
-import reducer, { type State, initialState } from 'reducer.js'
-import { type ValidationProps, validation } from 'validation.js'
+import reducer, { type State, initialState } from './reducer.js'
+import { type ValidationProps, validation } from './validation.js'
 
 export type Config = ValidationProps['config']
 export type Value = State['values'][string]

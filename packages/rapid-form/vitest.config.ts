@@ -1,5 +1,4 @@
 import { defineConfig } from 'vitest/config'
-import tsconfigPaths from 'vite-tsconfig-paths'
 import react from '@vitejs/plugin-react'
 
 export default defineConfig({
@@ -9,10 +8,8 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html'],
-      exclude: ['specs']
     },
-    exclude: ['**/node_modules/**']
   },
-  plugins: [tsconfigPaths(), react()],
+  plugins: [react()],
   esbuild: { target: 'es2022' }
 })

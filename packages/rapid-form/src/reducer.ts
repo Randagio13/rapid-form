@@ -55,9 +55,9 @@ export const reducer: Reducer<State, Action> = (state, action) => {
   switch (action.type) {
     case 'setValue':
     case 'setError':
-      return { ...state, values: action.values, errors: action.errors }
+      return { values: { ...state.values, ...action.values}, errors: { ...state.errors, ...action.errors } }
     case 'reset':
-      return { ...state, values: action.values, errors: {} }
+      return { values: action.values, errors: {} }
   }
 }
 

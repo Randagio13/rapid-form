@@ -1,5 +1,5 @@
 import { type Dispatch } from 'react'
-import { State, type Action } from 'reducer.js'
+import { type State, type Action } from './reducer.js'
 
 type EventType = 'change' | 'blur' | 'input'
 
@@ -40,7 +40,7 @@ export interface ValidationProps {
         validations?: ValidationConfig
         resetOnSubmit?: boolean
       }
-  | undefined
+    | undefined
   /**
    * State of the reducer
    */
@@ -79,7 +79,11 @@ interface InputValidationProps {
  * @param props - The input validation properties
  * @returns True if the input value is valid, false otherwise
  */
-function inputValidation({ type, value, element }: InputValidationProps): boolean {
+function inputValidation({
+  type,
+  value,
+  element
+}: InputValidationProps): boolean {
   switch (type) {
     case 'email':
       return validateEmail(value)
@@ -96,7 +100,12 @@ function inputValidation({ type, value, element }: InputValidationProps): boolea
  * Perform validation on form elements
  * @param props - The validation properties
  */
-export function validation({ ref, dispatch, config, state }: ValidationProps): void {
+export function validation({
+  ref,
+  dispatch,
+  config,
+  state
+}: ValidationProps): void {
   const elements = ref?.elements
   let eventType = config?.eventType ?? 'input'
   const resetOnSubmit = config?.resetOnSubmit ?? true
@@ -108,12 +117,12 @@ export function validation({ ref, dispatch, config, state }: ValidationProps): v
         for (let i = 0; i < elements.length; i++) {
           const element = elements[i]
           if (element != null) {
-            const name = element.getAttribute('name') as string
+            const name = element.getAttribute('name')
             if (name != null) {
-              resetsValues[`${name}`] = { 
+              resetsValues[`${name}`] = {
                 value: '',
                 name
-               }
+              }
             }
           }
         }
@@ -124,15 +133,16 @@ export function validation({ ref, dispatch, config, state }: ValidationProps): v
       const element = elements[i]
       if (element != null) {
         const name = element.getAttribute('name')
-        const hasEvent = name ? state?.values?.[name] != null : true
+        const hasEvent = name != null ? state?.values?.[name] != null : true
         if (hasEvent) {
           continue
         }
         const isRequired = element?.hasAttribute('required')
         if (isRequired) {
-          const currentElementName = element.getAttribute('name') as string
+          const currentElementName = element.getAttribute('name')
           eventType =
-            config?.validations?.[currentElementName]?.eventType ?? eventType
+            config?.validations?.[`${currentElementName}`]?.eventType ??
+            eventType
           element?.addEventListener(eventType, function (e) {
             const target = e.target as HTMLInputElement
             const val = target.value.trim()
@@ -147,19 +157,7 @@ export function validation({ ref, dispatch, config, state }: ValidationProps): v
                     value: val,
                     element: target
                   })
-            if (isValid === true) {
-              dispatch?.({
-                type: 'setValue',
-                values: { [target.name]: { name: target.name, value: val } },
-                errors: {
-                  [target.name]: {
-                    name: target.name,
-                    value: val,
-                    isInvalid: false
-                  }
-                }
-              })
-            } else {
+            if (isRequired && isValid === false) {
               dispatch?.({
                 type: 'setError',
                 values: { [target.name]: { name: target.name, value: val } },
@@ -172,6 +170,18 @@ export function validation({ ref, dispatch, config, state }: ValidationProps): v
                     message:
                       config?.validations?.[target.name]?.message ??
                       'Invalid format or required field'
+                  }
+                }
+              })
+            } else {
+              dispatch?.({
+                type: 'setValue',
+                values: { [target.name]: { name: target.name, value: val } },
+                errors: {
+                  [target.name]: {
+                    name: target.name,
+                    value: val,
+                    isInvalid: false
                   }
                 }
               })
