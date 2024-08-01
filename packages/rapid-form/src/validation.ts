@@ -1,5 +1,6 @@
 import { type Dispatch } from 'react'
 import { type State, type Action } from './reducer.js'
+import { addTrackedEventListener, hasEventListener } from './events.js'
 
 type EventType = 'change' | 'blur' | 'input'
 
@@ -41,10 +42,6 @@ export interface ValidationProps {
         resetOnSubmit?: boolean
       }
     | undefined
-  /**
-   * State of the reducer
-   */
-  state?: State
 }
 
 /**
@@ -104,7 +101,6 @@ export function validation({
   ref,
   dispatch,
   config,
-  state
 }: ValidationProps): void {
   const elements = ref?.elements
   let eventType = config?.eventType ?? 'input'
@@ -133,17 +129,18 @@ export function validation({
       const element = elements[i]
       if (element != null) {
         const name = element.getAttribute('name')
-        const hasEvent = name != null ? state?.values?.[name] != null : true
-        if (hasEvent) {
+        const hasEvent = hasEventListener(element, eventType)
+        if (hasEvent || !name) {
           continue
         }
+        debugger
         const isRequired = element?.hasAttribute('required')
         if (isRequired) {
           const currentElementName = element.getAttribute('name')
           eventType =
             config?.validations?.[`${currentElementName}`]?.eventType ??
             eventType
-          element?.addEventListener(eventType, function (e) {
+          addTrackedEventListener(element, eventType, function (e) {
             const target = e.target as HTMLInputElement
             const val = target.value.trim()
             const isValid =
@@ -181,7 +178,8 @@ export function validation({
                   [target.name]: {
                     name: target.name,
                     value: val,
-                    isInvalid: false
+                    isInvalid: false,
+                    message: ''
                   }
                 }
               })
