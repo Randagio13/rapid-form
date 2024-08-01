@@ -45,19 +45,45 @@ export const initialState: State = {
   errors: {}
 }
 
+type AnyObject = { [key: string]: any };
+
+function isObject(item: any): item is AnyObject {
+  return item && typeof item === 'object' && !Array.isArray(item);
+}
+
+function deepMerge<T extends AnyObject, U extends AnyObject>(target: T, source: U): T & U {
+  const output = { ...target } as T & U;
+
+  for (const key in source) {
+    if (source.hasOwnProperty(key)) {
+      const targetValue = output[key];
+      const sourceValue = source[key];
+
+      if (isObject(sourceValue) && isObject(targetValue)) {
+        // Recursively merge nested objects
+        output[key] = deepMerge(targetValue, sourceValue);
+      } else {
+        // Overwrite the target with the source value
+        output[key as keyof U] = sourceValue as (T & U)[Extract<keyof U, string>];
+      }
+    }
+  }
+
+  return output;
+}
 /**
  * The reducer function that handles state updates based on dispatched actions.
  * @param state The current state.
  * @param action The action to be dispatched.
  * @returns The new state after applying the action.
  */
-export const reducer: Reducer<State, Action> = (state, action) => {
-  switch (action.type) {
+export const reducer: Reducer<State, Action> = (state, { type, ...data}) => {
+  switch (type) {
     case 'setValue':
     case 'setError':
-      return { values: { ...state.values, ...action.values}, errors: { ...state.errors, ...action.errors } }
+      return deepMerge(state, data)
     case 'reset':
-      return { values: action.values, errors: {} }
+      return { values: data.values, errors: {} }
   }
 }
 

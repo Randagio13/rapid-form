@@ -54,6 +54,10 @@
     "vitest": "^1.6.0"
   },
   "peerDependencies": {
-    "react": "^16.8.0 || ^17 || ^18 || ^19"
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
+  },
+  "dependencies": {
+    "@example/basics": "link:/Users/alessandrocasazza/Documents/GitHub/okeo-academy"
   }
 }
