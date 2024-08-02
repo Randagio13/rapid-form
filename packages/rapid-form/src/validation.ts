@@ -106,6 +106,7 @@ export function validation({
   let eventType = config?.eventType ?? 'input'
   const resetOnSubmit = config?.resetOnSubmit ?? true
   if (elements != null) {
+    const numberOfRequiredFields = Array.from(elements).filter(e => e?.hasAttribute('required')).length
     if (resetOnSubmit) {
       ref?.addEventListener('submit', function () {
         ref?.reset()
@@ -122,7 +123,7 @@ export function validation({
             }
           }
         }
-        dispatch?.({ type: 'reset', values: resetsValues, errors: {} })
+        dispatch?.({ type: 'reset', values: resetsValues, errors: {}, numberOfRequiredFields })
       })
     }
     for (let i = 0; i < elements.length; i++) {
@@ -133,7 +134,6 @@ export function validation({
         if (hasEvent || !name) {
           continue
         }
-        debugger
         const isRequired = element?.hasAttribute('required')
         if (isRequired) {
           const currentElementName = element.getAttribute('name')
@@ -168,7 +168,8 @@ export function validation({
                       config?.validations?.[target.name]?.message ??
                       'Invalid format or required field'
                   }
-                }
+                },
+                numberOfRequiredFields
               })
             } else {
               dispatch?.({
@@ -181,7 +182,8 @@ export function validation({
                     isInvalid: false,
                     message: ''
                   }
-                }
+                },
+                numberOfRequiredFields
               })
             }
           })

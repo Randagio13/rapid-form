@@ -23,6 +23,7 @@ interface Error extends Value {
 export interface State {
   values: Record<string, Value>
   errors: Record<string, Error>
+  numberOfRequiredFields: number
 }
 
 /**
@@ -42,7 +43,8 @@ export interface Action extends State {
  */
 export const initialState: State = {
   values: {},
-  errors: {}
+  errors: {},
+  numberOfRequiredFields: 0
 }
 
 type AnyObject = { [key: string]: any };
@@ -83,7 +85,7 @@ export const reducer: Reducer<State, Action> = (state, { type, ...data}) => {
     case 'setError':
       return deepMerge(state, data)
     case 'reset':
-      return { values: data.values, errors: {} }
+      return { values: data.values, errors: {}, numberOfRequiredFields: data.numberOfRequiredFields }
   }
 }
 
