@@ -1,41 +1,41 @@
-import { type Reducer } from 'react'
+import type { Reducer } from 'react';
 
 /**
  * Represents a value with a name and a corresponding string value.
  */
 interface Value {
-  name: string
-  value: string
+  name: string;
+  value: string;
 }
 
 /**
  * Represents an error associated with a value.
  */
 interface Error extends Value {
-  isInvalid: boolean
-  errorType?: 'invalidFormat'
-  message?: string
+  isInvalid: boolean;
+  errorType?: 'invalidFormat';
+  message?: string;
 }
 
 /**
  * Represents the state of the reducer.
  */
 export interface State {
-  values: Record<string, Value>
-  errors: Record<string, Error>
-  numberOfRequiredFields: number
+  values: Record<string, Value>;
+  errors: Record<string, Error>;
+  numberOfRequiredFields: number;
 }
 
 /**
  * Represents the type of action that can be dispatched to the reducer.
  */
-type ActionType = 'setValue' | 'setError' | 'reset'
+type ActionType = 'setValue' | 'setError' | 'reset';
 
 /**
  * Represents an action that can be dispatched to the reducer.
  */
 export interface Action extends State {
-  type: ActionType
+  type: ActionType;
 }
 
 /**
@@ -45,15 +45,20 @@ export const initialState: State = {
   values: {},
   errors: {},
   numberOfRequiredFields: 0
-}
+};
 
+// biome-ignore lint/suspicious/noExplicitAny: required for recursive deep merge
 type AnyObject = { [key: string]: any };
 
+// biome-ignore lint/suspicious/noExplicitAny: required for recursive deep merge
 function isObject(item: any): item is AnyObject {
   return item && typeof item === 'object' && !Array.isArray(item);
 }
 
-function deepMerge<T extends AnyObject, U extends AnyObject>(target: T, source: U): T & U {
+function deepMerge<T extends AnyObject, U extends AnyObject>(
+  target: T,
+  source: U
+): T & U {
   const output = { ...target } as T & U;
 
   for (const [key, sourceValue] of Object.entries(source)) {
@@ -74,14 +79,18 @@ function deepMerge<T extends AnyObject, U extends AnyObject>(target: T, source: 
  * @param action The action to be dispatched.
  * @returns The new state after applying the action.
  */
-export const reducer: Reducer<State, Action> = (state, { type, ...data}) => {
+export const reducer: Reducer<State, Action> = (state, { type, ...data }) => {
   switch (type) {
     case 'setValue':
     case 'setError':
-      return deepMerge(state, data)
+      return deepMerge(state, data);
     case 'reset':
-      return { values: data.values, errors: {}, numberOfRequiredFields: data.numberOfRequiredFields }
+      return {
+        values: data.values,
+        errors: {},
+        numberOfRequiredFields: data.numberOfRequiredFields
+      };
   }
-}
+};
 
-export default reducer
+export default reducer;

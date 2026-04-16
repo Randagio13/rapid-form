@@ -1,6 +1,6 @@
-import { defineConfig } from 'tsup'
+import { defineConfig } from 'tsup';
 
-const env = process.env['NODE_ENV']
+const env = process.env.NODE_ENV;
 
 export default defineConfig(() => ({
   treeshake: true,
@@ -12,5 +12,5 @@ export default defineConfig(() => ({
   bundle: true,
   watch: env === 'development',
   target: 'es2020',
-  entry: ['src/index.ts'],
-}))
+  entry: ['src/index.ts']
+}));
