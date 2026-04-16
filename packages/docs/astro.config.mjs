@@ -3,11 +3,11 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://randagio13.github.io',
-	base: 'rapid-form',
+	site: 'https://rapid-form.github.io',
 	integrations: [
 		starlight({
 			title: 'Rapid Form',
+			favicon: '/favicon.svg',
 			logo: {
 				src: './src/assets/logo.svg',
 				alt: 'Rapid Form',
