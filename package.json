@@ -19,7 +19,7 @@
     "rapid-form:watch": "pnpm --filter rapid-form build:watch"
   },
   "devDependencies": {
-    "@biomejs/biome": "latest",
+    "@biomejs/biome": "2.4.12",
     "husky": "^9.1.7",
     "lerna": "^9.0.7",
     "typescript": "^6.0.2"
