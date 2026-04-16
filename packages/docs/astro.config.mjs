@@ -8,9 +8,9 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'Rapid Form',
-			social: {
-				github: 'https://github.com/Randagio13/rapid-form',
-			},
+			social: [
+				{ icon: 'github', label: 'GitHub', href: 'https://github.com/Randagio13/rapid-form' },
+			],
 			sidebar: [
 				{
 					label: 'Getting started',

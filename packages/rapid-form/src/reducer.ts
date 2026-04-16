@@ -56,18 +56,13 @@ function isObject(item: any): item is AnyObject {
 function deepMerge<T extends AnyObject, U extends AnyObject>(target: T, source: U): T & U {
   const output = { ...target } as T & U;
 
-  for (const key in source) {
-    if (Object.hasOwn(source, key)) {
-      const targetValue = output[key];
-      const sourceValue = source[key];
+  for (const [key, sourceValue] of Object.entries(source)) {
+    const targetValue = output[key];
 
-      if (isObject(sourceValue) && isObject(targetValue)) {
-        // Recursively merge nested objects
-        output[key] = deepMerge(targetValue, sourceValue);
-      } else {
-        // Overwrite the target with the source value
-        output[key as keyof U] = sourceValue as (T & U)[Extract<keyof U, string>];
-      }
+    if (isObject(sourceValue) && isObject(targetValue)) {
+      (output as AnyObject)[key] = deepMerge(targetValue, sourceValue);
+    } else {
+      output[key as keyof U] = sourceValue as (T & U)[Extract<keyof U, string>];
     }
   }
 

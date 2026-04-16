@@ -51,8 +51,7 @@ export interface ValidationProps {
  */
 function validateEmail(email: string): boolean {
   const re =
-    // eslint-disable-next-line no-useless-escape
-    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   return re.test(String(email).toLowerCase())
 }
 
@@ -111,86 +110,69 @@ export function validation({
       addTrackedEventListener(ref, 'submit', function () {
         ref?.reset()
         const resetsValues: State['values'] = {}
-        for (let i = 0; i < elements.length; i++) {
-          const element = elements[i]
-          if (element != null) {
-            const name = element.getAttribute('name')
-            if (name != null) {
-              resetsValues[`${name}`] = {
-                value: '',
-                name
-              }
-            }
+        for (const element of Array.from(elements)) {
+          const name = element.getAttribute('name')
+          if (name != null) {
+            resetsValues[name] = { value: '', name }
           }
         }
         dispatch?.({ type: 'reset', values: resetsValues, errors: {}, numberOfRequiredFields })
       })
     }
-    for (let i = 0; i < elements.length; i++) {
-      const element = elements[i]
-      if (element != null) {
-        const name = element.getAttribute('name')
-        if (!name) {
-          continue
+    for (const element of Array.from(elements)) {
+      const name = element.getAttribute('name')
+      if (!name) continue
+      const isRequired = element.hasAttribute('required')
+      const hasCustomValidation = config?.validations?.[name] != null
+      if (!isRequired && !hasCustomValidation) continue
+      const elementEventType = config?.validations?.[name]?.eventType ?? eventType
+      if (hasEventListener(element, elementEventType)) continue
+      addTrackedEventListener(element, elementEventType, function (e) {
+        const target = e.target as HTMLInputElement
+        const val = target.value.trim()
+        const isValid =
+          config?.validations?.[target.name]?.validation != null
+            ? config?.validations[target.name]?.validation({
+                value: val,
+                formElements: elements
+              })
+            : inputValidation({
+                type: target.type,
+                value: val,
+                element: target
+              })
+        if (isValid === false) {
+          dispatch?.({
+            type: 'setError',
+            values: { [target.name]: { name: target.name, value: val } },
+            errors: {
+              [target.name]: {
+                name: target.name,
+                value: val,
+                isInvalid: true,
+                errorType: 'invalidFormat',
+                message:
+                  config?.validations?.[target.name]?.message ??
+                  'Invalid format or required field'
+              }
+            },
+            numberOfRequiredFields
+          })
+        } else {
+          dispatch?.({
+            type: 'setValue',
+            values: { [target.name]: { name: target.name, value: val } },
+            errors: {
+              [target.name]: {
+                name: target.name,
+                value: val,
+                isInvalid: false,
+                message: ''
+              }
+            },
+            numberOfRequiredFields
+          })
         }
-        const isRequired = element?.hasAttribute('required')
-        const hasCustomValidation = config?.validations?.[name] != null
-        if (!isRequired && !hasCustomValidation) {
-          continue
-        }
-        const elementEventType =
-          config?.validations?.[name]?.eventType ?? eventType
-        const hasEvent = hasEventListener(element, elementEventType)
-        if (hasEvent) {
-          continue
-        }
-        addTrackedEventListener(element, elementEventType, function (e) {
-          const target = e.target as HTMLInputElement
-          const val = target.value.trim()
-          const isValid =
-            config?.validations?.[target.name]?.validation != null
-              ? config?.validations[target.name]?.validation({
-                  value: val,
-                  formElements: elements
-                })
-              : inputValidation({
-                  type: target.type,
-                  value: val,
-                  element: target
-                })
-          if (isValid === false) {
-            dispatch?.({
-              type: 'setError',
-              values: { [target.name]: { name: target.name, value: val } },
-              errors: {
-                [target.name]: {
-                  name: target.name,
-                  value: val,
-                  isInvalid: true,
-                  errorType: 'invalidFormat',
-                  message:
-                    config?.validations?.[target.name]?.message ??
-                    'Invalid format or required field'
-                }
-              },
-              numberOfRequiredFields
-            })
-          } else {
-            dispatch?.({
-              type: 'setValue',
-              values: { [target.name]: { name: target.name, value: val } },
-              errors: {
-                [target.name]: {
-                  name: target.name,
-                  value: val,
-                  isInvalid: false,
-                  message: ''
-                }
-              },
-              numberOfRequiredFields
-            })
-          }
-        })
-      }
+      })
     }
 }
