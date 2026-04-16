@@ -13,7 +13,7 @@ interface Value {
  */
 interface Error extends Value {
   isInvalid: boolean
-  errorType?: 'required' | 'invalidFormat'
+  errorType?: 'invalidFormat'
   message?: string
 }
 
@@ -57,7 +57,7 @@ function deepMerge<T extends AnyObject, U extends AnyObject>(target: T, source: 
   const output = { ...target } as T & U;
 
   for (const key in source) {
-    if (source.hasOwnProperty(key)) {
+    if (Object.hasOwn(source, key)) {
       const targetValue = output[key];
       const sourceValue = source[key];
 
