@@ -1,48 +1,52 @@
-import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://rapid-form.github.io',
+	site: 'https://randagio13.github.io',
 	base: 'rapid-form',
 	integrations: [
 		starlight({
 			title: 'Rapid Form',
+			logo: {
+				src: './src/assets/logo.svg',
+				alt: 'Rapid Form',
+			},
 			social: [
 				{ icon: 'github', label: 'GitHub', href: 'https://github.com/Randagio13/rapid-form' },
 			],
 			sidebar: [
-				{ label: 'Why Rapid Form?', link: '/why-rapid-form/' },
+				{ label: 'Why Rapid Form?', slug: 'why-rapid-form' },
 				{
-					label: 'Getting started',
+					label: 'Getting Started',
 					items: [
-						{ label: 'Installation', link: '/getting-started/installation/' },
-						{ label: 'Quick start', link: '/getting-started/quick-start/' },
+						{ label: 'Installation', slug: 'getting-started/installation' },
+						{ label: 'Quick Start', slug: 'getting-started/quick-start' },
 					],
 				},
 				{
 					label: 'Guides',
 					items: [
-						{ label: 'Customization', link: '/guides/customization/' },
-						{ label: 'Custom Validation', link: '/guides/custom-validation/' },
-						{ label: 'TypeScript', link: '/guides/typescript/' },
-						{ label: 'Styling Errors', link: '/guides/styling-errors/' },
-					],
-				},
-				{
-					label: 'Reference',
-					items: [
-						{ label: 'API Reference', link: '/reference/api-reference/' },
-						{ label: 'Validation Rules', link: '/reference/validation-rules/' },
-						{ label: 'Migration v2 → v3', link: '/reference/migration-from-v2-to-v3/' },
+						{ label: 'Customization', slug: 'guides/customization' },
+						{ label: 'Custom Validation', slug: 'guides/custom-validation' },
+						{ label: 'TypeScript', slug: 'guides/typescript' },
+						{ label: 'Styling Errors', slug: 'guides/styling-errors' },
 					],
 				},
 				{
 					label: 'Examples',
 					items: [
-						{ label: 'Login Form', link: '/examples/login-form/' },
-						{ label: 'Registration Form', link: '/examples/registration-form/' },
-						{ label: 'Multi-Field Form', link: '/examples/multi-field/' },
+						{ label: 'Login Form', slug: 'examples/login-form' },
+						{ label: 'Registration Form', slug: 'examples/registration-form' },
+						{ label: 'Multi-Field Form', slug: 'examples/multi-field' },
+					],
+				},
+				{
+					label: 'Reference',
+					items: [
+						{ label: 'API Reference', slug: 'reference/api-reference' },
+						{ label: 'Validation Rules', slug: 'reference/validation-rules' },
+						{ label: 'Migration v2 → v3', slug: 'reference/migration-from-v2-to-v3' },
 					],
 				},
 			],
