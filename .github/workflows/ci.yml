@@ -29,11 +29,11 @@ jobs:
         run: pnpm install
 
       - name: Lint
-        if: ${{ hashFiles('biome.json') != '' }}
+        if: hashFiles('biome.json') != ''
         run: pnpm check
 
       - name: Build
         run: pnpm build
 
-      - name: Test
-        run: pnpm test
+      - name: Test & Coverage
+        run: pnpm rapid-form:test:coverage
