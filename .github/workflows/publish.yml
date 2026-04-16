@@ -10,18 +10,18 @@ jobs:
 
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: pnpm 🧰
-        uses: pnpm/action-setup@v3
+        uses: pnpm/action-setup@v4
         with:
           version: latest
 
       - name: Node 🧰
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 'latest'
-          cache: 'pnpm'
+          node-version: lts/*
+          cache: pnpm
 
       - name: Install 📦
         run: pnpm install

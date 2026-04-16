@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none">
+  <!-- Purple rounded background -->
+  <rect width="40" height="40" rx="9" fill="#7C3AED"/>
+  <!-- Form field lines -->
+  <rect x="8" y="10" width="24" height="5" rx="2" fill="white" fill-opacity="0.25"/>
+  <rect x="8" y="19" width="14" height="5" rx="2" fill="white" fill-opacity="0.25"/>
+  <!-- Lightning bolt (rapid) -->
+  <path d="M26 16l-8 10h6l-5 8 14-13h-6l5-5z" fill="white"/>
+</svg>

@@ -55,7 +55,7 @@ import { Steps } from '@astrojs/starlight/components';
     ```tsx
     export function MyComponent() {
       const { refValidation, errors } = useRapidForm()
-      const isValid = Object.keys(errors).lenght === 0
+      const isValid = Object.values(errors).every(e => !e.isInvalid)
       return (
         <form
           ref={(ref) => {

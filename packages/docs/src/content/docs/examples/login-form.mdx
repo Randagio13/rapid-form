@@ -1,0 +1,71 @@
+---
+title: Login Form
+description: A complete login form with email and password validation using Rapid Form.
+---
+
+A minimal login form that validates an email address and password, shows inline error messages, and keeps the submit button disabled until both fields are valid.
+
+```tsx
+import { useRapidForm } from 'rapid-form';
+
+export function LoginForm() {
+  // errors: record of field validation state
+  // numberOfRequiredFields: total count of required fields in the form
+  const { refValidation, errors, numberOfRequiredFields } = useRapidForm();
+
+  // The submit button should stay disabled until:
+  // 1. All required fields have been touched (errors record is fully populated)
+  // 2. None of those fields are currently invalid
+  const hasErrors = Object.values(errors).some((e) => e.isInvalid);
+  const notAllTouched = Object.keys(errors).length < numberOfRequiredFields;
+  const isDisabled = hasErrors || notAllTouched;
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    // Both fields are valid — proceed with authentication
+    const email = (e.currentTarget as HTMLFormElement).email.value;
+    console.log('Logging in:', email);
+  }
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      ref={(ref) =>
+        // Rapid Form wires up validation listeners automatically.
+        // No config needed here — email and password have built-in rules.
+        refValidation(ref)
+      }
+    >
+      <div>
+        <label htmlFor="email">Email</label>
+        {/* type="email" triggers Rapid Form's built-in email regex check */}
+        <input id="email" type="email" name="email" required />
+        {errors['email']?.isInvalid && (
+          <span role="alert">{errors['email'].message ?? 'Please enter a valid email address.'}</span>
+        )}
+      </div>
+
+      <div>
+        <label htmlFor="password">Password</label>
+        {/* type="password" requires length > 6 by default */}
+        <input id="password" type="password" name="password" required />
+        {errors['password']?.isInvalid && (
+          <span role="alert">{errors['password'].message ?? 'Password must be longer than 6 characters.'}</span>
+        )}
+      </div>
+
+      <button type="submit" disabled={isDisabled}>
+        Log in
+      </button>
+    </form>
+  );
+}
+```
+
+## What's happening
+
+`useRapidForm` returns `errors` and `numberOfRequiredFields`. The `ref` callback passes the form element to `refValidation`, which attaches `input` event listeners to every `required` field.
+
+Because the `email` field uses `type="email"`, Rapid Form automatically applies an email-format regex. The `password` field uses `type="password"`, so Rapid Form enforces a minimum length of 6 characters — no extra config needed for either rule.
+
+The submit button is disabled while `notAllTouched` is true (the user has not interacted with every required field yet) or while any field reports `isInvalid: true`. Once both fields pass their checks, `isDisabled` becomes `false` and the button enables.

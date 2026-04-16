@@ -1,0 +1,165 @@
+---
+title: TypeScript
+description: Type the rapid-form hook, config, and error objects for a fully type-safe form.
+---
+
+rapid-form is written in TypeScript and ships its own type declarations. Every type you need is exported from the package root so you can import them alongside the hook itself.
+
+## Importing types
+
+```ts
+import { useRapidForm } from 'rapid-form';
+import type { Config, Value, FieldError, NumberOfRequiredFields } from 'rapid-form';
+```
+
+| Type | Description |
+|------|-------------|
+| `Config` | The optional second argument accepted by `refValidation`. |
+| `Value` | Shape of each entry in the `values` map (`{ name: string; value: string }`). |
+| `FieldError` | Shape of each entry in the `errors` map. |
+| `NumberOfRequiredFields` | Alias for `number` — the type of the `numberOfRequiredFields` return value. |
+
+## Typing the config object
+
+Annotating the config separately keeps the `ref` callback tidy and lets TypeScript catch typos in field names or invalid event types.
+
+```tsx
+import { useRapidForm } from 'rapid-form';
+import type { Config } from 'rapid-form';
+
+const config: Config = {
+  eventType: 'input',
+  resetOnSubmit: true,
+  validations: {
+    username: {
+      validation: ({ value }) => value.length >= 3,
+      message: 'Username must be at least 3 characters',
+    },
+    confirmPassword: {
+      eventType: 'blur',
+      validation: ({ value, formElements }) => {
+        const password = formElements.namedItem('password') as HTMLInputElement;
+        return value === password?.value;
+      },
+      message: 'Passwords do not match',
+    },
+  },
+};
+
+export function MyForm() {
+  const { refValidation } = useRapidForm();
+  return (
+    <form ref={(ref) => refValidation(ref, config)}>
+      {/* fields */}
+    </form>
+  );
+}
+```
+
+## Typing error display
+
+The `errors` object is typed as `Record<string, FieldError>`. Accessing a key that has not yet been touched returns `undefined`, so always use optional chaining when rendering error UI.
+
+```tsx
+import { useRapidForm } from 'rapid-form';
+import type { FieldError } from 'rapid-form';
+
+export function EmailField() {
+  const { refValidation, errors } = useRapidForm();
+
+  // Explicit cast when you want a typed local variable
+  const emailError: FieldError | undefined = errors['email'];
+
+  return (
+    <form ref={(ref) => refValidation(ref)}>
+      <input type="email" name="email" required />
+
+      {/* Safe access with optional chaining */}
+      {errors['email']?.isInvalid && (
+        <span role="alert">{errors['email'].message}</span>
+      )}
+
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+## Tracking required fields
+
+`numberOfRequiredFields` is typed as `number`. It reflects the count of `required` fields in the attached form. Use it together with the `errors` map to know whether the user has touched every required field before enabling submission.
+
+```tsx
+import { useRapidForm } from 'rapid-form';
+
+export function MyForm() {
+  const { refValidation, errors, numberOfRequiredFields } = useRapidForm();
+
+  // Number of required fields the user has already interacted with
+  const touchedCount = Object.keys(errors).length;
+
+  // Number of touched fields that are currently valid
+  const validCount = Object.values(errors).filter((e) => !e.isInvalid).length;
+
+  return (
+    <form ref={(ref) => refValidation(ref)}>
+      <input type="text" name="name" required />
+      <input type="email" name="email" required />
+
+      <p>
+        {validCount} of {numberOfRequiredFields} required fields completed
+      </p>
+
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+## FormComponent pattern
+
+When you build a reusable form component, define a typed props interface so consumers know exactly what to pass.
+
+```tsx
+import { useRapidForm } from 'rapid-form';
+import type { Config, FieldError } from 'rapid-form';
+
+interface ContactFormProps {
+  config?: Config;
+  onSubmit: (values: Record<string, { name: string; value: string }>) => void;
+}
+
+export function ContactForm({ config, onSubmit }: ContactFormProps) {
+  const { refValidation, errors, values, numberOfRequiredFields } = useRapidForm();
+
+  const allTouched = Object.keys(errors).length >= numberOfRequiredFields;
+  const allValid = Object.values(errors).every((e: FieldError) => !e.isInvalid);
+  const isSubmittable = allTouched && allValid;
+
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    onSubmit(values);
+  }
+
+  return (
+    <form
+      ref={(ref) => refValidation(ref, config)}
+      onSubmit={handleSubmit}
+    >
+      <input type="text" name="name" required placeholder="Name" />
+      {errors['name']?.isInvalid && (
+        <span role="alert">{errors['name'].message}</span>
+      )}
+
+      <input type="email" name="email" required placeholder="Email" />
+      {errors['email']?.isInvalid && (
+        <span role="alert">{errors['email'].message}</span>
+      )}
+
+      <button type="submit" disabled={!isSubmittable}>
+        Send
+      </button>
+    </form>
+  );
+}
+```
