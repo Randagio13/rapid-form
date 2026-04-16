@@ -4,7 +4,7 @@ import { type ValidationProps, validation } from './validation.js'
 
 export type Config = ValidationProps['config']
 export type Value = State['values'][string]
-export type Error = State['errors'][string]
+export type FieldError = State['errors'][string]
 export type NumberOfRequiredFields = State['numberOfRequiredFields']
 
 /**

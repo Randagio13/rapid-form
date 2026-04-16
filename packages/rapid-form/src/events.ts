@@ -8,11 +8,8 @@ export function addTrackedEventListener(
   event: string,
   handler: EventHandler
 ): void {
-  if (!eventListeners.has(element)) {
-    eventListeners.set(element, {});
-  }
-  const listeners = eventListeners.get(element)!;
-  listeners[event] = handler;
+  const existing = eventListeners.get(element) ?? {};
+  eventListeners.set(element, { ...existing, [event]: handler });
   element.addEventListener(event, handler);
 }
 

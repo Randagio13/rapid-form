@@ -1,3 +1,0 @@
-{
-  "extends": ["@commercelayer/eslint-config-ts-react"]
-}
