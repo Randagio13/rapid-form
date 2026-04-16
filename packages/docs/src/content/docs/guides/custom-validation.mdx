@@ -1,0 +1,159 @@
+---
+title: Custom Validation
+description: Add per-field validation logic, cross-field checks, and fine-grained event control with Rapid Form.
+---
+
+Rapid Form validates `required` fields automatically using native HTML rules. For anything beyond that — custom formats, cross-field checks, or field-level event control — you supply a `validations` map inside the config passed to `refValidation`.
+
+## Basic custom validation
+
+Provide a `validation` function for any field. Return `true` when the value is valid, `false` when it is not. Supply a `message` to show the user what went wrong.
+
+```tsx
+import { useRapidForm } from 'rapid-form';
+
+export function UsernameForm() {
+  const { refValidation, errors } = useRapidForm();
+
+  return (
+    <form
+      ref={(ref) =>
+        refValidation(ref, {
+          validations: {
+            username: {
+              validation: ({ value }) => value.length >= 3,
+              message: 'Username must be at least 3 characters',
+            },
+          },
+        })
+      }
+    >
+      <input type="text" name="username" required />
+      {errors['username']?.isInvalid && (
+        <span>{errors['username'].message}</span>
+      )}
+      <button type="submit">Save</button>
+    </form>
+  );
+}
+```
+
+:::note
+The `validation` function runs for a field whenever it is a `required` field **or** it has an entry in `validations`. Optional fields with a `validations` entry are also validated.
+:::
+
+## Custom event type per field
+
+The top-level `eventType` sets the default trigger for all fields (`'input'` by default). You can override it for a single field with its own `eventType` property.
+
+```tsx
+refValidation(ref, {
+  eventType: 'input',          // default: validate on every keystroke
+  validations: {
+    email: {
+      // this field validates only when the user leaves it
+      eventType: 'blur',
+      validation: ({ value }) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
+      message: 'Please enter a valid email address',
+    },
+    username: {
+      // inherits the top-level 'input' eventType
+      validation: ({ value }) => value.length >= 3,
+      message: 'Username must be at least 3 characters',
+    },
+  },
+})
+```
+
+Valid values for `eventType` are `'input'`, `'blur'`, and `'change'`.
+
+## Cross-field validation
+
+The `validation` function receives `formElements` — the native [`HTMLFormControlsCollection`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormControlsCollection) of the whole form. Use `formElements.namedItem()` to read another field's current value.
+
+The example below validates that a confirm-password field matches the password field:
+
+```tsx
+import { useRapidForm } from 'rapid-form';
+
+export function RegistrationForm() {
+  const { refValidation, errors } = useRapidForm();
+
+  return (
+    <form
+      ref={(ref) =>
+        refValidation(ref, {
+          validations: {
+            confirmPassword: {
+              eventType: 'blur',
+              validation: ({ value, formElements }) => {
+                const password = formElements.namedItem('password') as HTMLInputElement;
+                return value === password?.value;
+              },
+              message: 'Passwords do not match',
+            },
+          },
+        })
+      }
+    >
+      <input type="password" name="password" required />
+      <input type="password" name="confirmPassword" required />
+      {errors['confirmPassword']?.isInvalid && (
+        <span>{errors['confirmPassword'].message}</span>
+      )}
+      <button type="submit">Register</button>
+    </form>
+  );
+}
+```
+
+## Async-style validation
+
+The `validation` function must be **synchronous** — it runs inside a DOM event handler and Rapid Form reads the boolean return value immediately. Returning a `Promise` will not work as expected.
+
+If you need to validate against an external source (e.g. check whether a username is already taken), perform that check on form submit instead:
+
+```tsx
+import { useRapidForm } from 'rapid-form';
+
+export function SignUpForm() {
+  const { refValidation, errors, values } = useRapidForm();
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    // async check at submit time
+    const taken = await checkUsernameAvailability(values['username']?.value ?? '');
+    if (taken) {
+      alert('That username is already taken.');
+      return;
+    }
+    // proceed with form submission
+  }
+
+  return (
+    <form
+      ref={(ref) => refValidation(ref)}
+      onSubmit={handleSubmit}
+    >
+      <input type="text" name="username" required />
+      <button type="submit">Sign up</button>
+    </form>
+  );
+}
+```
+
+## Disabling reset on submit
+
+By default, rapid-form clears all field values and resets `errors` and `values` after the form's `submit` event fires (`resetOnSubmit: true`). Set `resetOnSubmit: false` to keep the state intact after submission — useful when you want to display a confirmation state or handle errors returned from a server.
+
+```tsx
+refValidation(ref, {
+  resetOnSubmit: false,
+  validations: {
+    email: {
+      validation: ({ value }) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
+      message: 'Please enter a valid email address',
+    },
+  },
+})
+```

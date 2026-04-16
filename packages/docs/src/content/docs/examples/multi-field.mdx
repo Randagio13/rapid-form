@@ -1,0 +1,106 @@
+---
+title: Multi-Field Form
+description: A contact form mixing text, select, textarea, and checkbox fields with a live completion progress indicator.
+---
+
+A contact form that combines four different field types and displays a live "N of 4 fields completed" progress indicator driven by the `errors` map.
+
+```tsx
+import { useRapidForm } from 'rapid-form';
+
+export function ContactForm() {
+  const { refValidation, errors, numberOfRequiredFields } = useRapidForm();
+
+  // A field counts as "completed" once it has been touched AND is not invalid.
+  const completedCount = Object.values(errors).filter((e) => !e.isInvalid).length;
+
+  const hasErrors = Object.values(errors).some((e) => e.isInvalid);
+  const notAllTouched = Object.keys(errors).length < numberOfRequiredFields;
+  const isDisabled = hasErrors || notAllTouched;
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    console.log('Form submitted');
+  }
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      ref={(ref) =>
+        // All four fields rely on Rapid Form's built-in rules:
+        //   text    → non-empty (length > 0)
+        //   select  → non-empty selected value
+        //   textarea → non-empty (length > 0)
+        //   checkbox → must be checked
+        refValidation(ref)
+      }
+    >
+      {/* Progress indicator — shown as soon as the user starts interacting */}
+      {Object.keys(errors).length > 0 && (
+        <p aria-live="polite">
+          {completedCount} of {numberOfRequiredFields} fields completed
+        </p>
+      )}
+
+      <div>
+        <label htmlFor="name">Full name</label>
+        <input id="name" type="text" name="name" required />
+        {errors['name']?.isInvalid && (
+          <span role="alert">{errors['name'].message ?? 'Name is required.'}</span>
+        )}
+      </div>
+
+      <div>
+        <label htmlFor="country">Country</label>
+        {/*
+          The empty first <option> has no value, so Rapid Form treats
+          the field as invalid until the user selects a real option.
+        */}
+        <select id="country" name="country" required defaultValue="">
+          <option value="" disabled>Select a country…</option>
+          <option value="us">United States</option>
+          <option value="gb">United Kingdom</option>
+          <option value="ca">Canada</option>
+          <option value="au">Australia</option>
+        </select>
+        {errors['country']?.isInvalid && (
+          <span role="alert">{errors['country'].message ?? 'Please select a country.'}</span>
+        )}
+      </div>
+
+      <div>
+        <label htmlFor="message">Message</label>
+        <textarea id="message" name="message" rows={4} required />
+        {errors['message']?.isInvalid && (
+          <span role="alert">{errors['message'].message ?? 'Message is required.'}</span>
+        )}
+      </div>
+
+      <div>
+        <label>
+          <input type="checkbox" name="terms" required />
+          {' '}I agree to the terms and conditions
+        </label>
+        {errors['terms']?.isInvalid && (
+          <span role="alert">{errors['terms'].message ?? 'You must accept the terms.'}</span>
+        )}
+      </div>
+
+      <button type="submit" disabled={isDisabled}>
+        Send message
+      </button>
+    </form>
+  );
+}
+```
+
+## What's happening
+
+`numberOfRequiredFields` is the total count of `required` fields Rapid Form found in the form — `4` in this case. The progress counter divides the work into two values:
+
+- `completedCount` — the number of entries in `errors` where `isInvalid` is `false`. A field only appears in `errors` once the user has interacted with it, so this starts at `0` and climbs as fields are successfully filled in.
+- `numberOfRequiredFields` — the fixed target. Together they produce the "2 of 4 fields completed" style message.
+
+The progress paragraph is wrapped in a conditional so it only appears after the user has touched at least one field, avoiding a "0 of 4" message on a fresh page load. The `aria-live="polite"` attribute announces updates to screen readers without interrupting ongoing speech.
+
+Each field type uses a different built-in rule: `text` and `textarea` check for a non-empty value, `select` checks that the selected option has a non-empty value (the placeholder option uses `value=""` so it fails the check), and `checkbox` checks that it is checked.

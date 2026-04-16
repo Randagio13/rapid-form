@@ -1,9 +1,9 @@
 ---
-title: Welcome to Rapid Form Docs
-description: Get started building your form with Rapid form.
+title: Rapid Form — The 2KB React Form Validation Hook
+description: rapid-form is a tiny, zero-dependency React hook for native HTML form validation. No schema, no register(), no re-renders on every keystroke. Just attach a ref and go.
 template: splash
 hero:
-  tagline: Simplify the creation and management of forms in web applications!
+  tagline: The 2KB React form hook that just works. No schema. No register(). No re-renders.
   image:
     file: ../../assets/houston.webp
   actions:
@@ -11,26 +11,56 @@ hero:
       link: getting-started/installation/
       icon: right-arrow
       variant: primary
+    - text: Why Rapid Form?
+      link: getting-started/installation/
+      icon: information
+      variant: secondary
     - text: GitHub Repo
       link: https://github.com/Randagio13/rapid-form
       icon: external
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import { Card, CardGrid, Code } from '@astrojs/starlight/components';
 
-## Next steps
+## See it in action
+
+```tsx
+import { useRapidForm } from 'rapid-form';
+
+export function ContactForm() {
+  const { refValidation, errors, values } = useRapidForm();
+
+  return (
+    <form ref={(ref) => refValidation(ref)}>
+      <input name="email" type="email" required placeholder="you@example.com" />
+      {errors.email?.isInvalid && (
+        <span>{errors.email.message}</span>
+      )}
+
+      <input name="name" required placeholder="Your name" />
+      {errors.name?.isInvalid && <span>{errors.name.message}</span>}
+
+      <button type="submit">Send</button>
+    </form>
+  );
+}
+```
+
+That's the whole thing. No schema. No `register()`. No `Controller`. Just native HTML.
+
+## Why Rapid Form?
 
 <CardGrid stagger>
-	<Card title="Easy to integrate" icon="pencil">
-		Build forms with Rapid Form in your React applications.
-	</Card>
-	<Card title="Easy to customize" icon="sun">
-		Customize your form with Rapid Form.
-	</Card>
-	<Card title="Install" icon="setting">
-		Run `npm install rapid-form` to install Rapid Form.
-	</Card>
-	<Card title="Read the docs" icon="open-book">
-		Learn more in [the Rapid Form Docs](getting-started/installation/).
-	</Card>
+  <Card title="~2KB" icon="rocket">
+    Zero runtime dependencies. Ships in under 2KB minified and gzipped. react-hook-form is ~25KB. Your users will notice.
+  </Card>
+  <Card title="Native HTML" icon="document">
+    Any element with `name` + `required` is automatically validated. No `register()`. No `Controller`. No wrappers.
+  </Card>
+  <Card title="No re-renders" icon="approve-check-circle">
+    Validation is event-driven, not controlled. Your form doesn't re-render on every keystroke. It stays fast.
+  </Card>
+  <Card title="Any field type" icon="list-format">
+    `input`, `select`, `textarea`, `checkbox` — all supported out of the box. If the browser knows it, Rapid Form handles it.
+  </Card>
 </CardGrid>

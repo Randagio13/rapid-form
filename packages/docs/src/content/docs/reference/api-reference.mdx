@@ -1,0 +1,189 @@
+---
+title: API Reference
+description: Complete API reference for the rapid-form library.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+## `useRapidForm()`
+
+The single hook exported by `rapid-form`. Call it inside any React component to get form state and the validation attachment function.
+
+```tsx
+import { useRapidForm } from 'rapid-form'
+
+const { refValidation, values, errors, numberOfRequiredFields } = useRapidForm()
+```
+
+### Return values
+
+| Name | Type | Description |
+|------|------|-------------|
+| `refValidation` | `(ref: HTMLFormElement \| null, config?: Config) => void` | Attaches validation logic to a form element. Pass it as the form's `ref` callback. |
+| `values` | `Record<string, Value>` | Live map of every tracked field, keyed by the field's `name` attribute. |
+| `errors` | `Record<string, FieldError>` | Map of validation errors for each field, keyed by the field's `name` attribute. Only fields that have been interacted with appear here. |
+| `numberOfRequiredFields` | `number` | Count of fields that carry the `required` attribute in the attached form. |
+
+---
+
+## `refValidation(ref, config?)`
+
+Attaches Rapid Form's validation listeners to a form element. Typically called inside a React ref callback on the `<form>` element.
+
+```tsx
+<form
+  ref={(ref) => {
+    refValidation(ref, config)
+  }}
+>
+  {/* fields */}
+</form>
+```
+
+### Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `ref` | `HTMLFormElement \| null` | Yes | The native form element. React passes `null` when the component unmounts — the function handles this safely. |
+| `config` | `Config` | No | Optional configuration object. See [Config](#config) below. |
+
+---
+
+## `Config`
+
+The optional second argument to `refValidation`. All properties are optional.
+
+```ts
+type Config = {
+  eventType?: 'input' | 'blur' | 'change'
+  resetOnSubmit?: boolean
+  validations?: Record<string, ValidationEntry>
+}
+```
+
+### Properties
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `eventType` | `'input' \| 'blur' \| 'change'` | `'input'` | The DOM event that triggers validation for all fields. Can be overridden per field inside `validations`. |
+| `resetOnSubmit` | `boolean` | `true` | When `true`, form field values are cleared and the `values` / `errors` state is reset after the form's `submit` event fires. |
+| `validations` | `Record<string, ValidationEntry>` | — | Per-field validation overrides. The record key must match the field's `name` attribute. |
+
+:::note
+`eventType: 'input'` fires on every keystroke, giving real-time feedback. Use `'blur'` if you prefer to validate only when the user leaves a field.
+:::
+
+---
+
+## `ValidationEntry`
+
+A per-field configuration object supplied as a value inside `Config.validations`.
+
+```ts
+type ValidationEntry = {
+  validation: (props: {
+    value: string
+    formElements: HTMLFormControlsCollection
+  }) => boolean
+  eventType?: 'input' | 'blur' | 'change'
+  message?: string
+}
+```
+
+### Properties
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| `validation` | `(props: { value: string; formElements: HTMLFormControlsCollection }) => boolean` | Yes | Custom validation function. Return `true` when the value is **valid**, `false` when it is invalid. Receives the current field `value` and the full `formElements` collection so you can cross-reference other fields. |
+| `eventType` | `'input' \| 'blur' \| 'change'` | No | Overrides the top-level `eventType` for this specific field only. |
+| `message` | `string` | No | Error message stored in `errors[name].message` when this field's `validation` returns `false`. |
+
+**Example — require a field to be longer than 10 characters, validated on blur:**
+
+```tsx
+refValidation(ref, {
+  validations: {
+    username: {
+      eventType: 'blur',
+      validation: ({ value }) => value.length > 10,
+      message: 'Username must be more than 10 characters',
+    },
+  },
+})
+```
+
+**Example — cross-field validation (password confirmation):**
+
+```tsx
+refValidation(ref, {
+  validations: {
+    confirmPassword: {
+      validation: ({ value, formElements }) => {
+        const password = formElements.namedItem('password') as HTMLInputElement
+        return value === password?.value
+      },
+      message: 'Passwords do not match',
+    },
+  },
+})
+```
+
+---
+
+## Error object shape (`FieldError`)
+
+Each entry in the `errors` map conforms to the `FieldError` type.
+
+```ts
+type FieldError = {
+  name: string
+  value: string
+  isInvalid: boolean
+  errorType?: 'invalidFormat'
+  message?: string
+}
+```
+
+### Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `name` | `string` | The `name` attribute of the form field. |
+| `value` | `string` | The current value of the field at the time the error was recorded. |
+| `isInvalid` | `boolean` | `true` when the field fails validation, `false` when it passes. Use this as the primary flag for disabling submit buttons or showing error UI. |
+| `errorType` | `'invalidFormat' \| undefined` | Set to `'invalidFormat'` for built-in format checks (e.g. email regex, password length). `undefined` for custom validation errors. |
+| `message` | `string \| undefined` | Human-readable error message. Populated from the `message` property of a `ValidationEntry`, or a built-in default message for format errors. |
+
+**Typical usage:**
+
+```tsx
+const { errors } = useRapidForm()
+const isFormValid = Object.values(errors).every((e) => !e.isInvalid)
+
+// Render an inline error
+{errors.email?.isInvalid && (
+  <span role="alert">{errors.email.message}</span>
+)}
+
+// Disable the submit button until all fields are valid
+<button type="submit" disabled={!isFormValid}>
+  Submit
+</button>
+```
+
+---
+
+## Exported TypeScript types
+
+All types are re-exported from the package root and can be imported directly.
+
+```ts
+import type { Config, Value, FieldError, NumberOfRequiredFields } from 'rapid-form'
+```
+
+| Type | Definition | Description |
+|------|------------|-------------|
+| `Config` | `{ eventType?: EventType; resetOnSubmit?: boolean; validations?: Record<string, ValidationEntry> }` | The optional config parameter accepted by `refValidation`. |
+| `Value` | `{ name: string; value: string }` | Shape of each entry in the `values` map returned by `useRapidForm`. |
+| `FieldError` | `{ name: string; value: string; isInvalid: boolean; errorType?: 'invalidFormat'; message?: string }` | Shape of each entry in the `errors` map returned by `useRapidForm`. |
+| `NumberOfRequiredFields` | `number` | Alias for the `numberOfRequiredFields` return value. |

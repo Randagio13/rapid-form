@@ -1,0 +1,199 @@
+---
+title: Styling Errors
+description: Display and style validation errors with conditional classes, Tailwind CSS, and accessible markup.
+---
+
+rapid-form surfaces validation state through the `errors` object returned by `useRapidForm`. Each entry appears only after the user has interacted with that field, so you never show errors before they are relevant.
+
+## Basic error message
+
+Render a `<span>` conditionally when a field is invalid. The `message` property comes from your `validations` config, or from the built-in format check message for `type="email"` and similar fields.
+
+```tsx
+import { useRapidForm } from 'rapid-form';
+
+export function SimpleForm() {
+  const { refValidation, errors } = useRapidForm();
+
+  return (
+    <form ref={(ref) => refValidation(ref)}>
+      <input type="email" name="email" required />
+      <span>{errors['email']?.message}</span>
+
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+:::note
+`errors['email']?.message` is `undefined` when the field is untouched or valid, so the `<span>` renders empty. Wrapping the `<span>` in a conditional on `isInvalid` avoids occupying layout space for empty content.
+:::
+
+## Conditional className
+
+Apply a different border colour to an input depending on whether it is currently invalid. This works with any CSS-in-JS library, CSS modules, or utility frameworks.
+
+```tsx
+<input
+  type="email"
+  name="email"
+  required
+  className={errors['email']?.isInvalid ? 'border-red-500' : 'border-gray-300'}
+/>
+```
+
+When `errors['email']` is `undefined` (field not yet touched), the optional chain returns `undefined`, which is falsy, so the default class is applied.
+
+## Full Tailwind CSS example
+
+A complete form field with a label, styled input, and an error message below it:
+
+```tsx
+import { useRapidForm } from 'rapid-form';
+
+export function TailwindForm() {
+  const { refValidation, errors } = useRapidForm();
+
+  return (
+    <form
+      className="flex flex-col gap-6 max-w-md"
+      ref={(ref) => refValidation(ref)}
+    >
+      {/* Email field */}
+      <div className="flex flex-col gap-1">
+        <label htmlFor="email" className="text-sm font-medium text-gray-700">
+          Email
+        </label>
+        <input
+          id="email"
+          type="email"
+          name="email"
+          required
+          placeholder="you@example.com"
+          className={[
+            'rounded-md border px-3 py-2 text-sm outline-none transition-colors',
+            'focus:ring-2 focus:ring-blue-500',
+            errors['email']?.isInvalid
+              ? 'border-red-500 bg-red-50'
+              : 'border-gray-300 bg-white',
+          ].join(' ')}
+        />
+        {errors['email']?.isInvalid && (
+          <span className="text-xs text-red-600">
+            {errors['email'].message}
+          </span>
+        )}
+      </div>
+
+      {/* Name field */}
+      <div className="flex flex-col gap-1">
+        <label htmlFor="name" className="text-sm font-medium text-gray-700">
+          Name
+        </label>
+        <input
+          id="name"
+          type="text"
+          name="name"
+          required
+          placeholder="Your name"
+          className={[
+            'rounded-md border px-3 py-2 text-sm outline-none transition-colors',
+            'focus:ring-2 focus:ring-blue-500',
+            errors['name']?.isInvalid
+              ? 'border-red-500 bg-red-50'
+              : 'border-gray-300 bg-white',
+          ].join(' ')}
+        />
+        {errors['name']?.isInvalid && (
+          <span className="text-xs text-red-600">
+            {errors['name'].message}
+          </span>
+        )}
+      </div>
+
+      <button
+        type="submit"
+        className="rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
+      >
+        Submit
+      </button>
+    </form>
+  );
+}
+```
+
+## Accessibility
+
+Use `aria-invalid` and `aria-describedby` to connect the input to its error message for screen-reader users.
+
+- `aria-invalid` signals to assistive technology that the field value is not accepted.
+- `aria-describedby` points to the `id` of the element that describes the error. Screen readers announce it when the input is focused.
+
+```tsx
+import { useRapidForm } from 'rapid-form';
+
+export function AccessibleForm() {
+  const { refValidation, errors } = useRapidForm();
+  const emailInvalid = errors['email']?.isInvalid ?? false;
+
+  return (
+    <form ref={(ref) => refValidation(ref)}>
+      <label htmlFor="email">Email</label>
+      <input
+        id="email"
+        type="email"
+        name="email"
+        required
+        aria-invalid={emailInvalid}
+        aria-describedby={emailInvalid ? 'email-error' : undefined}
+      />
+      {emailInvalid && (
+        <span id="email-error" role="alert">
+          {errors['email']?.message}
+        </span>
+      )}
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+## Disabling the submit button
+
+Keep the submit button disabled until every required field has been touched **and** all touched fields are valid.
+
+```tsx
+import { useRapidForm } from 'rapid-form';
+
+export function GuardedForm() {
+  const { refValidation, errors, numberOfRequiredFields } = useRapidForm();
+
+  // True if any touched field is currently invalid
+  const hasInvalidFields = Object.values(errors).some((e) => e.isInvalid);
+
+  // True if the user has not interacted with every required field yet
+  const hasUntouchedRequired = Object.keys(errors).length < numberOfRequiredFields;
+
+  return (
+    <form ref={(ref) => refValidation(ref)}>
+      <input type="text" name="name" required />
+      <input type="email" name="email" required />
+
+      <button
+        type="submit"
+        disabled={hasInvalidFields || hasUntouchedRequired}
+      >
+        Submit
+      </button>
+    </form>
+  );
+}
+```
+
+The two conditions cover distinct scenarios:
+
+| Condition | What it prevents |
+|-----------|-----------------|
+| `hasInvalidFields` | Submitting while a touched field still fails validation |
+| `hasUntouchedRequired` | Submitting before the user has filled in every required field |

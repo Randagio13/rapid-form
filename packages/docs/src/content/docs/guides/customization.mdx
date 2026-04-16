@@ -34,7 +34,7 @@ import { Steps } from '@astrojs/starlight/components';
         const config = {
           validations: {
             'input-name': {
-              eventType: 'blur'
+              eventType: 'blur',
               validation: ({ value }) => value.length > 10,
               message: 'The input must be more than 10 characters'
             }

@@ -1,0 +1,105 @@
+---
+title: Registration Form
+description: A registration form with a custom password length rule and cross-field confirm-password validation using Rapid Form.
+---
+
+A registration form that adds a custom minimum-length rule on the password field and uses `formElements` to cross-validate the confirm-password field against the password value.
+
+```tsx
+import { useRapidForm } from 'rapid-form';
+
+export function RegistrationForm() {
+  const { refValidation, errors, numberOfRequiredFields } = useRapidForm();
+
+  const hasErrors = Object.values(errors).some((e) => e.isInvalid);
+  const notAllTouched = Object.keys(errors).length < numberOfRequiredFields;
+  const isDisabled = hasErrors || notAllTouched;
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const form = e.currentTarget as HTMLFormElement;
+    console.log('Registering:', {
+      name: (form.elements.namedItem('name') as HTMLInputElement).value,
+      email: (form.elements.namedItem('email') as HTMLInputElement).value,
+    });
+  }
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      ref={(ref) =>
+        refValidation(ref, {
+          validations: {
+            // Override the default password rule: require at least 8 characters
+            // instead of the built-in minimum of 6.
+            password: {
+              validation: ({ value }) => value.length >= 8,
+              message: 'Password must be at least 8 characters.',
+            },
+            // Cross-field check: read the password field via formElements and
+            // compare it to the confirm-password value.
+            // eventType 'blur' defers validation until the user leaves the field,
+            // which avoids a premature "passwords do not match" flash while typing.
+            'confirm-password': {
+              eventType: 'blur',
+              validation: ({ value, formElements }) => {
+                const password = formElements.namedItem('password') as HTMLInputElement | null;
+                return value === password?.value;
+              },
+              message: 'Passwords do not match.',
+            },
+          },
+        })
+      }
+    >
+      <div>
+        <label htmlFor="name">Full name</label>
+        {/* type="text" — non-empty check applied automatically */}
+        <input id="name" type="text" name="name" required />
+        {errors['name']?.isInvalid && (
+          <span role="alert">{errors['name'].message ?? 'Name is required.'}</span>
+        )}
+      </div>
+
+      <div>
+        <label htmlFor="email">Email</label>
+        <input id="email" type="email" name="email" required />
+        {errors['email']?.isInvalid && (
+          <span role="alert">{errors['email'].message ?? 'Please enter a valid email address.'}</span>
+        )}
+      </div>
+
+      <div>
+        <label htmlFor="password">Password</label>
+        {/* Custom validation above overrides the built-in password rule */}
+        <input id="password" type="password" name="password" required />
+        {errors['password']?.isInvalid && (
+          <span role="alert">{errors['password'].message}</span>
+        )}
+      </div>
+
+      <div>
+        <label htmlFor="confirm-password">Confirm password</label>
+        <input id="confirm-password" type="password" name="confirm-password" required />
+        {errors['confirm-password']?.isInvalid && (
+          <span role="alert">{errors['confirm-password'].message}</span>
+        )}
+      </div>
+
+      <button type="submit" disabled={isDisabled}>
+        Create account
+      </button>
+    </form>
+  );
+}
+```
+
+## What's happening
+
+Two entries in the `validations` map extend the default behaviour.
+
+The `password` entry supplies a custom `validation` function that checks `value.length >= 8`, overriding Rapid Form's built-in minimum-of-6 rule. The `message` string is stored in `errors['password'].message` and shown when `isInvalid` is true.
+
+The `confirm-password` entry demonstrates cross-field validation. The `validation` callback receives `formElements` — the native [`HTMLFormControlsCollection`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormControlsCollection) of the whole form — so `formElements.namedItem('password')` retrieves the live password input and its current `.value`. Setting `eventType: 'blur'` delays the check until the user leaves the field, preventing a false "passwords do not match" error while the user is still typing.
+
+The submit button uses the same three-step disabled pattern as every other example: check for any invalid field, check that every required field has been touched, then gate on both.

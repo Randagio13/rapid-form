@@ -12,10 +12,10 @@ export default defineConfig({
 				{ icon: 'github', label: 'GitHub', href: 'https://github.com/Randagio13/rapid-form' },
 			],
 			sidebar: [
+				{ label: 'Why Rapid Form?', link: '/why-rapid-form/' },
 				{
 					label: 'Getting started',
 					items: [
-						// Each item here is one entry in the navigation menu.
 						{ label: 'Installation', link: '/getting-started/installation/' },
 						{ label: 'Quick start', link: '/getting-started/quick-start/' },
 					],
@@ -23,13 +23,27 @@ export default defineConfig({
 				{
 					label: 'Guides',
 					items: [
-						// Each item here is one entry in the navigation menu.
 						{ label: 'Customization', link: '/guides/customization/' },
+						{ label: 'Custom Validation', link: '/guides/custom-validation/' },
+						{ label: 'TypeScript', link: '/guides/typescript/' },
+						{ label: 'Styling Errors', link: '/guides/styling-errors/' },
 					],
 				},
 				{
 					label: 'Reference',
-					autogenerate: { directory: 'reference' },
+					items: [
+						{ label: 'API Reference', link: '/reference/api-reference/' },
+						{ label: 'Validation Rules', link: '/reference/validation-rules/' },
+						{ label: 'Migration v2 → v3', link: '/reference/migration-from-v2-to-v3/' },
+					],
+				},
+				{
+					label: 'Examples',
+					items: [
+						{ label: 'Login Form', link: '/examples/login-form/' },
+						{ label: 'Registration Form', link: '/examples/registration-form/' },
+						{ label: 'Multi-Field Form', link: '/examples/multi-field/' },
+					],
 				},
 			],
 		}),

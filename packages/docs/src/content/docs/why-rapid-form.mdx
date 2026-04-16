@@ -1,0 +1,88 @@
+---
+title: Why Rapid Form?
+description: How rapid-form compares to react-hook-form and formik, and when it's the right tool for the job.
+---
+
+Most applications ship the same handful of forms: login, signup, contact, settings. These forms have required fields, maybe a custom rule or two, and nothing particularly exotic. rapid-form is built for exactly that 80%. If your form has required fields and maybe some custom rules, you shouldn't need to pull in a 25KB dependency to handle it.
+
+## Comparison
+
+| Feature | rapid-form | react-hook-form | formik |
+|---|---|---|---|
+| Bundle size (gzip) | ~2KB | ~10KB | ~15KB |
+| Runtime dependencies | 0 | 0 | multiple |
+| API surface | 1 hook | large | large |
+| Native HTML support | `name` + `required` | with `register()` | needs Formik components |
+| No re-renders on input | ✅ | ✅ | ❌ |
+| Schema validation | ❌ | ✅ Zod / Yup / etc | ✅ Yup |
+| DevTools | ❌ | ✅ | ❌ |
+| Cross-field validation | ✅ via `formElements` | ✅ | ✅ |
+| Form arrays / dynamic fields | ❌ | ✅ | ✅ |
+
+## When to use rapid-form
+
+- **Login and signup forms** — email, password, maybe a confirm-password check.
+- **Contact forms** — name, email, message, submit. Done.
+- **Settings and profile forms** — a fixed set of fields the user fills in and saves.
+- **Any form where fields are known at build time** — if you're not generating fields dynamically at runtime, rapid-form handles it.
+- **When bundle size matters** — shipping to mobile users, low-bandwidth markets, or any product where every kilobyte counts.
+
+## When NOT to use rapid-form
+
+- **Highly dynamic forms** — field arrays, nested object structures, or fields that are added and removed at runtime are not supported.
+- **Complex schema validation** — if you need Zod or Yup for type-safe, composable validation rules, reach for react-hook-form instead.
+- **DevTools and form state inspection** — rapid-form has no browser extension or debug panel. react-hook-form's DevTools are excellent for complex forms.
+- **Multi-step wizard forms with shared state** — managing cross-step validation and accumulated form data is outside rapid-form's scope.
+
+## Side-by-side: the same login form
+
+### rapid-form
+
+```tsx
+import { useRapidForm } from 'rapid-form'
+
+function LoginForm() {
+  const { refValidation, errors, numberOfRequiredFields } = useRapidForm()
+  const isDisabled = Object.values(errors).some(e => e.isInvalid)
+    || Object.keys(errors).length < numberOfRequiredFields
+
+  return (
+    <form ref={(ref) => refValidation(ref)}>
+      <input type="email" name="email" required />
+      <span>{errors.email?.message}</span>
+      <input type="password" name="password" required />
+      <span>{errors.password?.message}</span>
+      <button type="submit" disabled={isDisabled}>Log in</button>
+    </form>
+  )
+}
+```
+
+No `register()`. No schema. The `name` and `required` attributes on each input are enough — rapid-form picks them up automatically via the form ref.
+
+### react-hook-form equivalent
+
+```tsx
+import { useForm } from 'react-hook-form'
+
+function LoginForm() {
+  const { register, handleSubmit, formState: { errors } } = useForm()
+  const onSubmit = (data) => console.log(data)
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <input {...register('email', { required: true, pattern: /^\S+@\S+$/i })} />
+      <span>{errors.email?.message}</span>
+      <input {...register('password', { required: true, minLength: 6 })} />
+      <span>{errors.password?.message}</span>
+      <button type="submit">Log in</button>
+    </form>
+  )
+}
+```
+
+react-hook-form is an excellent library with a much larger feature set. For a form this simple, though, you're paying ~10KB and a `register()` call on every field for capabilities you aren't using.
+
+---
+
+rapid-form won't do everything. But for the forms it handles, it's the smallest, simplest way to get there.
