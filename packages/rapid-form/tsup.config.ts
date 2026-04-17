@@ -12,5 +12,5 @@ export default defineConfig(() => ({
   bundle: true,
   watch: env === 'development',
   target: 'es2020',
-  entry: ['src/index.ts']
+  entry: ['src/index.ts', 'src/resolvers/zod.ts', 'src/resolvers/yup.ts']
 }));

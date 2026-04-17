@@ -58,6 +58,7 @@ type Config = {
   eventType?: 'input' | 'blur' | 'change'
   resetOnSubmit?: boolean
   validations?: Record<string, ValidationEntry>
+  resolver?: SchemaResolver
 }
 ```
 
@@ -67,7 +68,8 @@ type Config = {
 |----------|------|---------|-------------|
 | `eventType` | `'input' \| 'blur' \| 'change'` | `'input'` | The DOM event that triggers validation for all fields. Can be overridden per field inside `validations`. |
 | `resetOnSubmit` | `boolean` | `true` | When `true`, form field values are cleared and the `values` / `errors` state is reset after the form's `submit` event fires. |
-| `validations` | `Record<string, ValidationEntry>` | — | Per-field validation overrides. The record key must match the field's `name` attribute. |
+| `validations` | `Record<string, ValidationEntry>` | — | Per-field validation overrides. The record key must match the field's `name` attribute. Ignored when `resolver` is set. |
+| `resolver` | `SchemaResolver` | — | Schema resolver function. When provided it replaces per-field `validations`. See [Schema Validation](/rapid-form/guides/schema-validation) for built-in Zod and Yup adapters. |
 
 :::note
 `eventType: 'input'` fires on every keystroke, giving real-time feedback. Use `'blur'` if you prefer to validate only when the user leaves a field.
@@ -173,17 +175,38 @@ const isFormValid = Object.values(errors).every((e) => !e.isInvalid)
 
 ---
 
+## `SchemaResolver`
+
+A function type that receives all current form values and returns a map of error messages. Both sync and async resolvers are supported.
+
+```ts
+import type { SchemaResolver } from 'rapid-form'
+
+type SchemaResolver = (
+  values: Record<string, string>
+) =>
+  | Record<string, string | undefined>
+  | Promise<Record<string, string | undefined>>
+```
+
+Return `undefined` (or omit the key) for fields that pass validation. Return a string message for fields that fail.
+
+Built-in adapters are available for Zod and Yup — see the [Schema Validation guide](/rapid-form/guides/schema-validation).
+
+---
+
 ## Exported TypeScript types
 
 All types are re-exported from the package root and can be imported directly.
 
 ```ts
-import type { Config, Value, FieldError, NumberOfRequiredFields } from 'rapid-form'
+import type { Config, Value, FieldError, NumberOfRequiredFields, SchemaResolver } from 'rapid-form'
 ```
 
 | Type | Definition | Description |
 |------|------------|-------------|
-| `Config` | `{ eventType?: EventType; resetOnSubmit?: boolean; validations?: Record<string, ValidationEntry> }` | The optional config parameter accepted by `refValidation`. |
+| `Config` | `{ eventType?: EventType; resetOnSubmit?: boolean; validations?: Record<string, ValidationEntry>; resolver?: SchemaResolver }` | The optional config parameter accepted by `refValidation`. |
 | `Value` | `{ name: string; value: string }` | Shape of each entry in the `values` map returned by `useRapidForm`. |
 | `FieldError` | `{ name: string; value: string; isInvalid: boolean; errorType?: 'invalidFormat'; message?: string }` | Shape of each entry in the `errors` map returned by `useRapidForm`. |
 | `NumberOfRequiredFields` | `number` | Alias for the `numberOfRequiredFields` return value. |
+| `SchemaResolver` | `(values: Record<string, string>) => Record<string, string \| undefined> \| Promise<...>` | Schema resolver function type. Use with the built-in adapters or write your own. |

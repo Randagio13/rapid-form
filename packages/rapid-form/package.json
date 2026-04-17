@@ -9,6 +9,16 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
+    },
+    "./resolvers/zod": {
+      "types": "./dist/resolvers/zod.d.ts",
+      "import": "./dist/resolvers/zod.js",
+      "require": "./dist/resolvers/zod.cjs"
+    },
+    "./resolvers/yup": {
+      "types": "./dist/resolvers/yup.d.ts",
+      "import": "./dist/resolvers/yup.js",
+      "require": "./dist/resolvers/yup.cjs"
     }
   },
   "description": "The best way to make a rapid form with react hooks",
