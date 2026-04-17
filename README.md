@@ -23,7 +23,7 @@ No `register()`. No re-renders. Schema validation optional.
 
 | | rapid-form | react-hook-form |
 |---|---|---|
-| Bundle size | **~2KB** | ~25KB |
+| Bundle size (gzip) | **~2KB** | ~10KB |
 | Dependencies | **0** | 0 |
 | Register inputs | **No** | Yes |
 | Re-renders on input | **No** | Yes |
