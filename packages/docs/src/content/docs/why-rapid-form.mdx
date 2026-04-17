@@ -17,20 +17,19 @@ Most applications ship the same handful of forms: login, signup, contact, settin
 | Schema validation | ✅ Zod / Yup / etc | ✅ Zod / Yup / etc | ✅ Yup |
 | DevTools | ❌ | ✅ | ❌ |
 | Cross-field validation | ✅ via resolver or `formElements` | ✅ | ✅ |
-| Form arrays / dynamic fields | ❌ | ✅ | ✅ |
+| Form arrays / dynamic fields | ✅ | ✅ | ✅ |
 
 ## When to use rapid-form
 
 - **Login and signup forms** — email, password, maybe a confirm-password check.
 - **Contact forms** — name, email, message, submit. Done.
 - **Settings and profile forms** — a fixed set of fields the user fills in and saves.
-- **Any form where fields are known at build time** — if you're not generating fields dynamically at runtime, rapid-form handles it.
+- **Forms with dynamic fields** — conditional fields and field arrays work out of the box; rapid-form tracks additions and removals automatically.
 - **When bundle size matters** — shipping to mobile users, low-bandwidth markets, or any product where every kilobyte counts.
 - **When you want schema validation without the overhead** — plug in Zod or Yup via the built-in resolver adapters; only the adapter you import is added to your bundle.
 
 ## When NOT to use rapid-form
 
-- **Highly dynamic forms** — field arrays, nested object structures, or fields that are added and removed at runtime are not supported.
 - **DevTools and form state inspection** — rapid-form has no browser extension or debug panel. react-hook-form's DevTools are excellent for complex forms.
 - **Multi-step wizard forms with shared state** — managing cross-step validation and accumulated form data is outside rapid-form's scope.
 

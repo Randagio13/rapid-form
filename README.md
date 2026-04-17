@@ -29,6 +29,7 @@ No `register()`. No re-renders. Schema validation optional.
 | Re-renders on input | **No** | Yes |
 | Native HTML validation | **Yes** | Partial |
 | Schema validation | **Zod / Yup / any** | Zod / Yup / any |
+| Dynamic fields | **Yes** | Yes |
 
 Point a `ref` at your form. Done.
 
@@ -108,6 +109,26 @@ refValidation(ref, { resolver: zodResolver(schema) });
 ```
 
 A `yupResolver` is also available at `rapid-form/resolvers/yup`. Both adapters are tree-shakeable and add zero runtime dependencies to the core package.
+
+## Dynamic fields
+
+Conditional fields and field arrays are tracked automatically — no extra setup needed.
+
+```tsx
+function ConditionalForm() {
+  const [showExtra, setShowExtra] = useState(false);
+  const { refValidation, errors } = useRapidForm();
+
+  return (
+    <form ref={(ref) => refValidation(ref)}>
+      <input type="checkbox" name="agree" required onChange={(e) => setShowExtra(e.target.checked)} />
+      {showExtra && <input type="text" name="extra" required />}
+      {errors.extra?.isInvalid && <span>{errors.extra.message}</span>}
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
 
 ## Read values
 

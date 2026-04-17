@@ -47,6 +47,10 @@ Attaches Rapid Form's validation listeners to a form element. Typically called i
 | `ref` | `HTMLFormElement \| null` | Yes | The native form element. React passes `null` when the component unmounts — the function handles this safely. |
 | `config` | `Config` | No | Optional configuration object. See [Config](#config) below. |
 
+:::caution[Reserved field names]
+Fields named `__proto__`, `constructor`, or `prototype` are silently ignored by rapid-form for security reasons. Validation listeners are never attached to these fields and their values will not appear in `errors` or `values`.
+:::
+
 ---
 
 ## `Config`
@@ -153,7 +157,7 @@ type FieldError = {
 | `name` | `string` | The `name` attribute of the form field. |
 | `value` | `string` | The current value of the field at the time the error was recorded. |
 | `isInvalid` | `boolean` | `true` when the field fails validation, `false` when it passes. Use this as the primary flag for disabling submit buttons or showing error UI. |
-| `errorType` | `'invalidFormat' \| undefined` | Set to `'invalidFormat'` for built-in format checks (e.g. email regex, password length). `undefined` for custom validation errors. |
+| `errorType` | `'invalidFormat' \| undefined` | Set to `'invalidFormat'` for built-in format checks (e.g. email format, password length). `undefined` for custom validation errors. |
 | `message` | `string \| undefined` | Human-readable error message. Populated from the `message` property of a `ValidationEntry`, or a built-in default message for format errors. |
 
 **Typical usage:**
