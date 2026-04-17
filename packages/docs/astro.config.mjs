@@ -35,6 +35,7 @@ export default defineConfig({
             { label: 'Customization', slug: 'guides/customization' },
             { label: 'Custom Validation', slug: 'guides/custom-validation' },
             { label: 'Schema Validation', slug: 'guides/schema-validation' },
+            { label: 'Dynamic Fields', slug: 'guides/dynamic-fields' },
             { label: 'TypeScript', slug: 'guides/typescript' },
             { label: 'Styling Errors', slug: 'guides/styling-errors' }
           ]
