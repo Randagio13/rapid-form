@@ -5,7 +5,7 @@
 # Rapid Form
 
 **The 2KB React form hook that just works.**  
-No schema. No `register()`. No re-renders on every keystroke.
+No `register()`. No re-renders. Schema validation optional.
 
 [![npm version](https://img.shields.io/npm/v/rapid-form?style=flat-square&color=7C3AED)](https://www.npmjs.com/package/rapid-form)
 [![npm downloads](https://img.shields.io/npm/dm/rapid-form?style=flat-square&color=7C3AED)](https://www.npmjs.com/package/rapid-form)
@@ -28,6 +28,7 @@ No schema. No `register()`. No re-renders on every keystroke.
 | Register inputs | **No** | Yes |
 | Re-renders on input | **No** | Yes |
 | Native HTML validation | **Yes** | Partial |
+| Schema validation | **Zod / Yup / any** | Zod / Yup / any |
 
 Point a `ref` at your form. Done.
 
@@ -84,12 +85,29 @@ refValidation(ref, { eventType: 'blur' });
 refValidation(ref, {
   validations: {
     username: {
-      fn: (value) => value.length >= 3,
+      validation: (value) => value.length >= 3,
       message: 'At least 3 characters',
     },
   },
 });
 ```
+
+## Schema validation (Zod / Yup)
+
+```tsx
+import { z } from 'zod';
+import { zodResolver } from 'rapid-form/resolvers/zod';
+
+const schema = z.object({
+  email: z.string().email('Invalid email'),
+  name:  z.string().min(3, 'At least 3 characters'),
+});
+
+const { refValidation, errors } = useRapidForm();
+refValidation(ref, { resolver: zodResolver(schema) });
+```
+
+A `yupResolver` is also available at `rapid-form/resolvers/yup`. Both adapters are tree-shakeable and add zero runtime dependencies to the core package.
 
 ## Read values
 
