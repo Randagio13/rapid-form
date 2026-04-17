@@ -1,0 +1,152 @@
+---
+title: Dynamic Fields
+description: Fields added or removed at runtime are automatically tracked by Rapid Form — no extra setup required.
+---
+
+Rapid Form automatically tracks fields that are added or removed after the initial render. Whether you are showing a field conditionally or managing a list of rows, errors and values for removed fields are cleaned up without any additional code.
+
+:::tip
+The standard `useRapidForm` hook and an inline `ref` callback on `<form>` are all you need. There is no special dynamic-fields API.
+:::
+
+---
+
+## Conditional fields
+
+Use a boolean state value to mount or unmount a field. When the field disappears from the DOM, Rapid Form removes its entry from both `errors` and `values` automatically.
+
+```tsx
+import { useState } from 'react';
+import { useRapidForm } from 'rapid-form';
+
+export function ConditionalFieldForm() {
+  const { refValidation, errors } = useRapidForm();
+  const [showPhone, setShowPhone] = useState(false);
+
+  return (
+    <form ref={(ref) => refValidation(ref, { validations: {
+      email: { required: true, type: 'email' },
+      phone: { required: true },
+    }})}>
+      <label>
+        <input type="email" name="email" placeholder="Email" />
+        {errors['email']?.isInvalid && <span>{errors['email'].message}</span>}
+      </label>
+
+      <label>
+        <input
+          type="checkbox"
+          checked={showPhone}
+          onChange={(e) => setShowPhone(e.target.checked)}
+        />
+        {' '}Add phone number
+      </label>
+
+      {showPhone && (
+        <label>
+          <input type="tel" name="phone" placeholder="Phone" />
+          {errors['phone']?.isInvalid && <span>{errors['phone'].message}</span>}
+        </label>
+      )}
+
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+When the checkbox is unchecked, the `phone` field unmounts. Rapid Form detects the removal and clears `errors['phone']` and `values['phone']` — the error span disappears along with the field.
+
+:::note
+Validation rules listed under `validations` for a field that is not currently mounted are never triggered. You can safely keep the full validation config in one place.
+:::
+
+---
+
+## Field arrays
+
+A field array is a dynamic list of rows where each row contains one or more inputs. Use an array in state to drive the list, and give each input a unique name (e.g. `email.0`, `email.1`). When a row is removed, Rapid Form cleans up the corresponding errors and values.
+
+```tsx
+import { useState } from 'react';
+import { useRapidForm } from 'rapid-form';
+
+type Row = { id: number };
+
+let nextId = 2;
+
+export function EmailListForm() {
+  const { refValidation, errors } = useRapidForm();
+  const [rows, setRows] = useState<Row[]>([{ id: 1 }]);
+
+  const addRow = () => setRows((prev) => [...prev, { id: nextId++ }]);
+
+  const removeRow = (id: number) =>
+    setRows((prev) => prev.filter((r) => r.id !== id));
+
+  // Build validations dynamically for however many rows exist
+  const validations = Object.fromEntries(
+    rows.map((_, i) => [`email.${i}`, { required: true, type: 'email' as const }])
+  );
+
+  return (
+    <form ref={(ref) => refValidation(ref, { validations })}>
+      {rows.map((row, i) => (
+        <div key={row.id}>
+          <input
+            type="email"
+            name={`email.${i}`}
+            placeholder={`Email ${i + 1}`}
+          />
+          {errors[`email.${i}`]?.isInvalid && (
+            <span>{errors[`email.${i}`].message}</span>
+          )}
+          {rows.length > 1 && (
+            <button type="button" onClick={() => removeRow(row.id)}>
+              Remove
+            </button>
+          )}
+        </div>
+      ))}
+
+      <button type="button" onClick={addRow}>
+        Add row
+      </button>
+
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+```
+
+When a row is removed, the input for that index unmounts. Rapid Form detects the removal on the next render and removes the matching error and value. The error span for that row disappears along with the row itself.
+
+:::tip
+Using the array index as part of the field name (`email.0`, `email.1`, …) keeps names stable relative to their position. If you need stable names across reordering, use a unique ID instead: `email.${row.id}`.
+:::
+
+---
+
+## How it works
+
+Rapid Form relies on an **inline ref callback** pattern:
+
+```tsx
+<form ref={(ref) => refValidation(ref, options)}>
+```
+
+Because the callback is an arrow function defined inline, React creates a new function reference on every render. React calls the old callback with `null` (unmount) and the new callback with the DOM node (mount) on each render cycle. Rapid Form uses these calls to synchronously scan which named fields are present and remove any that have disappeared.
+
+A **MutationObserver** is also attached to the form element as a safety net — it picks up fields added or removed by non-React code (e.g. direct DOM manipulation or third-party libraries) outside of the React render cycle.
+
+---
+
+## Limitations
+
+Field names that clash with JavaScript built-in object properties are silently ignored for security reasons. Avoid using the following names:
+
+- `__proto__`
+- `constructor`
+- `prototype`
+
+All other field names work as expected.
