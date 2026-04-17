@@ -26,17 +26,17 @@ export interface State {
   numberOfRequiredFields: number;
 }
 
-/**
- * Represents the type of action that can be dispatched to the reducer.
- */
-type ActionType = 'setValue' | 'setError' | 'reset';
+type BaseAction = State & { type: 'setValue' | 'setError' | 'reset' };
+type RemoveFieldAction = {
+  type: 'removeField';
+  name: string;
+  numberOfRequiredFields: number;
+};
 
 /**
  * Represents an action that can be dispatched to the reducer.
  */
-export interface Action extends State {
-  type: ActionType;
-}
+export type Action = BaseAction | RemoveFieldAction;
 
 /**
  * Represents the initial state of the reducer.
@@ -79,17 +79,29 @@ function deepMerge<T extends AnyObject, U extends AnyObject>(
  * @param action The action to be dispatched.
  * @returns The new state after applying the action.
  */
-export const reducer: Reducer<State, Action> = (state, { type, ...data }) => {
-  switch (type) {
+export const reducer: Reducer<State, Action> = (state, action) => {
+  switch (action.type) {
     case 'setValue':
-    case 'setError':
+    case 'setError': {
+      const { type: _, ...data } = action;
       return deepMerge(state, data);
+    }
     case 'reset':
       return {
-        values: data.values,
+        values: action.values,
         errors: {},
-        numberOfRequiredFields: data.numberOfRequiredFields
+        numberOfRequiredFields: action.numberOfRequiredFields
       };
+    case 'removeField': {
+      const { [action.name]: _v, ...values } = state.values;
+      const { [action.name]: _e, ...errors } = state.errors;
+      return {
+        ...state,
+        values,
+        errors,
+        numberOfRequiredFields: action.numberOfRequiredFields
+      };
+    }
   }
 };
 
