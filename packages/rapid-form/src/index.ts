@@ -1,4 +1,5 @@
-import { useReducer } from 'react';
+import { useReducer, useRef } from 'react';
+import { disconnectObserver } from './events.js';
 import reducer, { initialState, type State } from './reducer.js';
 import {
   type SchemaResolver,
@@ -25,8 +26,15 @@ export function useRapidForm(): {
   numberOfRequiredFields: State['numberOfRequiredFields'];
 } {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const formRef = useRef<HTMLFormElement | null>(null);
   return {
     refValidation: (ref, config) => {
+      if (ref === null) {
+        disconnectObserver(formRef.current);
+        formRef.current = null;
+        return;
+      }
+      formRef.current = ref;
       validation({ ref, dispatch, config });
     },
     ...state

@@ -1,5 +1,12 @@
 import type { Dispatch } from 'react';
-import { addTrackedEventListener, hasEventListener } from './events.js';
+import {
+  addTrackedEventListener,
+  disconnectObserver,
+  getRegisteredNames,
+  hasEventListener,
+  registerFieldName,
+  setObserver
+} from './events.js';
 import type { Action, State } from './reducer.js';
 
 type EventType = 'change' | 'blur' | 'input';
@@ -37,7 +44,7 @@ export interface ValidationProps {
   /**
    * Reference to form element
    */
-  ref: HTMLFormElement | null;
+  ref: HTMLFormElement;
   /**
    * Dispatch action to reducer
    */
@@ -60,12 +67,6 @@ export interface ValidationProps {
     | undefined;
 }
 
-function validateEmail(email: string): boolean {
-  const re =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
-}
-
 interface InputValidationProps {
   type: HTMLInputElement['type'];
   value: string;
@@ -79,7 +80,8 @@ function inputValidation({
 }: InputValidationProps): boolean {
   switch (type) {
     case 'email':
-      return validateEmail(value);
+      // Use native browser validation — no custom regex, no ReDoS risk.
+      return element.validity.valid;
     case 'password':
       return value.length > 6;
     case 'checkbox':
@@ -89,6 +91,8 @@ function inputValidation({
   }
 }
 
+const UNSAFE_FIELD_NAMES = new Set(['__proto__', 'constructor', 'prototype']);
+
 /** Collect all named field values from a form's element collection. */
 function collectFormValues(
   elements: HTMLFormControlsCollection
@@ -96,7 +100,7 @@ function collectFormValues(
   const values: Record<string, string> = {};
   for (const el of Array.from(elements)) {
     const name = el.getAttribute('name');
-    if (!name) continue;
+    if (!name || UNSAFE_FIELD_NAMES.has(name)) continue;
     const input = el as HTMLInputElement;
     values[name] =
       input.type === 'checkbox' ? String(input.checked) : input.value.trim();
@@ -160,15 +164,29 @@ function resetForm(
 }
 
 export function validation({ ref, dispatch, config }: ValidationProps): void {
-  const elements = ref?.elements;
+  const elements = ref.elements;
   const eventType = config?.eventType ?? 'input';
   const resetOnSubmit = config?.resetOnSubmit ?? true;
   const resolver = config?.resolver;
-  if (ref == null || elements == null) return;
 
-  const numberOfRequiredFields = Array.from(elements).filter((e) =>
-    e?.hasAttribute('required')
-  ).length;
+  const countRequired = (): number =>
+    Array.from(elements).filter((e) => e?.hasAttribute('required')).length;
+  const numberOfRequiredFields = countRequired();
+
+  // Sync cleanup: dispatch removeField for names that were registered but are no longer in the DOM.
+  // This runs on every re-render (React calls the ref callback each render), so it reliably
+  // catches fields removed by React state changes.
+  const currentNames = new Set<string>();
+  for (const el of Array.from(elements)) {
+    const n = el.getAttribute('name');
+    if (n) currentNames.add(n);
+  }
+  for (const name of getRegisteredNames(ref)) {
+    if (!currentNames.has(name)) {
+      dispatch?.({ type: 'removeField', name, numberOfRequiredFields });
+      getRegisteredNames(ref).delete(name);
+    }
+  }
 
   // Submit listener
   const needsSubmitListener = resolver != null || resetOnSubmit;
@@ -202,6 +220,7 @@ export function validation({ ref, dispatch, config }: ValidationProps): void {
       const elementEventType =
         config?.validations?.[name]?.eventType ?? eventType;
       if (hasEventListener(element, elementEventType)) continue;
+      registerFieldName(ref, name);
       addTrackedEventListener(element, elementEventType, () => {
         void dispatchResolverResults(
           resolver,
@@ -218,6 +237,7 @@ export function validation({ ref, dispatch, config }: ValidationProps): void {
       const elementEventType =
         config?.validations?.[name]?.eventType ?? eventType;
       if (hasEventListener(element, elementEventType)) continue;
+      registerFieldName(ref, name);
       addTrackedEventListener(element, elementEventType, (e) => {
         const target = e.target as HTMLInputElement;
         const val = target.value.trim();
@@ -267,4 +287,30 @@ export function validation({ ref, dispatch, config }: ValidationProps): void {
       });
     }
   }
+
+  // MutationObserver — safety net for field removals that happen outside React
+  // (e.g. vanilla JS DOM manipulation). React-driven removals are already handled
+  // synchronously above via the registered-names check on each re-render.
+  // Disconnect any previous observer before creating a new one so observers
+  // don't accumulate across re-renders.
+  disconnectObserver(ref);
+  const observer = new MutationObserver(() => {
+    const names = new Set<string>();
+    for (const el of Array.from(elements)) {
+      const n = el.getAttribute('name');
+      if (n) names.add(n);
+    }
+    for (const name of getRegisteredNames(ref)) {
+      if (!names.has(name)) {
+        dispatch?.({
+          type: 'removeField',
+          name,
+          numberOfRequiredFields: countRequired()
+        });
+        getRegisteredNames(ref).delete(name);
+      }
+    }
+  });
+  observer.observe(ref, { childList: true, subtree: true });
+  setObserver(ref, observer);
 }
