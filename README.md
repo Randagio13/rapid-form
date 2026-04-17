@@ -12,6 +12,7 @@ No `register()`. No re-renders. Schema validation optional.
 [![GitHub stars](https://img.shields.io/github/stars/Randagio13/rapid-form?style=flat-square&color=7C3AED)](https://github.com/Randagio13/rapid-form/stargazers)
 [![CI](https://img.shields.io/github/actions/workflow/status/Randagio13/rapid-form/ci.yml?style=flat-square&color=7C3AED&label=CI)](https://github.com/Randagio13/rapid-form/actions/workflows/ci.yml)
 [![license](https://img.shields.io/npm/l/rapid-form?style=flat-square&color=7C3AED)](LICENSE)
+[![maintained](https://img.shields.io/badge/maintained-yes-7C3AED?style=flat-square)](https://github.com/Randagio13/rapid-form)
 
 [**Documentation →**](https://randagio13.github.io/rapid-form)
 
