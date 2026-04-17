@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@rapid-form": ["../rapid-form/src/index.ts"],
+      "@rapid-form": ["../rapid-form/src/index.ts"]
     }
   }
 }

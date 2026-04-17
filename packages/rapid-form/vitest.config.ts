@@ -1,5 +1,5 @@
-import { defineConfig } from 'vitest/config'
-import react from '@vitejs/plugin-react'
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
@@ -7,9 +7,9 @@ export default defineConfig({
     environment: 'jsdom',
     coverage: {
       provider: 'v8',
-      reporter: ['text', 'html'],
-    },
+      reporter: ['text', 'html']
+    }
   },
   plugins: [react()],
   esbuild: { target: 'es2022' }
-})
+});
