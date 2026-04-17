@@ -55,6 +55,8 @@ function isObject(item: any): item is AnyObject {
   return item && typeof item === 'object' && !Array.isArray(item);
 }
 
+const UNSAFE_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
+
 function deepMerge<T extends AnyObject, U extends AnyObject>(
   target: T,
   source: U
@@ -62,6 +64,7 @@ function deepMerge<T extends AnyObject, U extends AnyObject>(
   const output = { ...target } as T & U;
 
   for (const [key, sourceValue] of Object.entries(source)) {
+    if (UNSAFE_KEYS.has(key)) continue;
     const targetValue = output[key];
 
     if (isObject(sourceValue) && isObject(targetValue)) {

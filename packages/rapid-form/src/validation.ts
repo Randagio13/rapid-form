@@ -1,7 +1,7 @@
 import type { Dispatch } from 'react';
 import {
   addTrackedEventListener,
-  getObserver,
+  disconnectObserver,
   getRegisteredNames,
   hasEventListener,
   registerFieldName,
@@ -44,7 +44,7 @@ export interface ValidationProps {
   /**
    * Reference to form element
    */
-  ref: HTMLFormElement | null;
+  ref: HTMLFormElement;
   /**
    * Dispatch action to reducer
    */
@@ -67,12 +67,6 @@ export interface ValidationProps {
     | undefined;
 }
 
-function validateEmail(email: string): boolean {
-  const re =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
-}
-
 interface InputValidationProps {
   type: HTMLInputElement['type'];
   value: string;
@@ -86,7 +80,8 @@ function inputValidation({
 }: InputValidationProps): boolean {
   switch (type) {
     case 'email':
-      return validateEmail(value);
+      // Use native browser validation — no custom regex, no ReDoS risk.
+      return element.validity.valid;
     case 'password':
       return value.length > 6;
     case 'checkbox':
@@ -96,6 +91,8 @@ function inputValidation({
   }
 }
 
+const UNSAFE_FIELD_NAMES = new Set(['__proto__', 'constructor', 'prototype']);
+
 /** Collect all named field values from a form's element collection. */
 function collectFormValues(
   elements: HTMLFormControlsCollection
@@ -103,7 +100,7 @@ function collectFormValues(
   const values: Record<string, string> = {};
   for (const el of Array.from(elements)) {
     const name = el.getAttribute('name');
-    if (!name) continue;
+    if (!name || UNSAFE_FIELD_NAMES.has(name)) continue;
     const input = el as HTMLInputElement;
     values[name] =
       input.type === 'checkbox' ? String(input.checked) : input.value.trim();
@@ -167,11 +164,10 @@ function resetForm(
 }
 
 export function validation({ ref, dispatch, config }: ValidationProps): void {
-  const elements = ref?.elements;
+  const elements = ref.elements;
   const eventType = config?.eventType ?? 'input';
   const resetOnSubmit = config?.resetOnSubmit ?? true;
   const resolver = config?.resolver;
-  if (ref == null || elements == null) return;
 
   const countRequired = (): number =>
     Array.from(elements).filter((e) => e?.hasAttribute('required')).length;
@@ -295,25 +291,26 @@ export function validation({ ref, dispatch, config }: ValidationProps): void {
   // MutationObserver — safety net for field removals that happen outside React
   // (e.g. vanilla JS DOM manipulation). React-driven removals are already handled
   // synchronously above via the registered-names check on each re-render.
-  if (!getObserver(ref)) {
-    const observer = new MutationObserver(() => {
-      const names = new Set<string>();
-      for (const el of Array.from(elements)) {
-        const n = el.getAttribute('name');
-        if (n) names.add(n);
+  // Disconnect any previous observer before creating a new one so observers
+  // don't accumulate across re-renders.
+  disconnectObserver(ref);
+  const observer = new MutationObserver(() => {
+    const names = new Set<string>();
+    for (const el of Array.from(elements)) {
+      const n = el.getAttribute('name');
+      if (n) names.add(n);
+    }
+    for (const name of getRegisteredNames(ref)) {
+      if (!names.has(name)) {
+        dispatch?.({
+          type: 'removeField',
+          name,
+          numberOfRequiredFields: countRequired()
+        });
+        getRegisteredNames(ref).delete(name);
       }
-      for (const name of getRegisteredNames(ref)) {
-        if (!names.has(name)) {
-          dispatch?.({
-            type: 'removeField',
-            name,
-            numberOfRequiredFields: countRequired()
-          });
-          getRegisteredNames(ref).delete(name);
-        }
-      }
-    });
-    observer.observe(ref, { childList: true, subtree: true });
-    setObserver(ref, observer);
-  }
+    }
+  });
+  observer.observe(ref, { childList: true, subtree: true });
+  setObserver(ref, observer);
 }

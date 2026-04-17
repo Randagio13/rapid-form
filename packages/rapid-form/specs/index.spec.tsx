@@ -203,6 +203,23 @@ describe('Default settings', () => {
     );
   });
 
+  test('field named "constructor" is safely ignored — no crash, no state corruption', async () => {
+    // A field whose name matches an unsafe key (__proto__, constructor, prototype)
+    // must be silently skipped by deepMerge so it cannot shadow Object properties.
+    const elements: ElementType[] = [
+      { as: 'input', name: 'constructor', type: 'text', required: true }
+    ];
+    const user = userEvent.setup();
+    render(<Form elements={elements} />);
+    const input = screen.getByTestId('constructor');
+    // Triggering input events dispatches an action with key "constructor" inside
+    // values/errors — deepMerge's UNSAFE_KEYS guard (line 67 reducer.ts) must fire.
+    await user.type(input, 'hello');
+    await user.clear(input);
+    // No exception thrown; error span stays empty because the key was filtered.
+    expect(screen.getByTestId('constructor-error').textContent).toBe('');
+  });
+
   test('Input type password by default event without errors', async () => {
     const elements: ElementType[] = [
       {
