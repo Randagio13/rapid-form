@@ -21,6 +21,7 @@
       "require": "./dist/resolvers/yup.cjs"
     }
   },
+  "sideEffects": false,
   "description": "The best way to make a rapid form with react hooks",
   "repository": "git@github.com:Randagio13/rapid-form.git",
   "author": "Alessandro Casazza <imasterale@gmail.com>",
