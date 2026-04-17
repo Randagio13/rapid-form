@@ -1,0 +1,176 @@
+---
+title: Schema Validation
+description: Validate forms with Zod, Yup, or any schema library using Rapid Form's resolver API.
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+Rapid Form's **resolver** API lets you plug in any schema validation library — Zod, Yup, or a custom validator — without any runtime dependency on those libraries inside `rapid-form` itself.
+
+## How it works
+
+Pass a `resolver` function to `refValidation`. It receives all current form values as a `Record<string, string>` and returns a map of field names to error messages. Return `undefined` (or omit the key) for fields that pass.
+
+```ts
+type SchemaResolver = (
+  values: Record<string, string>
+) =>
+  | Record<string, string | undefined>
+  | Promise<Record<string, string | undefined>>
+```
+
+The resolver runs on every field event and on form submit. When `resolver` is present, it replaces per-field `validations`.
+
+---
+
+## Built-in adapters
+
+`rapid-form` ships two ready-made adapters, each imported from its own sub-path so they never increase the main bundle size.
+
+### Zod
+
+```bash
+npm install zod
+```
+
+<Tabs>
+<TabItem label="Usage">
+```tsx
+import { z } from 'zod';
+import { useRapidForm } from 'rapid-form';
+import { zodResolver } from 'rapid-form/resolvers/zod';
+
+const schema = z.object({
+  email: z.string().email('Invalid email address'),
+  name:  z.string().min(3, 'At least 3 characters'),
+});
+
+export function SignUpForm() {
+  const { refValidation, errors } = useRapidForm();
+
+  return (
+    <form ref={(ref) => refValidation(ref, { resolver: zodResolver(schema) })}>
+      <input type="email" name="email" />
+      {errors['email']?.isInvalid && <span>{errors['email'].message}</span>}
+
+      <input type="text" name="name" />
+      {errors['name']?.isInvalid && <span>{errors['name'].message}</span>}
+
+      <button type="submit">Sign up</button>
+    </form>
+  );
+}
+```
+</TabItem>
+<TabItem label="Schema">
+```ts
+import { z } from 'zod';
+
+// Any Zod schema that implements safeParseAsync works.
+const schema = z.object({
+  email: z.string().email('Invalid email address'),
+  name:  z.string().min(3, 'At least 3 characters'),
+  age:   z.coerce.number().min(18, 'Must be 18 or older'),
+});
+```
+</TabItem>
+</Tabs>
+
+### Yup
+
+```bash
+npm install yup
+```
+
+<Tabs>
+<TabItem label="Usage">
+```tsx
+import * as yup from 'yup';
+import { useRapidForm } from 'rapid-form';
+import { yupResolver } from 'rapid-form/resolvers/yup';
+
+const schema = yup.object({
+  email: yup.string().email('Invalid email address').required('Required'),
+  name:  yup.string().min(3, 'At least 3 characters').required('Required'),
+});
+
+export function SignUpForm() {
+  const { refValidation, errors } = useRapidForm();
+
+  return (
+    <form ref={(ref) => refValidation(ref, { resolver: yupResolver(schema) })}>
+      <input type="email" name="email" />
+      {errors['email']?.isInvalid && <span>{errors['email'].message}</span>}
+
+      <input type="text" name="name" />
+      {errors['name']?.isInvalid && <span>{errors['name'].message}</span>}
+
+      <button type="submit">Sign up</button>
+    </form>
+  );
+}
+```
+</TabItem>
+<TabItem label="Schema">
+```ts
+import * as yup from 'yup';
+
+const schema = yup.object({
+  email:    yup.string().email('Invalid email address').required('Required'),
+  name:     yup.string().min(3, 'At least 3 characters').required('Required'),
+  password: yup.string().min(8, 'At least 8 characters').required('Required'),
+});
+```
+</TabItem>
+</Tabs>
+
+---
+
+## Writing a custom resolver
+
+If you use a different library or want full control, write a `SchemaResolver` directly:
+
+```tsx
+import type { SchemaResolver } from 'rapid-form';
+
+const myResolver: SchemaResolver = ({ email, name }) => ({
+  email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? undefined : 'Invalid email',
+  name:  name.length >= 3 ? undefined : 'At least 3 characters',
+});
+
+// Use it the same way:
+refValidation(ref, { resolver: myResolver });
+```
+
+Resolvers can also be **async** — useful for remote checks like username availability:
+
+```ts
+const asyncResolver: SchemaResolver = async ({ username }) => {
+  const taken = await fetch(`/api/check-username?u=${username}`).then(r => r.json());
+  return { username: taken ? 'Username already taken' : undefined };
+};
+```
+
+---
+
+## Combining resolver with `resetOnSubmit`
+
+The resolver respects `resetOnSubmit` (defaults to `true`). The form resets only when the resolver returns **no errors**:
+
+```tsx
+refValidation(ref, {
+  resolver: zodResolver(schema),
+  resetOnSubmit: false, // keep values after a valid submit
+})
+```
+
+---
+
+## Behaviour summary
+
+| Scenario | Result |
+|----------|--------|
+| Field event fires | Resolver runs with all current values; errors update immediately |
+| Submit with errors | `e.preventDefault()` called; errors shown; form not reset |
+| Submit with no errors | Form resets (if `resetOnSubmit: true`) |
+| `resolver` + `validations` | `resolver` takes precedence; `validations` is ignored |
