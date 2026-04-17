@@ -35,11 +35,8 @@ export function setObserver(
   observers.set(element, observer);
 }
 
-export function getObserver(element: Element): MutationObserver | undefined {
-  return observers.get(element);
-}
-
-export function disconnectObserver(element: Element): void {
+export function disconnectObserver(element: Element | null): void {
+  if (!element) return;
   observers.get(element)?.disconnect();
   observers.delete(element);
 }

@@ -1,6 +1,6 @@
 import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { describe, expect, test } from 'vitest';
 import { useRapidForm } from '../src/index.js';
 
@@ -21,8 +21,8 @@ function ConditionalForm() {
       {showExtra && (
         <input type="text" name="extra" data-testid="extra" required />
       )}
-      <span data-testid="extra-error">{errors['extra']?.message}</span>
-      <span data-testid="agree-tracked">{values['agree'] ? 'yes' : 'no'}</span>
+      <span data-testid="extra-error">{errors.extra?.message}</span>
+      <span data-testid="agree-tracked">{values.agree ? 'yes' : 'no'}</span>
       <button data-testid="submit-button" type="submit">
         Submit
       </button>
@@ -90,9 +90,21 @@ function SimpleForm() {
     <form data-testid="form" ref={(ref) => refValidation(ref)}>
       <input type="text" name="name" data-testid="name" required />
       <input type="email" name="email" data-testid="email" required />
-      <span data-testid="name-error">{errors['name']?.message}</span>
+      <span data-testid="name-error">{errors.name?.message}</span>
+      {/* nameless button — covers if(n) false branch in MO callback */}
+      <button type="submit">Submit</button>
     </form>
   );
+}
+
+function NullBeforeMountForm() {
+  const { refValidation } = useRapidForm();
+  useEffect(() => {
+    // Call refValidation(null) when formRef.current is still null —
+    // covers the !element early-return branch in disconnectObserver.
+    refValidation(null);
+  }, [refValidation]);
+  return null;
 }
 
 // ── tests ────────────────────────────────────────────────────────────────────
@@ -188,6 +200,10 @@ describe('Dynamic fields', () => {
     // No assertion beyond "no error thrown" — verifies cleanup path runs safely
   });
 
+  test('refValidation(null) is safe when no form was ever mounted', () => {
+    expect(() => render(<NullBeforeMountForm />)).not.toThrow();
+  });
+
   test('MutationObserver cleans up field removed via direct DOM manipulation', async () => {
     const user = userEvent.setup();
     render(<SimpleForm />);
@@ -200,7 +216,15 @@ describe('Dynamic fields', () => {
       expect(screen.getByTestId('name-error').textContent).not.toBe('')
     );
 
-    // remove the input directly from the DOM — bypassing React
+    // Add a non-field element — MO fires but no fields are missing (covers
+    // the !names.has(name) === false branch in the MO callback)
+    const form = screen.getByTestId('form');
+    await act(async () => {
+      form.appendChild(document.createElement('div'));
+    });
+    expect(screen.getByTestId('name-error').textContent).not.toBe('');
+
+    // Remove the input directly from the DOM — bypassing React
     await act(async () => {
       nameInput.parentElement?.removeChild(nameInput);
     });

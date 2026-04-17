@@ -29,7 +29,7 @@ export function useRapidForm(): {
   const formRef = useRef<HTMLFormElement | null>(null);
   return {
     refValidation: (ref, config) => {
-      if (ref === null && formRef.current !== null) {
+      if (ref === null) {
         disconnectObserver(formRef.current);
         formRef.current = null;
         return;
