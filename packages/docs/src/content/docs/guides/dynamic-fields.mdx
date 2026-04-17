@@ -55,7 +55,7 @@ export function ConditionalFieldForm() {
 }
 ```
 
-When the checkbox is unchecked, the `phone` field unmounts. Rapid Form detects the removal and clears `errors['phone']` and `values['phone']` — the error span disappears along with the field.
+When the checkbox is unchecked, the `phone` field unmounts. Rapid Form detects the removal and clears the `phone` error from state — the error span disappears along with the field.
 
 :::note
 Validation rules listed under `validations` for a field that is not currently mounted are never triggered. You can safely keep the full validation config in one place.
@@ -84,13 +84,10 @@ export function EmailListForm() {
   const removeRow = (id: number) =>
     setRows((prev) => prev.filter((r) => r.id !== id));
 
-  // Build validations dynamically for however many rows exist
-  const validations = Object.fromEntries(
-    rows.map((_, i) => [`email.${i}`, { required: true, type: 'email' as const }])
-  );
-
   return (
-    <form ref={(ref) => refValidation(ref, { validations })}>
+    <form ref={(ref) => refValidation(ref, { validations: Object.fromEntries(
+      rows.map((_, i) => [`email.${i}`, { required: true, type: 'email' as const }])
+    )})}>
       {rows.map((row, i) => (
         <div key={row.id}>
           <input
@@ -119,7 +116,7 @@ export function EmailListForm() {
 }
 ```
 
-When a row is removed, the input for that index unmounts. Rapid Form detects the removal on the next render and removes the matching error and value. The error span for that row disappears along with the row itself.
+When a row is removed, the input for that index unmounts. Rapid Form detects the removal and removes the matching error from state. The error span for that row disappears along with the row itself.
 
 :::tip
 Using the array index as part of the field name (`email.0`, `email.1`, …) keeps names stable relative to their position. If you need stable names across reordering, use a unique ID instead: `email.${row.id}`.
@@ -135,7 +132,7 @@ Rapid Form relies on an **inline ref callback** pattern:
 <form ref={(ref) => refValidation(ref, options)}>
 ```
 
-Because the callback is an arrow function defined inline, React creates a new function reference on every render. React calls the old callback with `null` (unmount) and the new callback with the DOM node (mount) on each render cycle. Rapid Form uses these calls to synchronously scan which named fields are present and remove any that have disappeared.
+When a field is removed from the DOM, the next render's ref callback fires and rapid-form synchronously compares the current field list against its registry, dispatching a cleanup action for any missing fields.
 
 A **MutationObserver** is also attached to the form element as a safety net — it picks up fields added or removed by non-React code (e.g. direct DOM manipulation or third-party libraries) outside of the React render cycle.
 
