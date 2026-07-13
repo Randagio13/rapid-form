@@ -97,6 +97,41 @@ function SimpleForm() {
   );
 }
 
+// Mimics a child that mounts its fields only after an async operation settles
+// (e.g. a settings fetch). Its state change re-renders ONLY this child — the
+// parent form component does not re-render, so the ref callback never re-runs.
+function AsyncChildFields() {
+  const [settled, setSettled] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setSettled(true), 10);
+    return () => clearTimeout(t);
+  }, []);
+  if (!settled) return null;
+  return (
+    <select name="country" data-testid="country" required defaultValue="">
+      <option value="" disabled>
+        Select a country
+      </option>
+      <option value="IT">Italy</option>
+      <option value="FR">France</option>
+    </select>
+  );
+}
+
+function DescendantOnlyRenderForm() {
+  const { refValidation, values, errors, numberOfRequiredFields } =
+    useRapidForm();
+  return (
+    <form ref={(ref) => refValidation(ref)}>
+      <AsyncChildFields />
+      <span data-testid="country-value">{values.country?.value ?? ''}</span>
+      <span data-testid="country-error">{errors.country?.message ?? ''}</span>
+      <span data-testid="required-count">{numberOfRequiredFields}</span>
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
 function NullBeforeMountForm() {
   const { refValidation } = useRapidForm();
   useEffect(() => {
@@ -202,6 +237,38 @@ describe('Dynamic fields', () => {
 
   test('refValidation(null) is safe when no form was ever mounted', () => {
     expect(() => render(<NullBeforeMountForm />)).not.toThrow();
+  });
+
+  test('field mounted by a descendant-only render gets a listener', async () => {
+    const user = userEvent.setup();
+    render(<DescendantOnlyRenderForm />);
+
+    // the select mounts after the child's async state settles — the form
+    // component itself never re-renders, so only the MutationObserver can
+    // wire it
+    const country = await screen.findByTestId('country');
+
+    await user.selectOptions(country, 'IT');
+
+    // without the observer wiring the late field, this value never reaches
+    // form state
+    await waitFor(() =>
+      expect(screen.getByTestId('country-value').textContent).toBe('IT')
+    );
+  });
+
+  test('required count is synced when fields mount without a form re-render', async () => {
+    render(<DescendantOnlyRenderForm />);
+
+    // before the async child settles, no required fields are known
+    expect(screen.getByTestId('required-count').textContent).toBe('0');
+
+    await screen.findByTestId('country');
+
+    // observer wires the late field and syncs the required-field count
+    await waitFor(() =>
+      expect(screen.getByTestId('required-count').textContent).toBe('1')
+    );
   });
 
   test('MutationObserver cleans up field removed via direct DOM manipulation', async () => {
