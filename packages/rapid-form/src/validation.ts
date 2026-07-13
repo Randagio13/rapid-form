@@ -171,7 +171,6 @@ export function validation({ ref, dispatch, config }: ValidationProps): void {
 
   const countRequired = (): number =>
     Array.from(elements).filter((e) => e?.hasAttribute('required')).length;
-  const numberOfRequiredFields = countRequired();
 
   // Sync cleanup: dispatch removeField for names that were registered but are no longer in the DOM.
   // This runs on every re-render (React calls the ref callback each render), so it reliably
@@ -183,7 +182,11 @@ export function validation({ ref, dispatch, config }: ValidationProps): void {
   }
   for (const name of getRegisteredNames(ref)) {
     if (!currentNames.has(name)) {
-      dispatch?.({ type: 'removeField', name, numberOfRequiredFields });
+      dispatch?.({
+        type: 'removeField',
+        name,
+        numberOfRequiredFields: countRequired()
+      });
       getRegisteredNames(ref).delete(name);
     }
   }
@@ -192,6 +195,7 @@ export function validation({ ref, dispatch, config }: ValidationProps): void {
   const needsSubmitListener = resolver != null || resetOnSubmit;
   if (needsSubmitListener && !hasEventListener(ref, 'submit')) {
     addTrackedEventListener(ref, 'submit', (e) => {
+      const numberOfRequiredFields = countRequired();
       if (resolver) {
         e.preventDefault();
         void dispatchResolverResults(
@@ -210,91 +214,106 @@ export function validation({ ref, dispatch, config }: ValidationProps): void {
     });
   }
 
-  // Field event listeners
-  for (const element of Array.from(elements)) {
-    const name = element.getAttribute('name');
-    if (!name) continue;
+  // Field event listeners. Idempotent (guarded by hasEventListener), so it can
+  // run both on every validation() call and from the MutationObserver when
+  // fields mount after the initial render. Returns how many fields got wired.
+  const attachFieldListeners = (): number => {
+    let wired = 0;
+    for (const element of Array.from(elements)) {
+      const name = element.getAttribute('name');
+      if (!name) continue;
 
-    if (resolver) {
-      // Resolver mode: attach to every named field; run the full resolver.
-      const elementEventType =
-        config?.validations?.[name]?.eventType ?? eventType;
-      if (hasEventListener(element, elementEventType)) continue;
-      registerFieldName(ref, name);
-      addTrackedEventListener(element, elementEventType, () => {
-        void dispatchResolverResults(
-          resolver,
-          elements,
-          dispatch,
-          numberOfRequiredFields
-        );
-      });
-    } else {
-      // Per-field mode: only attach to required / custom-validated fields.
-      const isRequired = element.hasAttribute('required');
-      const hasCustomValidation = config?.validations?.[name] != null;
-      if (!isRequired && !hasCustomValidation) continue;
-      const elementEventType =
-        config?.validations?.[name]?.eventType ?? eventType;
-      if (hasEventListener(element, elementEventType)) continue;
-      registerFieldName(ref, name);
-      addTrackedEventListener(element, elementEventType, (e) => {
-        const target = e.target as HTMLInputElement;
-        const val = target.value.trim();
-        const isValid =
-          config?.validations?.[target.name]?.validation != null
-            ? config.validations[target.name]?.validation({
-                value: val,
-                formElements: elements
-              })
-            : inputValidation({
-                type: target.type,
-                value: val,
-                element: target
-              });
-        if (isValid === false) {
-          dispatch?.({
-            type: 'setError',
-            values: { [target.name]: { name: target.name, value: val } },
-            errors: {
-              [target.name]: {
-                name: target.name,
-                value: val,
-                isInvalid: true,
-                errorType: 'invalidFormat',
-                message:
-                  config?.validations?.[target.name]?.message ??
-                  'Invalid format or required field'
-              }
-            },
-            numberOfRequiredFields
-          });
-        } else {
-          dispatch?.({
-            type: 'setValue',
-            values: { [target.name]: { name: target.name, value: val } },
-            errors: {
-              [target.name]: {
-                name: target.name,
-                value: val,
-                isInvalid: false,
-                message: ''
-              }
-            },
-            numberOfRequiredFields
-          });
-        }
-      });
+      if (resolver) {
+        // Resolver mode: attach to every named field; run the full resolver.
+        const elementEventType =
+          config?.validations?.[name]?.eventType ?? eventType;
+        if (hasEventListener(element, elementEventType)) continue;
+        registerFieldName(ref, name);
+        wired++;
+        addTrackedEventListener(element, elementEventType, () => {
+          void dispatchResolverResults(
+            resolver,
+            elements,
+            dispatch,
+            countRequired()
+          );
+        });
+      } else {
+        // Per-field mode: only attach to required / custom-validated fields.
+        const isRequired = element.hasAttribute('required');
+        const hasCustomValidation = config?.validations?.[name] != null;
+        if (!isRequired && !hasCustomValidation) continue;
+        const elementEventType =
+          config?.validations?.[name]?.eventType ?? eventType;
+        if (hasEventListener(element, elementEventType)) continue;
+        registerFieldName(ref, name);
+        wired++;
+        addTrackedEventListener(element, elementEventType, (e) => {
+          const target = e.target as HTMLInputElement;
+          const val = target.value.trim();
+          const numberOfRequiredFields = countRequired();
+          const isValid =
+            config?.validations?.[target.name]?.validation != null
+              ? config.validations[target.name]?.validation({
+                  value: val,
+                  formElements: elements
+                })
+              : inputValidation({
+                  type: target.type,
+                  value: val,
+                  element: target
+                });
+          if (isValid === false) {
+            dispatch?.({
+              type: 'setError',
+              values: { [target.name]: { name: target.name, value: val } },
+              errors: {
+                [target.name]: {
+                  name: target.name,
+                  value: val,
+                  isInvalid: true,
+                  errorType: 'invalidFormat',
+                  message:
+                    config?.validations?.[target.name]?.message ??
+                    'Invalid format or required field'
+                }
+              },
+              numberOfRequiredFields
+            });
+          } else {
+            dispatch?.({
+              type: 'setValue',
+              values: { [target.name]: { name: target.name, value: val } },
+              errors: {
+                [target.name]: {
+                  name: target.name,
+                  value: val,
+                  isInvalid: false,
+                  message: ''
+                }
+              },
+              numberOfRequiredFields
+            });
+          }
+        });
+      }
     }
-  }
+    return wired;
+  };
+  attachFieldListeners();
 
-  // MutationObserver — safety net for field removals that happen outside React
-  // (e.g. vanilla JS DOM manipulation). React-driven removals are already handled
-  // synchronously above via the registered-names check on each re-render.
+  // MutationObserver — safety net for DOM changes that happen without the form
+  // component re-rendering: fields removed outside React (vanilla JS DOM
+  // manipulation) AND fields mounted by descendant-only renders (e.g. a child
+  // component that returns null until an async fetch settles). React-driven
+  // changes that re-render the form are already handled synchronously above,
+  // since React re-invokes the ref callback on each render.
   // Disconnect any previous observer before creating a new one so observers
   // don't accumulate across re-renders.
   disconnectObserver(ref);
   const observer = new MutationObserver(() => {
+    // Wire any fields that mounted since the last validation() run.
+    const wired = attachFieldListeners();
     const names = new Set<string>();
     for (const el of Array.from(elements)) {
       const n = el.getAttribute('name');
@@ -309,6 +328,16 @@ export function validation({ ref, dispatch, config }: ValidationProps): void {
         });
         getRegisteredNames(ref).delete(name);
       }
+    }
+    if (wired > 0) {
+      // Fields appeared without a form re-render: sync numberOfRequiredFields
+      // so consumers relying on it see the late-mounted fields.
+      dispatch?.({
+        type: 'setValue',
+        values: {},
+        errors: {},
+        numberOfRequiredFields: countRequired()
+      });
     }
   });
   observer.observe(ref, { childList: true, subtree: true });
