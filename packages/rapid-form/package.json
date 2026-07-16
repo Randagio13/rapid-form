@@ -6,19 +6,34 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     },
     "./resolvers/zod": {
-      "types": "./dist/resolvers/zod.d.ts",
-      "import": "./dist/resolvers/zod.js",
-      "require": "./dist/resolvers/zod.cjs"
+      "import": {
+        "types": "./dist/resolvers/zod.d.ts",
+        "default": "./dist/resolvers/zod.js"
+      },
+      "require": {
+        "types": "./dist/resolvers/zod.d.cts",
+        "default": "./dist/resolvers/zod.cjs"
+      }
     },
     "./resolvers/yup": {
-      "types": "./dist/resolvers/yup.d.ts",
-      "import": "./dist/resolvers/yup.js",
-      "require": "./dist/resolvers/yup.cjs"
+      "import": {
+        "types": "./dist/resolvers/yup.d.ts",
+        "default": "./dist/resolvers/yup.js"
+      },
+      "require": {
+        "types": "./dist/resolvers/yup.d.cts",
+        "default": "./dist/resolvers/yup.cjs"
+      }
     }
   },
   "sideEffects": false,
@@ -46,22 +61,22 @@
     "test": "vitest run",
     "test:dev": "vitest",
     "test:coverage": "vitest run --coverage",
-    "build": "tsup",
-    "build:watch": "tsup --watch"
+    "build": "tsdown",
+    "build:watch": "tsdown --watch"
   },
   "devDependencies": {
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
-    "@types/react": "^19.2.14",
+    "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^5.2.0",
-    "@vitest/coverage-v8": "^4.1.6",
+    "@vitejs/plugin-react": "^6.0.3",
+    "@vitest/coverage-v8": "^4.1.10",
     "jsdom": "^29.1.1",
-    "react": "^19.2.6",
-    "react-dom": "^19.2.6",
-    "tsup": "^8.5.1",
-    "typescript": "^6.0.3",
-    "vitest": "^4.1.6"
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "tsdown": "^0.22.8",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.10"
   },
   "peerDependencies": {
     "react": ">=16.9.0",
