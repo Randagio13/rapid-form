@@ -1,16 +1,13 @@
-import { defineConfig } from 'tsup';
+import { defineConfig } from 'tsdown';
 
-const env = process.env.NODE_ENV;
-
-export default defineConfig(() => ({
+export default defineConfig({
   treeshake: true,
   sourcemap: true, // source map is only available in prod
   clean: true, // clean dist before build
   dts: true, // generate dts file for main module
   format: ['cjs', 'esm'], // generate cjs and esm files
+  fixedExtension: false, // emit .js for esm (matching package.json exports)
   minify: true,
-  bundle: true,
-  watch: env === 'development',
   target: 'es2020',
   entry: ['src/index.ts', 'src/resolvers/zod.ts', 'src/resolvers/yup.ts']
-}));
+});
