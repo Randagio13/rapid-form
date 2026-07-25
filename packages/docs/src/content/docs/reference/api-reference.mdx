@@ -210,7 +210,7 @@ import type { Config, Value, FieldError, NumberOfRequiredFields, SchemaResolver 
 | Type | Definition | Description |
 |------|------------|-------------|
 | `Config` | `{ eventType?: EventType; resetOnSubmit?: boolean; validations?: Record<string, ValidationEntry>; resolver?: SchemaResolver }` | The optional config parameter accepted by `refValidation`. |
-| `Value` | `{ name: string; value: string }` | Shape of each entry in the `values` map returned by `useRapidForm`. |
+| `Value` | `{ name: string; value: string }` | Shape of each entry in the `values` map returned by `useRapidForm`. Checkbox fields report their checked state as `'true'` / `'false'`, ignoring any `value` attribute. |
 | `FieldError` | `{ name: string; value: string; isInvalid: boolean; errorType?: 'invalidFormat'; message?: string }` | Shape of each entry in the `errors` map returned by `useRapidForm`. |
 | `NumberOfRequiredFields` | `number` | Alias for the `numberOfRequiredFields` return value. |
 | `SchemaResolver` | `(values: Record<string, string>) => Record<string, string \| undefined> \| Promise<...>` | Schema resolver function type. Use with the built-in adapters or write your own. |
