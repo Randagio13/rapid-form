@@ -63,6 +63,7 @@ type Config = {
   resetOnSubmit?: boolean
   validations?: Record<string, ValidationEntry>
   resolver?: SchemaResolver
+  trackUnvalidatedFields?: boolean
 }
 ```
 
@@ -74,9 +75,23 @@ type Config = {
 | `resetOnSubmit` | `boolean` | `true` | When `true`, form field values are cleared and the `values` / `errors` state is reset after the form's `submit` event fires. |
 | `validations` | `Record<string, ValidationEntry>` | — | Per-field validation overrides. The record key must match the field's `name` attribute. Ignored when `resolver` is set. |
 | `resolver` | `SchemaResolver` | — | Schema resolver function. When provided it replaces per-field `validations`. See [Schema Validation](/rapid-form/guides/schema-validation) for built-in Zod and Yup adapters. |
+| `trackUnvalidatedFields` | `boolean` | `false` | When `true`, every named field appears in `values` even if it is neither `required` nor listed in `validations`. Such fields carry no validation constraint. No effect when `resolver` is set — resolver mode already tracks every named field. |
 
 :::note
 `eventType: 'input'` fires on every keystroke, giving real-time feedback. Use `'blur'` if you prefer to validate only when the user leaves a field.
+:::
+
+:::tip[Reading optional fields]
+By default an optional field never reaches `values`, because rapid-form only attaches listeners to fields it validates. Set `trackUnvalidatedFields: true` when you need to read optional values — it avoids declaring a placeholder `validations` entry that imposes a constraint you don't want.
+
+```tsx
+<form ref={(ref) => refValidation(ref, { trackUnvalidatedFields: true })}>
+  <input name="email" type="email" required />
+  <input name="company" type="text" />
+</form>
+```
+
+`values.company` now updates as the user types, while `numberOfRequiredFields` stays `1` — tracking and requiredness are independent.
 :::
 
 ---
@@ -209,7 +224,7 @@ import type { Config, Value, FieldError, NumberOfRequiredFields, SchemaResolver 
 
 | Type | Definition | Description |
 |------|------------|-------------|
-| `Config` | `{ eventType?: EventType; resetOnSubmit?: boolean; validations?: Record<string, ValidationEntry>; resolver?: SchemaResolver }` | The optional config parameter accepted by `refValidation`. |
+| `Config` | `{ eventType?: EventType; resetOnSubmit?: boolean; validations?: Record<string, ValidationEntry>; resolver?: SchemaResolver; trackUnvalidatedFields?: boolean }` | The optional config parameter accepted by `refValidation`. |
 | `Value` | `{ name: string; value: string }` | Shape of each entry in the `values` map returned by `useRapidForm`. Checkbox fields report their checked state as `'true'` / `'false'`, ignoring any `value` attribute. |
 | `FieldError` | `{ name: string; value: string; isInvalid: boolean; errorType?: 'invalidFormat'; message?: string }` | Shape of each entry in the `errors` map returned by `useRapidForm`. |
 | `NumberOfRequiredFields` | `number` | Alias for the `numberOfRequiredFields` return value. |
