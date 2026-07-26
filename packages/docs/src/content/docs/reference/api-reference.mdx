@@ -22,7 +22,7 @@ const { refValidation, values, errors, numberOfRequiredFields } = useRapidForm()
 | `refValidation` | `(ref: HTMLFormElement \| null, config?: Config) => void` | Attaches validation logic to a form element. Pass it as the form's `ref` callback. |
 | `values` | `Record<string, Value>` | Live map of every tracked field, keyed by the field's `name` attribute. |
 | `errors` | `Record<string, FieldError>` | Map of validation errors for each field, keyed by the field's `name` attribute. Only fields that have been interacted with appear here. |
-| `numberOfRequiredFields` | `number` | Count of fields that carry the `required` attribute in the attached form. |
+| `numberOfRequiredFields` | `number` | Count of distinct **field names** that carry the `required` attribute in the attached form. A radio group counts once, however many members it has. Required elements without a `name` are not counted, since rapid-form never tracks them. |
 
 ---
 
@@ -225,7 +225,7 @@ import type { Config, Value, FieldError, NumberOfRequiredFields, SchemaResolver 
 | Type | Definition | Description |
 |------|------------|-------------|
 | `Config` | `{ eventType?: EventType; resetOnSubmit?: boolean; validations?: Record<string, ValidationEntry>; resolver?: SchemaResolver; trackUnvalidatedFields?: boolean }` | The optional config parameter accepted by `refValidation`. |
-| `Value` | `{ name: string; value: string }` | Shape of each entry in the `values` map returned by `useRapidForm`. Checkbox fields report their checked state as `'true'` / `'false'`, ignoring any `value` attribute. |
+| `Value` | `{ name: string; value: string }` | Shape of each entry in the `values` map returned by `useRapidForm`. Checkbox fields report their checked state as `'true'` / `'false'`, ignoring any `value` attribute. A radio group is one entry keyed by its shared `name`, holding the selected member's value (`''` when nothing is selected). |
 | `FieldError` | `{ name: string; value: string; isInvalid: boolean; errorType?: 'invalidFormat'; message?: string }` | Shape of each entry in the `errors` map returned by `useRapidForm`. |
 | `NumberOfRequiredFields` | `number` | Alias for the `numberOfRequiredFields` return value. |
 | `SchemaResolver` | `(values: Record<string, string>) => Record<string, string \| undefined> \| Promise<...>` | Schema resolver function type. Use with the built-in adapters or write your own. |
