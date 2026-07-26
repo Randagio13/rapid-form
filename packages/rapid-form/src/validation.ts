@@ -105,9 +105,35 @@ function inputValidation({
  * than their `value` attribute, which is `'on'` whether checked or not.
  */
 function fieldValue(element: HTMLInputElement): string {
-  return element.type === 'checkbox'
-    ? String(element.checked)
-    : element.value.trim();
+  if (element.type === 'checkbox') return String(element.checked);
+  if (element.type === 'radio') return radioGroupValue(element);
+  return element.value.trim();
+}
+
+/**
+ * The selected value of the radio group `element` belongs to, or `''` when
+ * nothing is selected.
+ *
+ * A radio group is one logical field spread across several elements, so the
+ * value can't be read off the visited element — every member shares the same
+ * `name` but only the checked one is meaningful. The group is walked via
+ * `element.form` rather than a `name`-derived selector, since names come from
+ * user markup.
+ */
+function radioGroupValue(element: HTMLInputElement): string {
+  const group = element.form?.elements;
+  if (group == null) return element.checked ? element.value.trim() : '';
+  for (const el of Array.from(group)) {
+    const radio = el as HTMLInputElement;
+    if (
+      radio.type === 'radio' &&
+      radio.name === element.name &&
+      radio.checked
+    ) {
+      return radio.value.trim();
+    }
+  }
+  return '';
 }
 
 /**
@@ -219,8 +245,17 @@ export function validation({ ref, dispatch, config }: ValidationProps): void {
   const resolver = config?.resolver;
   const trackUnvalidatedFields = config?.trackUnvalidatedFields ?? false;
 
+  // Counts distinct names, not elements: a radio group marks `required` on
+  // every member but is one field. Unnamed elements are skipped — they are
+  // never tracked or validated, so counting them yields a denominator no
+  // consumer can satisfy.
   const countRequired = (): number =>
-    Array.from(elements).filter((e) => e?.hasAttribute('required')).length;
+    new Set(
+      Array.from(elements)
+        .filter((e) => e?.hasAttribute('required'))
+        .map((e) => e.getAttribute('name'))
+        .filter((name) => name != null && name !== '')
+    ).size;
 
   // Sync cleanup: dispatch removeField for names that were registered but are no longer in the DOM.
   // This runs on every re-render (React calls the ref callback each render), so it reliably
