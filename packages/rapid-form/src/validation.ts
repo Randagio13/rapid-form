@@ -91,6 +91,16 @@ function inputValidation({
   }
 }
 
+/**
+ * The state value for a field. Checkboxes report their checked state rather
+ * than their `value` attribute, which is `'on'` whether checked or not.
+ */
+function fieldValue(element: HTMLInputElement): string {
+  return element.type === 'checkbox'
+    ? String(element.checked)
+    : element.value.trim();
+}
+
 const UNSAFE_FIELD_NAMES = new Set(['__proto__', 'constructor', 'prototype']);
 
 /** Collect all named field values from a form's element collection. */
@@ -101,9 +111,7 @@ function collectFormValues(
   for (const el of Array.from(elements)) {
     const name = el.getAttribute('name');
     if (!name || UNSAFE_FIELD_NAMES.has(name)) continue;
-    const input = el as HTMLInputElement;
-    values[name] =
-      input.type === 'checkbox' ? String(input.checked) : input.value.trim();
+    values[name] = fieldValue(el as HTMLInputElement);
   }
   return values;
 }
@@ -250,7 +258,7 @@ export function validation({ ref, dispatch, config }: ValidationProps): void {
         wired++;
         addTrackedEventListener(element, elementEventType, (e) => {
           const target = e.target as HTMLInputElement;
-          const val = target.value.trim();
+          const val = fieldValue(target);
           const numberOfRequiredFields = countRequired();
           const isValid =
             config?.validations?.[target.name]?.validation != null
