@@ -104,10 +104,25 @@ function inputValidation({
  * The state value for a field. Checkboxes report their checked state rather
  * than their `value` attribute, which is `'on'` whether checked or not.
  */
-function fieldValue(element: HTMLInputElement): string {
-  return element.type === 'checkbox'
-    ? String(element.checked)
-    : element.value.trim();
+function fieldValue(
+  element: HTMLInputElement,
+  elements?: HTMLFormControlsCollection
+): string {
+  if (element.type === 'checkbox') return String(element.checked);
+  if (element.type === 'radio') {
+    if (elements == null) {
+      return element.checked ? element.value.trim() : '';
+    }
+    const checked = Array.from(elements).find(
+      (candidate): candidate is HTMLInputElement =>
+        candidate instanceof HTMLInputElement &&
+        candidate.type === 'radio' &&
+        candidate.name === element.name &&
+        candidate.checked
+    );
+    return checked?.value.trim() ?? '';
+  }
+  return element.value.trim();
 }
 
 /**
@@ -152,7 +167,7 @@ function collectFormValues(
   for (const el of Array.from(elements)) {
     const name = el.getAttribute('name');
     if (!name || UNSAFE_FIELD_NAMES.has(name)) continue;
-    values[name] = fieldValue(el as HTMLInputElement);
+    values[name] = fieldValue(el as HTMLInputElement, elements);
   }
   return values;
 }
@@ -220,7 +235,12 @@ export function validation({ ref, dispatch, config }: ValidationProps): void {
   const trackUnvalidatedFields = config?.trackUnvalidatedFields ?? false;
 
   const countRequired = (): number =>
-    Array.from(elements).filter((e) => e?.hasAttribute('required')).length;
+    new Set(
+      Array.from(elements)
+        .filter((e) => e?.hasAttribute('required'))
+        .map((e) => e.getAttribute('name'))
+        .filter((name): name is string => name != null && name.length > 0)
+    ).size;
 
   // Sync cleanup: dispatch removeField for names that were registered but are no longer in the DOM.
   // This runs on every re-render (React calls the ref callback each render), so it reliably
