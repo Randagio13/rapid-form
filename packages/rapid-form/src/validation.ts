@@ -63,6 +63,15 @@ export interface ValidationProps {
          * When provided it replaces per-field `validations`.
          */
         resolver?: SchemaResolver;
+        /**
+         * Track named fields that are neither `required` nor listed in
+         * `validations`. They get listeners (so `values[name]` stays populated
+         * and unmount cleanup applies) but no validation constraint.
+         * Resolver mode already tracks every named field, so this is a no-op
+         * there.
+         * @default false
+         */
+        trackUnvalidatedFields?: boolean;
       }
     | undefined;
 }
@@ -99,6 +108,38 @@ function fieldValue(element: HTMLInputElement): string {
   return element.type === 'checkbox'
     ? String(element.checked)
     : element.value.trim();
+}
+
+/**
+ * Decide whether a field's current value is valid.
+ *
+ * `isValidated` is false for fields tracked only via
+ * `config.trackUnvalidatedFields` — they exist in state so consumers can read
+ * `values[name]`, but carry no constraint of their own.
+ */
+function resolveValidity({
+  target,
+  elements,
+  isValidated,
+  customValidation
+}: {
+  target: HTMLInputElement;
+  elements: HTMLFormControlsCollection;
+  isValidated: boolean;
+  customValidation: ValidationFunction | undefined;
+}): boolean {
+  if (!isValidated) return true;
+  if (customValidation != null) {
+    return customValidation({
+      value: fieldValue(target),
+      formElements: elements
+    });
+  }
+  return inputValidation({
+    type: target.type,
+    value: fieldValue(target),
+    element: target
+  });
 }
 
 const UNSAFE_FIELD_NAMES = new Set(['__proto__', 'constructor', 'prototype']);
@@ -176,6 +217,7 @@ export function validation({ ref, dispatch, config }: ValidationProps): void {
   const eventType = config?.eventType ?? 'input';
   const resetOnSubmit = config?.resetOnSubmit ?? true;
   const resolver = config?.resolver;
+  const trackUnvalidatedFields = config?.trackUnvalidatedFields ?? false;
 
   const countRequired = (): number =>
     Array.from(elements).filter((e) => e?.hasAttribute('required')).length;
@@ -247,10 +289,12 @@ export function validation({ ref, dispatch, config }: ValidationProps): void {
           );
         });
       } else {
-        // Per-field mode: only attach to required / custom-validated fields.
+        // Per-field mode: attach to required / custom-validated fields, plus
+        // every named field when trackUnvalidatedFields is on.
         const isRequired = element.hasAttribute('required');
         const hasCustomValidation = config?.validations?.[name] != null;
-        if (!isRequired && !hasCustomValidation) continue;
+        const isValidated = isRequired || hasCustomValidation;
+        if (!isValidated && !trackUnvalidatedFields) continue;
         const elementEventType =
           config?.validations?.[name]?.eventType ?? eventType;
         if (hasEventListener(element, elementEventType)) continue;
@@ -260,17 +304,12 @@ export function validation({ ref, dispatch, config }: ValidationProps): void {
           const target = e.target as HTMLInputElement;
           const val = fieldValue(target);
           const numberOfRequiredFields = countRequired();
-          const isValid =
-            config?.validations?.[target.name]?.validation != null
-              ? config.validations[target.name]?.validation({
-                  value: val,
-                  formElements: elements
-                })
-              : inputValidation({
-                  type: target.type,
-                  value: val,
-                  element: target
-                });
+          const isValid = resolveValidity({
+            target,
+            elements,
+            isValidated,
+            customValidation: config?.validations?.[target.name]?.validation
+          });
           if (isValid === false) {
             dispatch?.({
               type: 'setError',
