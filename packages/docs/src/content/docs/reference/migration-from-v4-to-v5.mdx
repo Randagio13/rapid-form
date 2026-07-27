@@ -1,0 +1,91 @@
+---
+title: Migration from v4 to v5
+description: A reference page for migrating from Rapid Form v4 to v5.
+---
+
+v5 has a single breaking change: field values can now be a `string[]` as well as a `string`.
+
+This exists so that `<select multiple>` and `<input type="file" multiple>` can report every selection. In v4 they reported only the first, and the rest were unrecoverable.
+
+## What changed
+
+`Value['value']`, `FieldError['value']`, the `value` given to a custom `validation`, and the `values` argument to a `SchemaResolver` all widened from `string` to `string | string[]`.
+
+```diff lang="ts"
+- type Value = { name: string; value: string }
++ type Value = { name: string; value: string | string[] }
+```
+
+Only **list-valued** fields produce an array — a `<select multiple>` or a `<input type="file" multiple>`. Every other field type still produces a `string`, exactly as before. Runtime behaviour for single-value fields is unchanged; what changed is that TypeScript now makes you acknowledge the array case.
+
+## Do you need to change anything?
+
+**No, if** you only read values and pass them somewhere that accepts anything — rendering them in JSX, storing them, comparing them with `===`:
+
+```tsx
+// still fine in v5
+<span>{values.email?.value}</span>
+{values.plan?.value === 'pro' && <ProBadge />}
+```
+
+**Yes, if** you pass a value somewhere that requires a `string`:
+
+```diff lang="tsx"
+- const trimmed = values.email.value.trim()
+- sendToApi(values.email.value)
++ const raw = values.email.value
++ const trimmed = typeof raw === 'string' ? raw.trim() : raw.join(',')
+```
+
+TypeScript will point at every such site, so the compiler is your migration checklist.
+
+## Narrowing inside a custom validation
+
+```diff lang="tsx"
+  refValidation(ref, {
+    validations: {
+      username: {
+-       validation: ({ value }) => value.length > 3,
++       // `length` works on both strings and arrays, so this needs no change
++       validation: ({ value }) => value.length > 3,
+        message: 'Too short',
+      },
+      password: {
+-       validation: ({ value }) => /[0-9]/.test(value),
++       validation: ({ value }) =>
++         typeof value === 'string' && /[0-9]/.test(value),
+        message: 'Needs a digit',
+      },
+    },
+  })
+```
+
+Anything reading `.length` keeps working, since it means "non-empty" for both forms. String-specific methods — `test`, `match`, `toLowerCase`, `trim` — need a `typeof` guard.
+
+## Reading a multi-select
+
+```tsx
+const { refValidation, values } = useRapidForm()
+
+<form ref={(ref) => refValidation(ref)}>
+  <select multiple name="langs" required>
+    <option value="ts">TS</option>
+    <option value="go">Go</option>
+  </select>
+</form>
+
+// values.langs?.value → ['ts', 'go']
+```
+
+An empty selection is `[]`, not `''`, and a required list-valued field is invalid exactly when the list is empty. Resetting the form clears it to `[]`, so the type of a given field's value never changes across a reset.
+
+## Schema resolvers
+
+The bundled Zod and Yup adapters need **no changes** — they pass values straight through to the schema. If you wrote your own resolver and typed its parameter explicitly, widen it:
+
+```diff lang="ts"
+- const resolver = (values: Record<string, string>) => { … }
++ const resolver = (values: Record<string, string | string[]>) => { … }
+```
+
+Your schema should describe multi-selects as arrays, e.g. `z.array(z.string()).min(1)` instead of `z.string()`.

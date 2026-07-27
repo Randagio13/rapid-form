@@ -85,6 +85,8 @@ describe('checkbox values in per-field mode', () => {
           validations: {
             terms: {
               validation: ({ value }) => {
+                // A checkbox is single-valued; narrow before string use.
+                if (typeof value !== 'string') return false;
                 seen.push(value);
                 return value === 'true';
               },

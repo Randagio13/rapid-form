@@ -24,6 +24,17 @@ const { refValidation, values, errors, numberOfRequiredFields } = useRapidForm()
 | `errors` | `Record<string, FieldError>` | Map of validation errors for each field, keyed by the field's `name` attribute. Only fields that have been interacted with appear here. |
 | `numberOfRequiredFields` | `number` | Count of distinct **field names** that carry the `required` attribute in the attached form. A radio group counts once, however many members it has. Required elements without a `name` are not counted, since rapid-form never tracks them. |
 
+:::note[List-valued fields]
+`Value['value']` is `string | string[]`. A `<select multiple>` or `<input type="file" multiple>` reports every selection as a `string[]` — empty selection is `[]`. Every other field type reports a `string`.
+
+```tsx
+values.langs?.value   // ['ts', 'go']  — <select multiple>
+values.email?.value   // 'a@b.com'     — everything else
+```
+
+Narrow with `Array.isArray` or `typeof` before using a value as a string. Migrating from v4? See [Migration v4 → v5](/rapid-form/reference/migration-from-v4-to-v5).
+:::
+
 ---
 
 ## `refValidation(ref, config?)`
@@ -103,7 +114,7 @@ A per-field configuration object supplied as a value inside `Config.validations`
 ```ts
 type ValidationEntry = {
   validation: (props: {
-    value: string
+    value: string | string[]
     formElements: HTMLFormControlsCollection
   }) => boolean
   eventType?: 'input' | 'blur' | 'change'
@@ -115,7 +126,7 @@ type ValidationEntry = {
 
 | Property | Type | Required | Description |
 |----------|------|----------|-------------|
-| `validation` | `(props: { value: string; formElements: HTMLFormControlsCollection }) => boolean` | Yes | Custom validation function. Return `true` when the value is **valid**, `false` when it is invalid. Receives the current field `value` and the full `formElements` collection so you can cross-reference other fields. |
+| `validation` | `(props: { value: string \| string[]; formElements: HTMLFormControlsCollection }) => boolean` | Yes | Custom validation function. Return `true` when the value is **valid**, `false` when it is invalid. Receives the current field `value` and the full `formElements` collection so you can cross-reference other fields. `value` is a `string[]` for list-valued fields — narrow with `Array.isArray` or `typeof` before using it as a string. |
 | `eventType` | `'input' \| 'blur' \| 'change'` | No | Overrides the top-level `eventType` for this specific field only. |
 | `message` | `string` | No | Error message stored in `errors[name].message` when this field's `validation` returns `false`. |
 
@@ -158,7 +169,7 @@ Each entry in the `errors` map conforms to the `FieldError` type.
 ```ts
 type FieldError = {
   name: string
-  value: string
+  value: string | string[]
   isInvalid: boolean
   errorType?: 'invalidFormat'
   message?: string
@@ -170,7 +181,7 @@ type FieldError = {
 | Property | Type | Description |
 |----------|------|-------------|
 | `name` | `string` | The `name` attribute of the form field. |
-| `value` | `string` | The current value of the field at the time the error was recorded. |
+| `value` | `string \| string[]` | The current value of the field at the time the error was recorded. A `string[]` for list-valued fields. |
 | `isInvalid` | `boolean` | `true` when the field fails validation, `false` when it passes. Use this as the primary flag for disabling submit buttons or showing error UI. |
 | `errorType` | `'invalidFormat' \| undefined` | Set to `'invalidFormat'` for built-in format checks (e.g. email format, password length). `undefined` for custom validation errors. |
 | `message` | `string \| undefined` | Human-readable error message. Populated from the `message` property of a `ValidationEntry`, or a built-in default message for format errors. |
@@ -202,7 +213,7 @@ A function type that receives all current form values and returns a map of error
 import type { SchemaResolver } from 'rapid-form'
 
 type SchemaResolver = (
-  values: Record<string, string>
+  values: Record<string, string | string[]>
 ) =>
   | Record<string, string | undefined>
   | Promise<Record<string, string | undefined>>
@@ -225,7 +236,7 @@ import type { Config, Value, FieldError, NumberOfRequiredFields, SchemaResolver 
 | Type | Definition | Description |
 |------|------------|-------------|
 | `Config` | `{ eventType?: EventType; resetOnSubmit?: boolean; validations?: Record<string, ValidationEntry>; resolver?: SchemaResolver; trackUnvalidatedFields?: boolean }` | The optional config parameter accepted by `refValidation`. |
-| `Value` | `{ name: string; value: string }` | Shape of each entry in the `values` map returned by `useRapidForm`. Checkbox fields report their checked state as `'true'` / `'false'`, ignoring any `value` attribute. A radio group is one entry keyed by its shared `name`, holding the selected member's value (`''` when nothing is selected). |
-| `FieldError` | `{ name: string; value: string; isInvalid: boolean; errorType?: 'invalidFormat'; message?: string }` | Shape of each entry in the `errors` map returned by `useRapidForm`. |
+| `Value` | `{ name: string; value: string \| string[] }` | Shape of each entry in the `values` map returned by `useRapidForm`. Checkbox fields report their checked state as `'true'` / `'false'`, ignoring any `value` attribute. A radio group is one entry keyed by its shared `name`, holding the selected member's value (`''` when nothing is selected). List-valued fields — `<select multiple>` and `<input type="file" multiple>` — hold a `string[]`. |
+| `FieldError` | `{ name: string; value: string \| string[]; isInvalid: boolean; errorType?: 'invalidFormat'; message?: string }` | Shape of each entry in the `errors` map returned by `useRapidForm`. |
 | `NumberOfRequiredFields` | `number` | Alias for the `numberOfRequiredFields` return value. |
-| `SchemaResolver` | `(values: Record<string, string>) => Record<string, string \| undefined> \| Promise<...>` | Schema resolver function type. Use with the built-in adapters or write your own. |
+| `SchemaResolver` | `(values: Record<string, string \| string[]>) => Record<string, string \| undefined> \| Promise<...>` | Schema resolver function type. Use with the built-in adapters or write your own. |

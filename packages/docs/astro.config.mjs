@@ -56,6 +56,10 @@ export default defineConfig({
             {
               label: 'Migration v2 → v3',
               slug: 'reference/migration-from-v2-to-v3'
+            },
+            {
+              label: 'Migration v4 → v5',
+              slug: 'reference/migration-from-v4-to-v5'
             }
           ]
         }

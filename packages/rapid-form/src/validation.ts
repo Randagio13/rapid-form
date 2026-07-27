@@ -15,7 +15,7 @@ type EventType = 'change' | 'blur' | 'input';
  * Validation function — return true if the value is valid.
  */
 type ValidationFunction = (props: {
-  value: string;
+  value: string | string[];
   formElements: HTMLFormControlsCollection;
 }) => boolean;
 
@@ -35,7 +35,7 @@ type ValidationConfig = Record<
  * Both sync and async resolvers are supported.
  */
 export type SchemaResolver = (
-  values: Record<string, string>
+  values: Record<string, string | string[]>
 ) =>
   | Record<string, string | undefined>
   | Promise<Record<string, string | undefined>>;
@@ -78,7 +78,7 @@ export interface ValidationProps {
 
 interface InputValidationProps {
   type: HTMLInputElement['type'];
-  value: string;
+  value: string | string[];
   element: HTMLInputElement;
 }
 
@@ -92,10 +92,11 @@ function inputValidation({
       // Use native browser validation — no custom regex, no ReDoS risk.
       return element.validity.valid;
     case 'password':
-      return value.length > 6;
+      return typeof value === 'string' && value.length > 6;
     case 'checkbox':
       return element.checked;
     default:
+      // Correct for both forms: a non-empty string, or a non-empty list.
       return value.length > 0;
   }
 }
@@ -104,10 +105,27 @@ function inputValidation({
  * The state value for a field. Checkboxes report their checked state rather
  * than their `value` attribute, which is `'on'` whether checked or not.
  */
-function fieldValue(element: HTMLInputElement): string {
+function fieldValue(element: HTMLInputElement): string | string[] {
   if (element.type === 'checkbox') return String(element.checked);
   if (element.type === 'radio') return radioGroupValue(element);
+  if (element instanceof HTMLSelectElement) {
+    return element.multiple
+      ? Array.from(element.selectedOptions, (o) => o.value.trim())
+      : element.value.trim();
+  }
+  if (element.type === 'file' && element.multiple) {
+    return Array.from(element.files ?? [], (f) => f.name);
+  }
   return element.value.trim();
+}
+
+/**
+ * Whether a field holds a list rather than a single value. Used to pick the
+ * right empty value when resetting.
+ */
+function isMultiValueField(element: HTMLInputElement): boolean {
+  if (element instanceof HTMLSelectElement) return element.multiple;
+  return element.type === 'file' && element.multiple;
 }
 
 /**
@@ -173,8 +191,8 @@ const UNSAFE_FIELD_NAMES = new Set(['__proto__', 'constructor', 'prototype']);
 /** Collect all named field values from a form's element collection. */
 function collectFormValues(
   elements: HTMLFormControlsCollection
-): Record<string, string> {
-  const values: Record<string, string> = {};
+): Record<string, string | string[]> {
+  const values: Record<string, string | string[]> = {};
   for (const el of Array.from(elements)) {
     const name = el.getAttribute('name');
     if (!name || UNSAFE_FIELD_NAMES.has(name)) continue;
@@ -228,7 +246,11 @@ function resetForm(
   const resetValues: State['values'] = {};
   for (const element of Array.from(elements)) {
     const name = element.getAttribute('name');
-    if (name != null) resetValues[name] = { value: '', name };
+    if (name == null) continue;
+    // A list-valued field resets to an empty list, not an empty string, so the
+    // type of values[name] stays stable across a reset.
+    const empty = isMultiValueField(element as HTMLInputElement) ? [] : '';
+    resetValues[name] = { value: empty, name };
   }
   dispatch?.({
     type: 'reset',
