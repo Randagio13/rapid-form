@@ -55,7 +55,7 @@ describe('radio group values', () => {
 
   test('resolver mode reports the selected member, not the last in DOM order', async () => {
     const user = userEvent.setup();
-    const seen: Record<string, string>[] = [];
+    const seen: Record<string, string | string[]>[] = [];
     render(
       <RadioForm
         config={{
@@ -74,7 +74,7 @@ describe('radio group values', () => {
 
   test('an unselected group reports an empty string', async () => {
     const user = userEvent.setup();
-    const seen: Record<string, string>[] = [];
+    const seen: Record<string, string | string[]>[] = [];
     render(
       <RadioForm
         config={{

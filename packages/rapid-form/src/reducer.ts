@@ -1,11 +1,14 @@
 import type { Reducer } from 'react';
 
 /**
- * Represents a value with a name and a corresponding string value.
+ * Represents a value with a name and a corresponding value.
+ *
+ * `string[]` covers fields that hold a list rather than a single value —
+ * `<select multiple>` and `<input type="file" multiple>`.
  */
 interface Value {
   name: string;
-  value: string;
+  value: string | string[];
 }
 
 /**
